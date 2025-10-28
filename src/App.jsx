@@ -9,7 +9,10 @@ function App() {
 
   
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+    const apiUrl = import.meta.env.VITE_API_URL || 
+      (window.location.hostname.includes('amplifyapp.com')
+       ? 'https://main.d22sjrfdf1uqnw.amplifyapp.com/'//Maria added Amplify 
+       : 'http://localhost:8080')
 
     fetch(`${apiUrl}/api/hello`)
       .then((res) => res.text())
