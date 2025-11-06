@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL || 
       (window.location.hostname.includes('amplifyapp.com')
-       ? 'http://18.116.74.253:8080'//Maria 
+       ? 'https://dkdavnbhgrmho.cloudfront.net'//Maria 
        : 'http://localhost:8080');
 
     fetch(`${apiUrl}/api/hello`)
