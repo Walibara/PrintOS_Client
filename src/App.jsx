@@ -11,7 +11,6 @@ function App() {
     let baseUrl = import.meta.env.VITE_API_URL
     if (!baseUrl) {
       if (window.location.hostname.includes('amplifyapp.com')) {
-        // Deployed frontend but no env var: use CloudFront directly
         baseUrl = 'https://dkdavnbhgrmho.cloudfront.net'
       } else {
         // Local dev
