@@ -7,15 +7,27 @@ function App() {
   const [count, setCount] = useState(0)
   const [message, setMessage] = useState('Loading...')
 
-  
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 
-      (window.location.hostname.includes('amplifyapp.com')
-       ? 'https://dkdavnbhgrmho.cloudfront.net'//Maria still testing 
-       : 'http://localhost:8080');
+    let baseUrl = import.meta.env.VITE_API_URL
+    if (!baseUrl) {
+      if (window.location.hostname.includes('amplifyapp.com')) {
+        // Deployed frontend but no env var: use CloudFront directly
+        baseUrl = 'https://dkdavnbhgrmho.cloudfront.net'
+      } else {
+        // Local dev
+        baseUrl = 'http://localhost:8080'
+      }
+    }
 
-    fetch(`${apiUrl}/api/hello`)
-      .then((res) => res.text())
+    baseUrl = baseUrl.replace(/\/+$/, '')
+
+    fetch(`${baseUrl}/api/hello`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Backend returned ${res.status}`)
+        }
+        return res.text()
+      })
       .then((data) => setMessage(data))
       .catch((err) => {
         console.error('Error fetching backend:', err)
