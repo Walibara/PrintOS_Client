@@ -1,42 +1,155 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset and full layout */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Main flex container */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #003366; /* HP deep blue */
+  color: #33a1ff; /* HP light blue accent */
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.hp-logo {
+  width: 80px;
+  margin-bottom: 30px;
 }
 
-.card {
-  padding: 2em;
+/* Navigation styles */
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.read-the-docs {
-  color: #888;
+.nav-item {
+  margin: 10px 0;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #66ccff;
+}
+
+.nav-submenu {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  color: #66ccff;
+}
+
+.nav-submenu li {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.nav-submenu li:hover {
+  color: #99ddff;
+}
+
+/*Dashboard*/
+.dashboard-image {
+  max-width: 250px;   
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+/*Amplify - just for fun*/
+.trustme-image {
+  display: block;
+  margin: 20px auto;
+  max-width: 700px;   
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+/*Just for fun*/
+.job-status-image {
+  display: block;
+  margin: 20px auto;
+  max-width: 700px;   
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-image:hover {
+  transform: scale(1.03);
+}
+
+/* Log out at bottom */
+.logout {
+  margin-top: auto;
+  color: #33a1ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #d9ecff, #ffffff);
+  height: 100%;
+  width: 100%;
+}
+
+/* Top bar */
+.topbar {
+  background-color: #003366;
+  color: #b3d9ff;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+/* Content area */
+.content {
+  padding: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.backend-message {
+  color: #003366;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* Optional scroll handling */
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+.content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 51, 102, 0.3);
+  border-radius: 4px;
 }
