@@ -1,4 +1,3 @@
-/* Reset and full layout */
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -9,20 +8,21 @@ html, body, #root {
 /* Main flex container */
 .app-container {
   display: flex;
-  height: 100vh;
+  height: 100vh;      
   width: 100vw;
-  overflow: hidden;
+  overflow: hidden;  
 }
 
 /* Sidebar */
 .sidebar {
   width: 220px;
-  background-color: #003366; /* HP deep blue */
-  color: #33a1ff; /* HP light blue accent */
+  background-color: #003366;
+  color: #33a1ff;
   padding: 25px 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex-shrink: 0;    
 }
 
 .hp-logo {
@@ -66,7 +66,7 @@ html, body, #root {
   color: #99ddff;
 }
 
-/*Dashboard*/
+/* Dashboard */
 .dashboard-image {
   max-width: 250px;   
   width: 100%;
@@ -76,7 +76,11 @@ html, body, #root {
   transition: transform 0.2s ease;
 }
 
-/*Amplify - just for fun*/
+.dashboard-image:hover {
+  transform: scale(1.03);
+}
+
+/* Amplify - just for fun */
 .trustme-image {
   display: block;
   margin: 20px auto;
@@ -86,7 +90,8 @@ html, body, #root {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-/*Just for fun*/
+
+/* Job Status */
 .job-status-image {
   display: block;
   margin: 20px auto;
@@ -95,10 +100,6 @@ html, body, #root {
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.dashboard-image:hover {
-  transform: scale(1.03);
 }
 
 /* Log out at bottom */
@@ -115,8 +116,8 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   background: linear-gradient(to bottom, #d9ecff, #ffffff);
-  height: 100%;
-  width: 100%;
+  height: 100vh;      
+  overflow-y: auto;     
 }
 
 /* Top bar */
@@ -128,6 +129,7 @@ html, body, #root {
   font-weight: 600;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 /* Content area */
@@ -137,6 +139,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
 }
 
 .backend-message {
@@ -145,11 +148,11 @@ html, body, #root {
   font-weight: bold;
 }
 
-/* Optional scroll handling */
-.content::-webkit-scrollbar {
+/* Optional scroll styling for right side */
+.main-content::-webkit-scrollbar {
   width: 8px;
 }
-.content::-webkit-scrollbar-thumb {
+.main-content::-webkit-scrollbar-thumb {
   background-color: rgba(0, 51, 102, 0.3);
   border-radius: 4px;
 }
