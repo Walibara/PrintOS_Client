@@ -1,55 +1,80 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from 'react-router-dom'
+
 import './App.css'
+import hpLogo from './assets/HP_logo_2012.svg'
+import AmplifyHome from './AmplifyHome.jsx'// we can remove this later
+import Dashboard from './Dashboard.jsx'
+import MyAccount from './MyAccount.jsx'
+import MyJobs from './MyJobs.jsx'
+import JobStatus from './JobStatus.jsx'
+import JobHistory from './JobHistory.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [message, setMessage] = useState('Loading...')
-
-  
-  useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 
-      (window.location.hostname.includes('amplifyapp.com')
-       ? 'https://ec2-18-116-74-253.us-east-2.compute.amazonaws.com:8080/api/hello'//Maria added Amplify 
-       : 'http://localhost:8080');
-
-    fetch(`${apiUrl}/api/hello`)
-      .then((res) => res.text())
-      .then((data) => setMessage(data))
-      .catch((err) => {
-        console.error('Error fetching backend:', err)
-        setMessage('Failed to connect to backend')
-      })
-  }, [])
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <BrowserRouter>
+      <div className="app-container">
+        {/* Sidebar */}
+        <aside className="sidebar">
+          <Link to="/dashboard">
+            <img
+              src={hpLogo}
+              alt="HP Logo"
+              className="hp-logo"
+              style={{ cursor: "pointer" }}
+            />
+          </Link>
+
+          <nav className="nav-menu">
+            <Link to="/" className="nav-item">
+              Amplify Home
+            </Link>
+
+            <Link to="/my-account" className="nav-item">
+              My Account
+            </Link>
+
+            <Link to="/dashboard" className="nav-item">
+              Dashboard
+            </Link>
+
+            <div className="nav-item">My Jobs</div>
+            <ul className="nav-submenu">
+              <li>
+                <Link to="/my-jobs/status">Job Status</Link>
+              </li>
+              <li>
+                <Link to="/my-jobs/history">Job History</Link>
+              </li>
+            </ul>
+
+            <div className="logout">Log out</div>
+          </nav>
+        </aside>
+
+        {/* Main content */}
+        <main className="main-content">
+          <header className="topbar">
+            <span>(Some Text here)</span>
+          </header>
+
+          <section className="content">
+            <Routes>
+              <Route path="/" element={<AmplifyHome />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/my-account" element={<MyAccount />} />
+              <Route path="/my-jobs" element={<MyJobs />} />
+              <Route path="/my-jobs/status" element={<JobStatus />} />
+              <Route path="/my-jobs/history" element={<JobHistory />} />
+            </Routes>
+          </section>
+        </main>
       </div>
-
-      <h1>Vite + React</h1>
-      <h2 style={{ color: '#42b983' }}>{message}</h2> {/* Displays backend message */}
-
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </BrowserRouter>
   )
 }
 
