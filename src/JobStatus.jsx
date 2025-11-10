@@ -17,11 +17,15 @@ export default function JobStatus() {
     
    
       <div className="stats-grid">
+
+        
+      <button className="submit-btn">Submit New Job</button>
+        
         <div className="stat-card">
-          <h3>Success</h3>
+          <h3>Completed</h3>
           <hr />
           <h1>36</h1>
-          <p>^ 12% from yesterday</p>
+          
         </div>
         <div className="stat-card">
           <h3>In Progress</h3>

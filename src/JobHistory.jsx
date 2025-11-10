@@ -2,6 +2,7 @@ import wrongDB from "./assets/wrong_db.jpeg";
 import "./App.css";
 import { useState } from "react";
 import "./JobHistory.css";
+import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
 
 
 export default function JobHistory() {
@@ -53,9 +54,9 @@ export default function JobHistory() {
               <span className="job-file">{job.file}</span>
               <span className="job-date">{formatDate(job.date)}</span>
               <span className="status-icon">
-                {job.status === "success" && "✅"}
-                {job.status === "error" && "❌"}
-                {job.status === "pending" && "⏳"}
+                {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
+                {job.status === "error" &&  <FaTimesCircle color="red" size="1.2em" />}
+                {job.status === "pending" && <FaClock color="orange" size="1.2em" />}
               </span>
             </div>
           ))}
