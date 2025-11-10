@@ -1,18 +1,55 @@
-import NotMe from "./assets/hiding-into-bush.gif";
-import "./App.css";
+import React from "react";
+import "./Dashboard.css";
 
 export default function Dashboard() {
-  return (
-    <div className="dashboard-container">
-      <h1>Dashboard</h1>
-      <p>Sorry in advance for whoever has to set up this page...</p>
+  const jobHistory = [
+    { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success" },
+    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "error" },
+    { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending" },
+  ];
 
-      <div className="dashboard-image-wrapper">
-        <img src={NotMe} alt="NotMe" className="dashboard-image" />
+  return (
+    <div className="dashboard">
+      <button className="submit-btn">Submit New Job</button>
+
+      <div className="stats-grid">
+        <div className="stat-card">
+          <h3>Total Jobs Today</h3>
+          <hr />
+          <h1>36</h1>
+          <p>^ 12% from yesterday</p>
+        </div>
+        <div className="stat-card">
+          <h3>Processing</h3>
+          <hr />
+          <h1>33</h1>
+          <p>Jobs in Progress</p>
+        </div>
+        <div className="stat-card">
+          <h3>Needs Review</h3>
+          <hr />
+          <h1>3</h1>
+          <p>Retry Attempts: 3</p>
+        </div>
       </div>
 
-      {/* Big black text under image */}
-      <h2 className="dashboard-bigtext">Just kidding... Maybe</h2>
+      <div className="history-section">
+        <h2>View Recent Job History:</h2>
+        <div className="history-list">
+          {jobHistory.map((job) => (
+            <div key={job.id} className="history-item">
+              <div className={`status-dot ${job.status}`}></div>
+              <span className="job-id">{job.id}</span>
+              <span className="job-file">{job.file}</span>
+              <span className="status-icon">
+                {job.status === "success" && "✅"}
+                {job.status === "error" && "❌"}
+                {job.status === "pending" && "⏳"}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
