@@ -1,0 +1,133 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to bottom, #dff2ff, #f9fcff);
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* --- Button --- */
+.submit-btn {
+  background-color: #38a9ff;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #1b8de2;
+}
+
+/* --- Stats Grid --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stat-card hr {
+  width: 50%;
+  margin: 0.5rem auto;
+  border: 1px solid #000;
+}
+
+.stat-card h1 {
+  font-size: 2.2rem;
+  margin: 0.5rem 0;
+}
+
+.stat-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* --- History Section --- */
+.history-section {
+  background-color: #64b5f6;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  color: white;
+}
+
+.history-section h2 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 50px;
+  padding: 0.6rem 1rem;
+  color: black;
+  justify-content: space-between;
+}
+
+.status-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.status-dot.success {
+  background-color: green;
+}
+
+.status-dot.error {
+  background-color: brown;
+}
+
+.status-dot.pending {
+  background-color: goldenrod;
+}
+
+.job-id {
+  flex: 1;
+  font-weight: 600;
+}
+
+.job-file {
+  flex: 3;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.status-icon {
+  font-size: 1.3rem;
+  margin-left: auto;
+}
