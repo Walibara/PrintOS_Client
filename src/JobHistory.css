@@ -1,0 +1,89 @@
+
+.job-date {
+  flex: 1;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #555;
+  background-color: #f8f9fa;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+  margin-right: 15px;
+  font-weight: 500;
+}
+
+
+.status-icon {
+  font-size: 1.3rem;
+  margin-left: 10px;
+  min-width: 30px;
+}
+
+.paginations {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+
+.pagination-button {
+  background-color: #38a9ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #1b8de2;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.page-number {
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.page-number:hover {
+  background-color: #e0e0e0;
+}
+
+.page-number.active {
+  background-color: #38a9ff;
+  color: white;
+}
+
+
+.job-history-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 60vh; 
+}
+

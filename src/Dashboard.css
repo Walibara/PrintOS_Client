@@ -95,6 +95,7 @@
   padding: 0.6rem 1rem;
   color: black;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .status-dot {
@@ -131,3 +132,5 @@
   font-size: 1.3rem;
   margin-left: auto;
 }
+
+
