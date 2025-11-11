@@ -1,0 +1,50 @@
+/* Add to your existing JobStatus.css */
+.stat-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 5px 0;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+  gap: 5px;
+}
+
+.job-id {
+  font-weight: bold;
+  min-width: 80px;
+  color: black;
+}
+
+.job-file {
+  flex: 1;
+  font-size: 0.9em;
+  word-break: break-word;
+  color: black;
+}
+
+.job-date {
+  color: #666;
+  font-size: 0.8em;
+  min-width: 80px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.success { background-color: green; }
+.status-dot.pending { background-color: orange; }
+.status-dot.error { background-color: red; }
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
