@@ -33,12 +33,13 @@
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 15px;
+  height: 15px  ;
   border-radius: 50%;
 }
 
 .status-dot.success { background-color: green; }
 .status-dot.pending { background-color: orange; }
 .status-dot.error { background-color: red; }
+
 

@@ -1,0 +1,130 @@
+.view-receipt-btn, .rerun-job-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.view-receipt-btn {
+  background-color: #92c6fe;
+  color: white;
+}
+
+.view-receipt-btn:hover {
+  background-color: #0056b3;
+}
+
+.rerun-job-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.rerun-job-btn:hover {
+  background-color: #545b62;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  color: black;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-close-btn:hover {
+  color: #333;
+}
+
+.receipt-details {
+  margin-bottom: 20px;
+}
+
+.receipt-details p {
+  margin: 10px 0;
+  padding: 5px 0;
+}
+
+.receipt-amount {
+  border-top: 2px solid #333;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.print-receipt-btn, .download-receipt-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.print-receipt-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.print-receipt-btn:hover {
+  background-color: #218838;
+}
+
+.download-receipt-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.download-receipt-btn:hover {
+  background-color: #138496;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}

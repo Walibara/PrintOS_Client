@@ -2,8 +2,14 @@ import unemployed from "./assets/unemployed.jpg";
 import "./App.css";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import "./JobStatus.css";
+import ActionButton from "./ActionButton.jsx"; 
+import { useState } from "react";
+
 
 export default function JobStatus() {
+
+  const[openModal, setOpenModal] = useState(false);
+  const[selectedJob, setSelectedJob] = useState(null);
 
       const jobHistory = [
     { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-02-15" },
@@ -25,6 +31,22 @@ export default function JobStatus() {
   const inProgressJobsList = jobHistory.filter((job) => job.status === "pending");
   const failedJobsList = jobHistory.filter((job) => job.status === "error");
 
+
+  // handlers for action buttons
+  const handleViewReceipt = (job) => {
+    setSelectedJob(job);
+    setOpenModal(true);
+  }
+
+  const handleRerunJob = (job) => {
+    console.log(`Rerunning job ID: ${job.id}`);
+    alert(`Rerunning job ID: ${job.id}`);
+  }
+
+  const closeModal = () => {
+    setOpenModal(false);
+    setSelectedJob(null);
+  }
 
   
   return (
@@ -52,6 +74,11 @@ export default function JobStatus() {
                 <div className={`status-dot ${job.status}`}></div>
                 <span className="job-id">{job.id}</span>
                 <span className="job-file">{job.file}</span> 
+                <ActionButton 
+                  job={job}
+                  onViewReceipt={handleViewReceipt}
+                  onRerunJob={handleRerunJob}
+              />
                 <span className="job-date">{job.date}</span>
                 <FaCheckCircle color="green" size="1.2em" />
               </div>
@@ -67,7 +94,12 @@ export default function JobStatus() {
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
                 <span className="job-id">{job.id}</span>
-                <span className="job-file">{job.file}</span> 
+                <span className="job-file">{job.file}</span>
+                <ActionButton 
+                job={job}
+                  onViewReceipt={handleViewReceipt}
+                  onRerunJob={handleRerunJob}
+              /> 
                 <span className="job-date">{job.date}</span>
                 <FaClock color="orange" size="1.2em" />
               </div>
@@ -84,6 +116,11 @@ export default function JobStatus() {
                 <div className={`status-dot ${job.status}`}></div>
                 <span className="job-id">{job.id}</span>
                 <span className="job-file">{job.file}</span> 
+                <ActionButton 
+                job={job}
+                  onViewReceipt={handleViewReceipt}
+                  onRerunJob={handleRerunJob}
+              />
                 <span className="job-date">{job.date}</span>
                 <FaTimesCircle color="red" size="1.2em" />
               </div>
@@ -91,7 +128,36 @@ export default function JobStatus() {
           </div>
         </div>
 
-    
+
+        {/*  The Modal for Receipt */}
+
+        {openModal&& (
+          <div className="modal-overlay" onClick={closeModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+              <h2>Receipt for {selectedJob.id}</h2>
+              <button className="close-modal-btn" onClick={closeModal}>X</button>
+            </div>
+            <div className="receipt-details">
+              {selectedJob && (
+                <>
+                  <p><strong>Job ID:</strong> {selectedJob.id}</p>
+                  <p><strong>File:</strong> {selectedJob.file}</p>
+                  <p><strong>Status:</strong> {selectedJob.status}</p>
+                  <p><strong>Date:</strong> {selectedJob.date}</p>
+                <div className="receipt-amount">
+                  <p><strong>Amount Paid:</strong> $50.00</p>
+                </div>
+            </>
+            )}
+          </div>
+          <div className="modal-footer">
+            <button className="print-receipt-btn">Print Receipt</button>
+            <button className="download-receipt-btn">Download PDF</button>
+          </div>
+          </div>
+          </div>
+        )}
     </div>
 
   );
