@@ -80,7 +80,7 @@ export default function JobStatus() {
                   onRerunJob={handleRerunJob}
               />
                 <span className="job-date">{job.date}</span>
-                <FaCheckCircle color="green" size="1.2em" />
+                <FaCheckCircle color="green"style={{ marginRight: "60px" }} size="1.9em"/>
               </div>
             ))}
           </div>
@@ -101,7 +101,7 @@ export default function JobStatus() {
                   onRerunJob={handleRerunJob}
               /> 
                 <span className="job-date">{job.date}</span>
-                <FaClock color="orange" size="1.2em" />
+                <FaClock color="orange" style={{ marginRight: "60px" }} size="1.9em" />
               </div>
             ))}
           </div>
@@ -122,7 +122,7 @@ export default function JobStatus() {
                   onRerunJob={handleRerunJob}
               />
                 <span className="job-date">{job.date}</span>
-                <FaTimesCircle color="red" size="1.2em" />
+                <FaTimesCircle color="red" style={{ marginRight: "60px" }} size="1.9em" />
               </div>
             ))}
           </div>

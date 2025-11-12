@@ -30,7 +30,7 @@
 .job-date {
   color: #666;
   font-size: 0.5em;
-  max-width: 90px;
+  max-width: 100px;
 }
 
 .status-dot {
@@ -40,8 +40,8 @@
   margin-left: 60px;
 }
 
-.status-dot.success { background-color: green; }
-.status-dot.pending { background-color: orange; }
-.status-dot.error { background-color: red; }
+.status-dot.success { background-color: green; size: 1.9em; }
+.status-dot.pending { background-color: orange; size: 1.9em; }
+.status-dot.error { background-color: red; size: 1.9em; }
 
 
