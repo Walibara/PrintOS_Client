@@ -12,9 +12,6 @@ const ActionButton = ({job, onViewReceipt, onRerunJob}) => {
     }
   }
 
-
-
-
     // text to display on the button based on job status
   const buttonText = () => {
 

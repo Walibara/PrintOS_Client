@@ -3,13 +3,14 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
-  margin-left: 10px;
+  font-size: 1.2em;
+  margin-right: 50px;
+  max-width: 200px;
   transition: all 0.3s ease;
 }
 
 .view-receipt-btn {
-  background-color: #92c6fe;
+  background-color: #71a6e0;
   color: white;
 }
 
@@ -120,11 +121,4 @@
 
 .download-receipt-btn:hover {
   background-color: #138496;
-}
-
-.job-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
 }
