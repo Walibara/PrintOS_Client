@@ -1,5 +1,6 @@
 import React from "react";
 import "./Dashboard.css";
+import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
 
 export default function Dashboard() {
   const jobHistory = [
@@ -42,9 +43,9 @@ export default function Dashboard() {
               <span className="job-id">{job.id}</span>
               <span className="job-file">{job.file}</span>
               <span className="status-icon">
-                {job.status === "success" && "✅"}
-                {job.status === "error" && "❌"}
-                {job.status === "pending" && "⏳"}
+                {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
+                {job.status === "error" && <FaTimesCircle color="red" size="1.2em" />}
+                {job.status === "pending" && <FaClock color="orange" size="1.2em" />}
               </span>
             </div>
           ))}
