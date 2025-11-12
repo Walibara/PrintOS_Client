@@ -51,7 +51,7 @@ export default function JobStatus() {
   
   return (
     <div className="job-status-container">
-      <h1>Job Status</h1>
+      <h1 style={{ color: "black" }}>Job Status</h1>
       <div className="job-status-image-wrapper">
         <img
           src={unemployed}
@@ -60,7 +60,7 @@ export default function JobStatus() {
         />
       </div>
 
-      <h2 className="job-status-bigtext">"Ai is NOT taking our JOBS!! its OUTSOURCING!!!" ...  I scream as they drag me to the asylum. </h2>
+      <h2 className="job-status-bigtext" style={{color:"black"}}>"Ai is NOT taking our JOBS!! its OUTSOURCING!!!" ...  I scream as they drag me to the asylum. </h2>
  
       <button className="submit-btn">Submit New Job</button>
         
