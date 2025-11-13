@@ -4,6 +4,7 @@ import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import "./JobStatus.css";
 import ActionButton from "./ActionButton.jsx"; 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export default function JobStatus() {
@@ -48,6 +49,8 @@ export default function JobStatus() {
     setSelectedJob(null);
   }
 
+  const navigate = useNavigate();
+
   
   return (
     <div className="job-status-container">
@@ -61,8 +64,9 @@ export default function JobStatus() {
       </div>
 
       <h2 className="job-status-bigtext" style={{color:"black"}}>"Ai is NOT taking our JOBS!! its OUTSOURCING!!!" ...  I scream as they drag me to the asylum. </h2>
- 
-      <button className="submit-btn">Submit New Job</button>
+
+      <button className="submit-btn" onClick={() => navigate("/job-submission")}>Submit New Job
+      </button>
         
 
         {/*  Completed Jobs */}
