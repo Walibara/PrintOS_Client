@@ -2,6 +2,7 @@
     font-size: 3rem;
     font-weight: bold;
     margin-top: 1.5rem;
+    color:black;
 }
 
 /*Container around the three div classes that have:
@@ -12,6 +13,7 @@ personal information, billing transactions, and settings*/
     justify-content: center;
     border-radius: 10px; 
     gap:2%; 
+    color:black;
 }
 
 /*The actual personal info, billing transactions, etc. containers.*/
@@ -29,6 +31,7 @@ personal information, billing transactions, and settings*/
     font-weight: bold; 
     border: 0.2rem solid rgba(0, 51, 102, 0.2);
     box-shadow: 0 4px 8px rgba(0, 51, 102, 0.5);
+    color:black;
 }
 
 /*Hidden Container for Personal Information*/
@@ -38,6 +41,7 @@ personal information, billing transactions, and settings*/
     border-radius: 10px; 
     width: 100%; 
     justify-content: center;
+    color:black;
 }
 
 /*Personal info container*/
