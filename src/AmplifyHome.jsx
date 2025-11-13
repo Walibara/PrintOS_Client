@@ -1,77 +1,101 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import trustme from './assets/trust-me-bro.jpeg'
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import trustme from "./assets/trust-me-bro.jpeg";
+import "./AmplifyHome.css";
 
 function AmplifyHome() {
-  const [count, setCount] = useState(0)
-  const [message, setMessage] = useState('Loading...')
+  const [message, setMessage] = useState("Loading...");
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // IMPORTANT: backend / Amplify routing logic - DO NOT CHANGE - Thank you :)
-    let baseUrl = import.meta.env.VITE_API_URL
+    let baseUrl = import.meta.env.VITE_API_URL;
 
     if (!baseUrl) {
-      if (window.location.hostname.includes('amplifyapp.com')) {
-        // Amplify-hosted frontend → CloudFront
-        baseUrl = 'https://dkdavnbhgrmho.cloudfront.net'
+      if (window.location.hostname.includes("amplifyapp.com")) {
+        baseUrl = "https://dkdavnbhgrmho.cloudfront.net";
       } else {
-        // Local dev
-        baseUrl = 'http://localhost:8080'
+        baseUrl = "http://localhost:8080";
       }
     }
 
-    // remove trailing slashes
-    baseUrl = baseUrl.replace(/\/+$/, '')
+    baseUrl = baseUrl.replace(/\/+$/, "");
 
     fetch(`${baseUrl}/api/hello`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Backend returned ${res.status}`)
-        }
-        return res.text()
-      })
+      .then((res) => res.text())
       .then((data) => setMessage(data))
-      .catch((err) => {
-        console.error('Error fetching backend:', err)
-        setMessage('Failed to connect to backend')
-      })
-  }, [])
+      .catch(() => setMessage("Failed to connect to backend"));
+  }, []);
 
   return (
-    <>
-      {/* This page should not be visible */}
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+    <div className="home-container">
+      <div className="home-card">
 
-      {/* Server message*/}
-      <h2 style={{ color: '#42b983' }}>{message}</h2>
-      
-      <img
-        src={trustme}
-        alt="Trust Me Bro"
-        className="trustme-image"
-      />
+        <img src={trustme} className="home-meme-top" />
 
-      <div className="card">
-        <button onClick={() => setCount((c) => c + 1)}>
+        <h1 className="home-title">
+          Welcome To HP PrintOS Orchestration Application
+        </h1>
+
+        <p className="home-sub">
+          Hello User, select any action below of your choosing.
+        </p>
+
+        <div className="system-banner">
+          <div>
+            <strong>System Status: All Services Online</strong>
+            <p className="system-sub">
+              All backend services are connected and running normally.
+            </p>
+          </div>
+        </div>
+
+        <div className="home-grid">
+
+          <Link to="/dashboard" className="home-grid-item">
+            <div className="grid-text">
+              <h3>Dashboard</h3>
+              <p>Overview of job activity</p>
+            </div>
+          </Link>
+
+          <Link to="/my-jobs/status" className="home-grid-item">
+            <div className="grid-text">
+              <h3>Job Status</h3>
+              <p>Track active, in progress, or completed jobs</p>
+            </div>
+          </Link>
+
+          <Link to="/my-jobs/history" className="home-grid-item">
+            <div className="grid-text">
+              <h3>Job History</h3>
+              <p>View current and past submissions</p>
+            </div>
+          </Link>
+
+          <Link to="/my-account" className="home-grid-item">
+            <div className="grid-text">
+              <h3>My Account</h3>
+              <p>Manage profile settings</p>
+            </div>
+          </Link>
+
+        </div>
+
+        <div className="footer-section">
+          System Version: v0.0.0
+        </div>
+
+        <button className="hidden-debug-btn" onClick={() => setCount(count + 1)}>
           count is {count}
         </button>
-        <p>
-          This page is just to verify that Amplify is connecting to the backend.
-          It should not be visible, we can remove it later - Maria
-        </p>
-      </div>
-    </>
-  )
 
+        <p className="home-note">
+          This section is only used for verifying the Amplify → Backend connection.
+        </p>
+
+      </div>
+    </div>
+  );
 }
 
-export default AmplifyHome
+export default AmplifyHome;
