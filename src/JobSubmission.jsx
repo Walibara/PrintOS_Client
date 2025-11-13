@@ -8,7 +8,7 @@ function JobSubmission() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // later this will call your backend
+    // later this will call the backend
     console.log("Submitting job with type:", jobType);
     alert(`Job submitted as: ${jobType}`);
   };
