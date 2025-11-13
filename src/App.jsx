@@ -59,7 +59,7 @@ function App() {
         {/* Main content */}
         <main className="main-content">
           <header className="topbar">
-            <span>(Some Text here)</span>
+            <span>Welcome, John Doe</span>
           </header>
 
           <section className="content">

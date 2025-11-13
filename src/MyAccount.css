@@ -1,0 +1,75 @@
+.account-title{
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+}
+
+/*Container around the three div classes that have:
+personal information, billing transactions, and settings*/
+.flex-container {
+    margin-top: 1rem; 
+    display: flex;
+    justify-content: center;
+    border-radius: 10px; 
+    gap:2%; 
+}
+
+/*The actual personal info, billing transactions, etc. containers.*/
+.flex-container div {
+    display: flex;
+    background-color: white;
+    border-radius: 10px; 
+    justify-content: center;
+    margin: 10px;
+    padding: 20px; 
+    font-size: 30px;
+    width: 16rem;
+    height: 7rem; 
+    font-size: 1.5rem;
+    font-weight: bold; 
+    border: 0.2rem solid rgba(0, 51, 102, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 51, 102, 0.5);
+}
+
+/*Hidden Container for Personal Information*/
+.info-hidden {
+    margin-top: 1rem;
+    display: flex;
+    border-radius: 10px; 
+    width: 100%; 
+    justify-content: center;
+}
+
+/*Personal info container*/
+.info-hidden div {
+    display: flex;
+    background-color: white;
+    border-radius: 10px; 
+    flex-direction: column;
+    align-items: right;
+    margin: 10px;
+    padding: 20px; 
+    width: 60%; 
+    height: 20rem; 
+    font-size: .9rem;
+    border: 0.2rem solid rgba(0, 51, 102, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 51, 102, 0.5);
+}
+
+/*Font color for element containers: personal info, billing trans, settings*/
+.info-hidden div h2 {
+    color:  #003366;
+}
+
+/*Containers first centering*/
+.personal-information, .billing-transactions, .settings {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+/*Hover over these containers for the first time*/
+.personal-information:hover, .billing-transactions:hover, .settings:hover {
+    background-color: #38a9ff; 
+    color: white; 
+}
