@@ -1,6 +1,7 @@
 import React from "react";
 import "./Dashboard.css";
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const jobHistory = [
@@ -9,9 +10,16 @@ export default function Dashboard() {
     { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending" },
   ];
 
+  const navigate = useNavigate();
+
   return (
     <div className="dashboard">
-      <button className="submit-btn">Submit New Job</button>
+      <button 
+        className="submit-btn"
+        onClick={() => navigate("/job-submission")}
+      >
+        Submit New Job
+      </button>
 
       <div className="stats-grid">
         <div className="stat-card">

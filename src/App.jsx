@@ -13,6 +13,8 @@ import MyAccount from './MyAccount.jsx'
 import MyJobs from './MyJobs.jsx'
 import JobStatus from './JobStatus.jsx'
 import JobHistory from './JobHistory.jsx'
+import JobSubmission from './JobSubmission.jsx'
+
 
 function App() {
   return (
@@ -59,7 +61,7 @@ function App() {
         {/* Main content */}
         <main className="main-content">
           <header className="topbar">
-            <span>Welcome, John Doe</span>
+            <span>(Some Text here)</span>
           </header>
 
           <section className="content">
@@ -70,6 +72,9 @@ function App() {
               <Route path="/my-jobs" element={<MyJobs />} />
               <Route path="/my-jobs/status" element={<JobStatus />} />
               <Route path="/my-jobs/history" element={<JobHistory />} />
+              <Route path="/my-jobs/submit" element={<JobSubmission />} />
+              <Route path="/job-submission" element={<JobSubmission />} />
+
             </Routes>
           </section>
         </main>
