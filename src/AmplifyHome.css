@@ -1,0 +1,146 @@
+/* Main container */
+.home-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+/* Page card */
+.home-card {
+  width: 70%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
+  padding: 40px 50px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Meme */
+.home-meme-top {
+  width: 130px;
+  border-radius: 8px;
+  margin: 0 auto 10px auto;
+  display: block;
+}
+
+/* Title */
+.home-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #0a2a43;
+}
+
+.home-sub {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* System status banner */
+.system-banner {
+  background: #e9f5ff;
+  border-left: 5px solid #0094ff;
+  padding: 15px 20px;
+  border-radius: 6px;
+  text-align: left;
+  width: 80%;
+  margin: 0 auto 35px auto;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: #0a2a43;
+}
+
+.system-banner * {
+  color: #0a2a43 !important;
+}
+
+.system-icon {
+  font-size: 22px;
+  color: #0094ff !important;
+  margin-top: 2px;
+}
+
+.system-sub {
+  margin: 0;
+  font-size: 13px;
+  color: #555 !important;
+}
+
+/* Grid layout */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-top: 15px;
+}
+
+/* Buttons (cards) */
+.home-grid-item {
+  background: #f5f8ff;
+  border-radius: 10px;
+  padding: 22px 28px;
+  border: 1px solid #e1e8f5;
+  transition: 0.2s ease;
+  text-decoration: none;
+  color: #0a2a43;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Text block — FIXED INDENTATION */
+.grid-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.grid-text h3 {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 17px;
+  font-weight: 600;
+  color: #0a2a43;
+}
+
+.grid-text p {
+  margin: 3px 0 0 0 !important;
+  padding: 0 !important;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Hover effect */
+.home-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Footer */
+.footer-section {
+  margin-top: 40px;
+  color: #666;
+}
+
+.hidden-debug-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.home-note {
+  margin-top: 5px;
+  color: #888;
+  font-size: 12px;
+}
