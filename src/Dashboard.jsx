@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const jobHistory = [
     { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success" },
-    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "error" },
+    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "success" },
     { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending" },
   ];
 
