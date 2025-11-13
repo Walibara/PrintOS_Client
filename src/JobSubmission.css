@@ -19,7 +19,6 @@
   gap: 80px;
 }
 
-/* Left: preview card */
 
 .job-preview-card {
   background-color: #ffffff;
@@ -48,7 +47,6 @@
   font-size: 18px;
 }
 
-/* Right: form */
 
 .job-form {
   display: flex;
@@ -74,7 +72,6 @@
   border-radius: 4px;
 }
 
-/* Submit button – styled to match your blue button mockup */
 
 .job-submit-button {
   margin-top: 10px;
