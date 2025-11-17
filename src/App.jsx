@@ -14,6 +14,8 @@ import MyJobs from './MyJobs.jsx'
 import JobStatus from './JobStatus.jsx'
 import JobHistory from './JobHistory.jsx'
 import JobSubmission from './JobSubmission.jsx'
+import FileUpload from './FileUpload.jsx'
+import FileRendering from './FileRendering.jsx'
 
 
 function App() {
@@ -47,6 +49,9 @@ function App() {
             <div className="nav-item">My Jobs</div>
             <ul className="nav-submenu">
               <li>
+                <Link to="/file-upload">Job Submission</Link>
+              </li>
+              <li>
                 <Link to="/my-jobs/status">Job Status</Link>
               </li>
               <li>
@@ -61,7 +66,7 @@ function App() {
         {/* Main content */}
         <main className="main-content">
           <header className="topbar">
-            <span>(Some Text here)</span>
+            <span>(Presentation Demo - Backend not functional yet)</span>
           </header>
 
           <section className="content">
@@ -74,6 +79,8 @@ function App() {
               <Route path="/my-jobs/history" element={<JobHistory />} />
               <Route path="/my-jobs/submit" element={<JobSubmission />} />
               <Route path="/job-submission" element={<JobSubmission />} />
+              <Route path="/file-upload" element={<FileUpload/>}/>
+              <Route path="/file-rendering" element={<FileRendering/>}/> 
 
             </Routes>
           </section>

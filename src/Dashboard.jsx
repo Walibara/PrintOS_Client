@@ -16,7 +16,7 @@ export default function Dashboard() {
     <div className="dashboard">
       <button 
         className="submit-btn"
-        onClick={() => navigate("/job-submission")}
+        onClick={() => navigate("/file-upload")}
       >
         Submit New Job
       </button>

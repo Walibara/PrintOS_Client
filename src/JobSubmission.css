@@ -1,78 +1,140 @@
+/* Main page layout – centers the job submission card on a soft blue background */
 .job-submission-page {
-  width: 100%;
-  height: 100%;
-  padding: 40px 60px;
-  box-sizing: border-box;
-  background: linear-gradient(#e2f1ff, #ffffff);
-}
-
-.job-submission-title {
-  font-size: 32px;
-  margin: 0 0 30px 0;
-  color: #00529b; /* HP-ish blue */
-}
-
-.job-submission-content {
+  flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 80px;
+  align-items: flex-start;
+  padding: 40px;
+  background: linear-gradient(180deg, #f5f8ff 0%, #ffffff 60%);
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
+/* Main card that holds the preview + job type form */
+.job-submission-card {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 1100px;
+  width: 100%;
+  padding: 32px 40px 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
+}
 
+/* Big title at the top of the job submission card */
+.job-submission-title {
+  font-size: 28px;
+  margin: 0 0 6px;
+  color: #0a2a43;
+}
+
+/* Short explanation line under the title */
+.job-submission-subtitle {
+  margin: 0 0 20px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Layout: left side = file preview, right side = job type form */
+.job-submission-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+  margin-top: 8px;
+}
+
+/* Card around the “Your file” preview */
 .job-preview-card {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background-color: #f5f8ff;
+  padding: 22px 22px 18px;
+  border-radius: 18px;
+  border: 1px solid #e1e8f5;
   text-align: center;
 }
 
+/* Inner box that holds the front + back images */
 .job-preview-inner {
-  background-color: #f2f2f2;
-  padding: 25px;
+  background-color: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #dde5f3;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+/* Single “page” block for each side of the card (Front / Back) */
+.job-preview-page {
+  background-color: #f7f9ff;
+  border-radius: 12px;
+  padding: 12px 12px 10px;
+}
+
+/* Preview image for each side of the card */
 .job-preview-image {
   display: block;
-  width: 260px;
-  max-width: 100%;
-  margin: 0 auto 15px auto;
-  object-fit: contain;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto 6px auto;
+  object-fit: cover;
 }
 
-.job-preview-caption {
-  margin-top: 15px;
+/* Label under each preview image (“Front” / “Back”) */
+.job-preview-page-label {
+  font-size: 12px;
   font-weight: 600;
-  font-size: 18px;
+  color: #4a5568;
+  text-align: center;
 }
 
+/* Small caption under the whole preview (“Your file”) */
+.job-preview-caption {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #0a2a43;
+}
 
+/* Right-hand side form that lets the user pick the job type */
 .job-form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+  padding: 18px 18px 20px;
+  border-radius: 18px;
+  border: 1px solid #e3e7f0;
+  background: #f5f8ff;
 }
 
+/* Label + select combo for the job type dropdown */
 .job-form-label {
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  font-size: 18px;
-  color: #000000;
+  font-size: 14px;
+  color: #0a2a43;
+  margin-bottom: 16px;
 }
 
+/* Dropdown where the user chooses Imposition, Proofing, etc. */
 .job-type-select {
   margin-top: 8px;
-  min-width: 260px;
-  padding: 8px 10px;
-  font-size: 16px;
-  border: 2px solid #000000;
-  border-radius: 4px;
+  padding: 9px 10px;
+  font-size: 13px;
+  border-radius: 10px;
+  border: 1px solid #c5d3ea;
+  color: #2b3850;
+  background: #ffffff;
 }
 
+/* Row that holds the Go Back + Submit buttons */
+.job-button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
 
+/* Optional: if you ever use a dedicated job-submit button class
+   (right now your JSX uses .primary-button / .secondary-button instead) */
 .job-submit-button {
   margin-top: 10px;
   padding: 10px 40px;
@@ -81,10 +143,18 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  background-color: #33a1ff;
+  background-color: #0094ff;
   color: #ffffff;
 }
 
 .job-submit-button:hover {
   filter: brightness(0.95);
+}
+
+/* Tiny note at the very bottom of the card */
+.job-submission-footer {
+  margin: 0;
+  font-size: 11px;
+  color: #888;
+  text-align: right;
 }
