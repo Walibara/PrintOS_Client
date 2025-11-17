@@ -1,0 +1,245 @@
+/* Main page layout – centers the upload card on a soft blue background */
+.file-upload-page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  background: linear-gradient(180deg, #f5f8ff 0%, #ffffff 60%);
+  overflow-y: auto;
+}
+
+/* Main upload card that holds the two panels (new upload + previous files) */
+.file-upload-card {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 1100px;
+  width: 100%;
+  padding: 32px 40px 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
+}
+
+/* Big title at the top of the upload card */
+.file-upload-title {
+  font-size: 28px;
+  margin: 0 0 6px;
+  color: #0a2a43;
+}
+
+/* Short description under the title */
+.file-upload-subtitle {
+  margin: 0 0 20px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Small status pill that says things like “Ready to receive print jobs” */
+.file-upload-status-banner {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #e9f5ff; /* matches system-banner background feel */
+  color: #0a2a43;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+/* Little green dot inside the status banner */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #21c45d;
+  margin-right: 8px;
+}
+
+/* Two-column layout: left = new upload, right = previous files */
+.file-upload-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+/* Panel styling for each side (new upload panel / previous files panel) */
+.file-upload-section {
+  border-radius: 18px;
+  border: 1px solid #e1e8f5;
+  padding: 18px 18px 20px;
+  background: #f5f8ff;
+}
+
+/* Section titles (e.g., New Upload, Previously Uploaded) */
+.file-upload-section h2 {
+  font-size: 18px;
+  margin: 0 0 4px;
+  color: #0a2a43;
+}
+
+/* Short helpful text under each panel title */
+.section-description {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #6a7484;
+}
+
+/* The “click or drag to upload” area */
+.upload-dropzone {
+  border: 2px dashed #c5d3ea;
+  border-radius: 16px;
+  padding: 22px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  background: #ffffff;
+  display: block;
+}
+
+/* Hover state for the dropzone so it feels clickable */
+.upload-dropzone:hover {
+  border-color: #0094ff;
+  background: #f4f6ff;
+}
+
+/* Hides the real file input so we can style the label instead */
+.hidden-file-input {
+  display: none;
+}
+
+/* Main line of text inside the dropzone */
+.dropzone-title {
+  margin: 0 0 2px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0a2a43;
+}
+
+/* Smaller helper text under the dropzone title */
+.dropzone-subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: #7a8595;
+}
+
+/* Container for file name + size after user selects a file */
+.file-info {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* Wrapper for the file name and meta info lines */
+.file-info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* File name text */
+.file-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0a2a43;
+}
+
+/* File size text */
+.file-meta {
+  font-size: 12px;
+  color: #7a8595;
+  margin-top: 2px;
+}
+
+/* Container for the image preview */
+.file-preview {
+  margin-top: 14px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #dde5f3;
+  background: #ffffff;
+  max-height: 220px;
+}
+
+/* Preview image itself (for now set to 50% width for demo) */
+.file-preview img {
+  display: block;
+  width: 50%;
+  object-fit: cover;
+}
+
+/* Shared button base styles for primary and secondary buttons */
+.primary-button,
+.secondary-button {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.05s ease, opacity 0.2s ease;
+}
+
+/* Main action button (e.g., Continue / Submit) */
+.primary-button {
+  background: #0094ff; /* aligns with system-banner accent blue */
+  color: #ffffff;
+}
+
+/* Hover state for the main action button */
+.primary-button:hover:not(:disabled) {
+  background: #0078d6;
+  transform: translateY(-1px);
+}
+
+/* Secondary button for softer actions (e.g., Go Back) */
+.secondary-button {
+  background: #eef3ff;
+  color: #23408c;
+}
+
+/* Hover state for the secondary button */
+.secondary-button:hover:not(:disabled) {
+  background: #dde6ff;
+  transform: translateY(-1px);
+}
+
+/* Disabled state styling for both button types */
+.primary-button:disabled,
+.secondary-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Dropdown select styling for "Previously Uploaded" files */
+.file-select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid #c5d3ea;
+  font-size: 13px;
+  color: #2b3850;
+  background: #ffffff;
+}
+
+/* Tiny footer note at the very bottom of the upload card */
+.file-upload-footer {
+  margin: 0;
+  font-size: 11px;
+  color: #888;
+  text-align: right;
+}
+
+/* Responsive layout: stack the two columns on smaller screens */
+@media (max-width: 900px) {
+  .file-upload-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-upload-card {
+    padding: 24px;
+  }
+
+  .file-upload-page {
+    padding: 24px 16px;
+  }
+}
