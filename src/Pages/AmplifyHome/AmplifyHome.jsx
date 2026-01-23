@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import trustme from "../../Assets/trust-me-bro.jpeg";
+import trustme from "../../assets/trust-me-bro.jpeg";
 import "./AmplifyHome.css";
 
 function AmplifyHome() {
