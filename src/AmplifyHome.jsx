@@ -46,6 +46,9 @@ function AmplifyHome() {
             <p className="system-sub">
               All backend services are connected and running normally.
             </p>
+            <p className="api-status">
+              Backend says: {message}
+            </p>
           </div>
         </div>
 
