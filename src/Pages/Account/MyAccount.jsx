@@ -1,4 +1,4 @@
-import "./App.css";
+import "../App/App.css";
 import "./MyAccount.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMoneyCheckDollar, faGear } from '@fortawesome/free-solid-svg-icons';
