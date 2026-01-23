@@ -23,8 +23,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./JobSubmission.css";
-import BennyFront from "../../Assets/BennyFront.png";
-import BennyBack from "../../Assets/BennyBack.png";
+import BennyFront from "../../assets/BennyFront.png";
+import BennyBack from "../../assets/BennyBack.png";
 
 function JobSubmission() {
   const navigate = useNavigate();
