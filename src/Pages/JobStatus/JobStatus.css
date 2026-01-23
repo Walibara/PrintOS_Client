@@ -43,5 +43,3 @@
 .status-dot.success { background-color: green; size: 1.9em; }
 .status-dot.pending { background-color: orange; size: 1.9em; }
 .status-dot.error { background-color: red; size: 1.9em; }
-
-

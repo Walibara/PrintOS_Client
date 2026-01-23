@@ -1,8 +1,8 @@
-import unemployed from "./assets/unemployed.jpg";
-import "./App.css";
+import unemployed from "../../assets/unemployed.jpg";
+import "../App/App.css";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import "./JobStatus.css";
-import ActionButton from "./ActionButton.jsx"; 
+import ActionButton from "../ActionButton/ActionButton.jsx"; 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

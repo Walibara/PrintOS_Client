@@ -6,16 +6,16 @@ import {
 } from 'react-router-dom'
 
 import './App.css'
-import hpLogo from './assets/HP_logo_2012.svg'
-import AmplifyHome from './AmplifyHome.jsx'// we can remove this later
-import Dashboard from './Dashboard.jsx'
-import MyAccount from './MyAccount.jsx'
-import MyJobs from './MyJobs.jsx'
-import JobStatus from './JobStatus.jsx'
-import JobHistory from './JobHistory.jsx'
-import JobSubmission from './JobSubmission.jsx'
-import FileUpload from './FileUpload.jsx'
-import FileRendering from './FileRendering.jsx'
+import hpLogo from '../../Assets/HP_logo_2012.svg'
+import AmplifyHome from '../AmplifyHome/AmplifyHome.jsx'// we can remove this later
+import Dashboard from '../Dashboard/Dashboard.jsx'
+import MyAccount from '../Account/MyAccount.jsx'
+import MyJobs from '../MyJobs/MyJobs.jsx'
+import JobStatus from '../JobStatus/JobStatus.jsx'
+import JobHistory from '../JobHistory/JobHistory.jsx'
+import JobSubmission from '../JobSubmission/JobSubmission.jsx'
+import FileUpload from '../FileUpload/FileUpload.jsx'
+import FileRendering from '../FileRendering/FileRendering.jsx'
 
 
 function App() {

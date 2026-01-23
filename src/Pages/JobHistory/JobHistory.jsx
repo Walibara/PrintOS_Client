@@ -1,5 +1,5 @@
-import wrongDB from "./assets/wrong_db.jpeg";
-import "./App.css";
+import wrongDB from "../../assets/wrong_db.jpeg";
+import "../App/App.css";
 import { useState } from "react";
 import "./JobHistory.css";
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';

@@ -20,11 +20,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FileUpload.css";
 
-import codingHumor1 from "./assets/coding_humor1.jpg";
-import codingHumor2 from "./assets/coding_humor2.png";
-import codingHumor3 from "./assets/coding_humor3.jpg";
-import codingHumor4 from "./assets/coding_humor4.jpg";
-import PickMeChooseMe from "./assets/BennyFront.png";
+import codingHumor1 from "../../Assets/coding_humor1.jpg";
+import codingHumor2 from "../../Assets/coding_humor2.png";
+import codingHumor3 from "../../Assets/coding_humor3.jpg";
+import codingHumor4 from "../../Assets/coding_humor4.jpg";
+import PickMeChooseMe from "../../Assets/BennyFront.png";
 
 // -----------------------------------------------------------
 // DEMO-ONLY DATA: - Maria 11/16
