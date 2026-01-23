@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 
 import './App.css'
-import hpLogo from '../../Assets/HP_logo_2012.svg'
+import hpLogo from '../../assets/HP_logo_2012.svg'
 import AmplifyHome from '../AmplifyHome/AmplifyHome.jsx'// we can remove this later
 import Dashboard from '../Dashboard/Dashboard.jsx'
 import MyAccount from '../Account/MyAccount.jsx'
