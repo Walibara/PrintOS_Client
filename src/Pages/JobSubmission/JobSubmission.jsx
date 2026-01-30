@@ -55,7 +55,8 @@ function JobSubmission() {
     };
 
     try {
-      const response = await fetch("/api/jobs/", {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL;
+      const response = await fetch(`${API_BASE}/api/jobs`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
