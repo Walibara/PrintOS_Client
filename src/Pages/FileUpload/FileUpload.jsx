@@ -15,7 +15,6 @@
 // - Moving on to /job-submission after a file is chosen
 // -----------------------------------------------------------
 
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FileUpload.css";
@@ -42,36 +41,35 @@ const previouslyUploadedFiles = [
 function FileUpload() {
   const navigate = useNavigate();
 
-// ---------------------------------------------------------
-// Info about a new upload: - Maria 11/16
-// - selectedFile holds the actual file
-// - selectedFilePreview shows a quick image preview
-//
-// These will still be useful once the backend is connected.
-// ---------------------------------------------------------
+  // ---------------------------------------------------------
+  // Info about a new upload: - Maria 11/16
+  // - selectedFile holds the actual file
+  // - selectedFilePreview shows a quick image preview
+  //
+  // These will still be useful once the backend is connected.
+  // ---------------------------------------------------------
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFilePreview, setSelectedFilePreview] = useState(null);
 
-// ---------------------------------------------------------
-// For the “previously uploaded” option: - Maria 11/16
-// - selectedPreviousId is whatever they pick in the dropdown
-// - selectedPreviousFile is the object we pull from our demo list
-//
-// Later this will tie into real files from the backend.
-// ---------------------------------------------------------
-
+  // ---------------------------------------------------------
+  // For the “previously uploaded” option: - Maria 11/16
+  // - selectedPreviousId is whatever they pick in the dropdown
+  // - selectedPreviousFile is the object we pull from our demo list
+  //
+  // Later this will tie into real files from the backend.
+  // ---------------------------------------------------------
   const [selectedPreviousId, setSelectedPreviousId] = useState("");
   const selectedPreviousFile = previouslyUploadedFiles.find(
     (f) => f.id === selectedPreviousId
   );
 
-// ---------------------------------------------------------
-// Maria 11/16
-// When a user picks a file from their device, we land here.
-// We save the file and show a quick preview if we can.
-//
-// In the real version, this should also talk to the server.
-// ---------------------------------------------------------
+  // ---------------------------------------------------------
+  // Maria 11/16
+  // When a user picks a file from their device, we land here.
+  // We save the file and show a quick preview if we can.
+  //
+  // In the real version, this should also talk to the server.
+  // ---------------------------------------------------------
   const handleNewFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -86,49 +84,68 @@ function FileUpload() {
     }
   };
 
-// ---------------------------------------------------------
-// Maria 11/16
-// When someone selects an older file, we store the id and
-// show the matching demo thumbnail.
-//
-// Later on, this will fetch the real file details from the server.
-// ---------------------------------------------------------
+  // ---------------------------------------------------------
+  // Maria 11/16
+  // When someone selects an older file, we store the id and
+  // show the matching demo thumbnail.
+  //
+  // Later on, this will fetch the real file details from the server.
+  // ---------------------------------------------------------
   const handlePreviousChange = (e) => {
     setSelectedPreviousId(e.target.value);
   };
 
-// ---------------------------------------------------------
-// Maria 11/16
-// User picked a new file and wants to keep going.
-// For now, we just check that the file is there and move
-// to /job-submission.
-//
-// Later this will send actual file details to the next step.
-// ---------------------------------------------------------
+  // ---------------------------------------------------------
+  // Maria 11/16
+  // User picked a new file and wants to keep going.
+  // For now, we pass file info to /job-submission so it can POST correctly.
+  // ---------------------------------------------------------
   const handleContinueWithNew = () => {
     if (!selectedFile) return;
-    navigate("/job-submission");
+
+    // Pass uploaded file info to Job Submission (no UI change)
+    const nextState = {
+      fileName: selectedFile.name,
+      fileType: selectedFile.type
+    };
+
+    // Fallback for refreshes / direct navigation
+    sessionStorage.setItem("uploadedFileName", nextState.fileName);
+    sessionStorage.setItem("uploadedFileType", nextState.fileType);
+
+    navigate("/job-submission", { state: nextState });
   };
 
-// ---------------------------------------------------------
-// Maria 11/16
-// When someone selects a past file, this is where we handle it.
-// For the demo, we just confirm something is selected and keep going.
-//
-// In the real version, we should pass the actual file ID along.
-// ---------------------------------------------------------
-
+  // ---------------------------------------------------------
+  // Maria 11/16
+  // When someone selects a past file, this is where we handle it.
+  // For the demo, we pass the selected file name + derived type.
+  // ---------------------------------------------------------
   const handleContinueWithPrevious = () => {
     if (!selectedPreviousFile) return;
-    navigate("/job-submission");
+
+    // Demo previous files only include a name + thumbnail, so derive a type from the thumbnail.
+    const thumbUrl = String(selectedPreviousFile.thumbnail || "");
+    const extMatch = thumbUrl.match(/\.([a-zA-Z0-9]+)(?:\?|#|$)/);
+    const derivedType = extMatch ? extMatch[1].toLowerCase() : "";
+
+    const nextState = {
+      fileName: selectedPreviousFile.name,
+      fileType: derivedType
+    };
+
+    sessionStorage.setItem("uploadedFileName", nextState.fileName);
+    sessionStorage.setItem("uploadedFileType", nextState.fileType);
+
+    navigate("/job-submission", { state: nextState });
   };
 
-// ---------------------------------------------------------
-// Maria 11/16
-// Left side = upload a brand-new file
-// Right side = pick something from the “previous files” list
-// Footer = we should probably put something useful here
-// ---------------------------------------------------------
+  // ---------------------------------------------------------
+  // Maria 11/16
+  // Left side = upload a brand-new file
+  // Right side = pick something from the “previous files” list
+  // Footer = we should probably put something useful here
+  // ---------------------------------------------------------
   return (
     <div className="file-upload-page">
       <div className="file-upload-card">
