@@ -1,52 +1,82 @@
-// -----------------------------------------------------------
-// JOB SUBMISSION SCREEN - By Maria 11/16
-// -----------------------------------------------------------
-// What’s happening right now (just for demo):
-// - We’re showing a fake front/back preview of a business card.
-//   In reality, this would be 2 separate files, but we will deal 
-//   with that later.
-// - You pick what kind of job you want (imposition, proofing, etc).
-//   Nothing happens when you pick the jobs, it's for demo only.
-// - When you hit submit, it's gonna take you to our fake rendering page.
-//
-// What will change later:
-// - The preview will show the actual file the user uploaded.
-// - We’ll send the job info to the backend instead of just logging it.
-//
-// What will stay:
-// - This page will still be the review/confirmation step.
-// - The layout (preview on the left, job options on the right).
-// - The idea that you look everything over before handing it to the
-//   digital workers.
-// -----------------------------------------------------------
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./JobSubmission.css";
 import BennyFront from "../../assets/BennyFront.png";
 import BennyBack from "../../assets/BennyBack.png";
 
 function JobSubmission() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-// ---------------------------------------------------------
-// This just remembers which job type the user picked.
-// When the backend is ready, we’ll use this to tell the server
-// what to do with the file.
-// ---------------------------------------------------------
+  // ---------------------------------------------------------
+  // This just remembers which job type the user picked.
+  // ---------------------------------------------------------
   const [jobType, setJobType] = useState("Imposition");
 
-// ---------------------------------------------------------
-// When the user submits, we basically fake it for now:
-// log the job type and jump to the rendering screen.
-//
-// Once the backend is alive, this is the spot where we’ll
-// send the real job info.
-// ---------------------------------------------------------
-  const handleSubmit = (e) => {
+  // ---------------------------------------------------------
+  // NEW (no UI change):
+  // Get uploaded file info from the previous page.
+  // Priority:
+  // 1) react-router navigation state
+  // 2) sessionStorage fallback
+  // ---------------------------------------------------------
+  const fileName =
+    location.state?.fileName || sessionStorage.getItem("uploadedFileName") || "";
+
+  const fileTypeRaw =
+    location.state?.fileType || sessionStorage.getItem("uploadedFileType") || "";
+
+  // Convert MIME type ("application/pdf") -> "pdf" when needed
+  const fileType = fileTypeRaw.includes("/")
+    ? fileTypeRaw.split("/")[1]
+    : fileTypeRaw;
+
+  // ---------------------------------------------------------
+  // When the user submits, send the job info to backend
+  // ---------------------------------------------------------
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting job with type:", jobType);
-    navigate("/file-rendering");
+
+    // Prevent submitting with no real upload data (avoids bad requests)
+    if (!fileName || !fileType) {
+      alert("No uploaded file found. Please go back and upload a file first.");
+      return;
+    }
+
+    const jobData = {
+      jobType: jobType,
+      quantity: 1,
+      material: "default",
+      originalFile: fileName,
+      fileType: fileType,
+      additionalCustomization: "",
+      additionalComments: ""
+      // FIX: removed uploadedByUserId (was hardcoded + likely wrong type -> 400)
+    };
+
+    try {
+      const response = await fetch("/api/jobs/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jobData)
+      });
+
+      if (!response.ok) {
+        // Show backend error message (helps you debug wiring)
+        const msg = await response.text();
+        throw new Error(msg || `HTTP ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Job created:", result);
+
+      navigate("/file-rendering");
+    } catch (error) {
+      console.error("Error submitting job:", error);
+      alert(`Failed to submit job. ${error.message}`);
+    }
   };
 
   // - GoBack button
@@ -54,11 +84,6 @@ function JobSubmission() {
     navigate(-1);
   };
 
-// ---------------------------------------------------------
-// Basic page layout:
-// Left side = a preview of the file (front + back)
-// Right side = the job options and buttons
-// ---------------------------------------------------------
   return (
     <div className="job-submission-page">
       <div className="job-submission-card">
@@ -115,10 +140,7 @@ function JobSubmission() {
                 Go Back
               </button>
 
-              <button
-                type="submit"
-                className="primary-button"
-              >
+              <button type="submit" className="primary-button">
                 Submit Job
               </button>
             </div>
