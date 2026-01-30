@@ -31,6 +31,7 @@ function JobSubmission() {
     ? fileTypeRaw.split("/")[1]
     : fileTypeRaw;
 
+  const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim(); //Backend base URL (set in Vite/Amplify env vars)
   // ---------------------------------------------------------
   // When the user submits, send the job info to backend
   // ---------------------------------------------------------
@@ -55,7 +56,8 @@ function JobSubmission() {
     };
 
     try {
-      const response = await fetch("/api/jobs/", {
+      //const response = await fetch("/api/jobs/", {
+      const response = await fetch(`${API_BASE}/api/jobs`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
