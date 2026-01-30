@@ -37,16 +37,44 @@ function JobSubmission() {
   const [jobType, setJobType] = useState("Imposition");
 
 // ---------------------------------------------------------
-// When the user submits, we basically fake it for now:
-// log the job type and jump to the rendering screen.
-//
-// Once the backend is alive, this is the spot where we’ll
-// send the real job info.
+// When the user submits, we now send the job info to backend
+// instead of just logging it.
 // ---------------------------------------------------------
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting job with type:", jobType);
-    navigate("/file-rendering");
+
+    const jobData = {
+      jobType: jobType,
+      quantity: 1,
+      material: "default",
+      originalFile: "demo-file.pdf",
+      fileType: "pdf",
+      additionalCustomization: "",
+      additionalComments: "",
+      uploadedByUserId: "demo-user"
+    };
+
+    try {
+      const response = await fetch("/api/jobs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jobData)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit job");
+      }
+
+      const result = await response.json();
+      console.log("Job created:", result);
+
+      navigate("/file-rendering");
+    } catch (error) {
+      console.error("Error submitting job:", error);
+      alert("Failed to submit job. Please try again.");
+    }
   };
 
   // - GoBack button
