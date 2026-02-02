@@ -57,7 +57,18 @@ function JobSubmission() {
 
     try {
       //const response = await fetch("/api/jobs/", {
-      const response = await fetch(`${API_BASE}/api/jobs`, {
+      //const response = await fetch(`${API_BASE}/api/jobs`, {
+      //  method: "POST",
+       // headers: {
+        //  "Content-Type": "application/json"
+     //   },
+   //     body: JSON.stringify(jobData)
+    //  });
+      // 
+      // See if this can help with CORS
+      const cleanBase = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
+      
+      const response = await fetch(`${cleanBase}/api/jobs`, { 
         method: "POST",
         headers: {
           "Content-Type": "application/json"
