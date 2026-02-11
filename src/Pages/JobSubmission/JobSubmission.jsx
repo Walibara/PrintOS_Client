@@ -12,7 +12,11 @@ function JobSubmission() {
   // This just remembers which job type the user picked.
   // ---------------------------------------------------------
   const [jobType, setJobType] = useState("Imposition");
-
+  const [quantity, setQuantity] = useState(1);
+  const [material, setMaterial] = useState("");  
+  const [additionalCustomization, setAdditionalCustomization] = useState("");  
+  const [additionalComments, setAdditionalComments] = useState("");  
+  const [submissionStatus, setSubmissionStatus] = useState(null);
   // ---------------------------------------------------------
   // NEW (no UI change):
   // Get uploaded file info from the previous page.
@@ -44,14 +48,19 @@ function JobSubmission() {
       return;
     }
 
+    if (quantity < 1) {
+      alert("Quantity must be at least 1.");
+      return;
+    }
+
     const jobData = {
       jobType: jobType,
-      quantity: 1,
-      material: "default",
+      quantity: quantity,
+      material: material || "default",
       originalFile: fileName,
       fileType: fileType,
-      additionalCustomization: "",
-      additionalComments: ""
+      additionalCustomization: additionalCustomization,
+      additionalComments: additionalComments
       // FIX: removed uploadedByUserId (was hardcoded + likely wrong type -> 400)
     };
 
@@ -85,9 +94,20 @@ function JobSubmission() {
       const result = await response.json();
       console.log("Job created:", result);
 
-      navigate("/file-rendering");
+    //commenting this out for now till we get the workers 
+    //  navigate("/file-rendering");
+    
+    //Get Job Submission confirmation with job number from database
+    const jobNumber = result.id || result.jobNumber || result.job_id || "N/A";
+      setSubmissionStatus({ success: true, jobNumber });
+
+      // Navigate after delay so user can see the message
+      setTimeout(() => {
+        navigate("/file-rendering");
+      }, 3000);
+
     } catch (error) {
-      console.error("Error submitting job:", error);
+     // console.error("Error submitting job:", error);
       alert(`Failed to submit job. ${error.message}`);
     }
   };
@@ -101,6 +121,14 @@ function JobSubmission() {
     <div className="job-submission-page">
       <div className="job-submission-card">
         <h1 className="job-submission-title">Review &amp; Submit</h1>
+        
+        {/*Success message display*/}
+        {submissionStatus?.success && (
+          <div className="success-message">
+            <h2>✓ Job #{submissionStatus.jobNumber} has been created!</h2>
+            <p>Please wait a moment while we review your file...</p>
+          </div>
+        )}
 
         <div className="job-submission-grid">
           {/* LEFT SIDE: file preview */}
@@ -142,6 +170,63 @@ function JobSubmission() {
                 <option value="Proofing">Proofing</option>
                 <option value="Finishing">Finishing</option>
               </select>
+            </label>
+
+            {/* Quantity */}
+            <label className="job-form-label">
+              Quantity <span className="required">*</span>
+              <input
+                type="number"
+                className="job-form-input"
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                min="1"
+                required
+              />
+            </label>
+
+            {/* Material */}
+            <label className="job-form-label">
+              Material
+              <select
+                className="job-type-select"
+                value={material}
+                onChange={(e) => setMaterial(e.target.value)}
+              >
+                <option value="">Select material (optional)</option>
+                <option value="Standard Paper">Standard Paper</option>
+                <option value="Cardstock">Cardstock</option>
+                <option value="Glossy">Glossy</option>
+                <option value="Matte">Matte</option>
+                <option value="Premium">Premium</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+
+            {/* Additional Customization */}
+            <label className="job-form-label">
+              Additional Customization
+              <input
+                type="text"
+                className="job-form-input"
+                value={additionalCustomization}
+                onChange={(e) => setAdditionalCustomization(e.target.value)}
+                placeholder="e.g., trim size, bleed specifications"
+                maxLength="255"
+              />
+            </label>
+
+            {/* Additional Comments */}
+            <label className="job-form-label">
+              Additional Comments
+              <textarea
+                className="job-form-textarea"
+                value={additionalComments}
+                onChange={(e) => setAdditionalComments(e.target.value)}
+                placeholder="Any special instructions or notes..."
+                rows="4"
+                maxLength="255"
+              />
             </label>
 
             <div className="job-button-row">
