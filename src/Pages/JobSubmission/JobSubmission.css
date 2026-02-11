@@ -158,3 +158,83 @@
   color: #888;
   text-align: right;
 }
+
+/* Form inputs (text, number) */
+.job-form-input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #c5d3ea;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #2b3850;
+  background: #ffffff;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.job-form-input:focus {
+  outline: none;
+  border-color: #0094ff;
+}
+
+/* Textarea for comments */
+.job-form-textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #c5d3ea;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #2b3850;
+  background: #ffffff;
+  transition: border-color 0.2s;
+  resize: vertical;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.job-form-textarea:focus {
+  outline: none;
+  border-color: #0094ff;
+}
+
+/* Required field asterisk */
+.required {
+  color: #dc3545;
+  margin-left: 4px;
+}
+
+/* Sucess Message */
+.success-message {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+.success-message h2 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.success-message p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
