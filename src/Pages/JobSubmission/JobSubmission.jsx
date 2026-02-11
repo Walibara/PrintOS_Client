@@ -102,9 +102,11 @@ function JobSubmission() {
       setSubmissionStatus({ success: true, jobNumber });
 
       // Navigate after delay so user can see the message
+      //Removing this until we set up the workers 
+      /*
       setTimeout(() => {
         navigate("/file-rendering");
-      }, 3000);
+      }, 3000); */
 
     } catch (error) {
      // console.error("Error submitting job:", error);
