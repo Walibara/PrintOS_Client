@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./JobSubmission.css";
 import BennyFront from "../../assets/BennyFront.png";
 import BennyBack from "../../assets/BennyBack.png";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 function JobSubmission() {
   const navigate = useNavigate();
@@ -59,7 +60,6 @@ function JobSubmission() {
       material: material || "default",
       originalFile: fileName,
       fileType: fileType,
-      additionalCustomization: additionalCustomization,
       additionalComments: additionalComments
       // FIX: removed uploadedByUserId (was hardcoded + likely wrong type -> 400)
     };
@@ -77,16 +77,24 @@ function JobSubmission() {
       // See if this can help with CORS
       const cleanBase = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
       
+      const session = await fetchAuthSession();
+      const token = session.tokens?.toString();
+
+      if (!token) {
+        throw new Error ("No authentication token found")
+      }
+
       const response = await fetch(`${cleanBase}/api/jobs`, { 
         method: "POST",
         headers: {
           "Content-Type": "application/json"
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(jobData)
       });
 
       if (!response.ok) {
-        // Show backend error message (helps you debug wiring)
+        // Show backend error message 
         const msg = await response.text();
         throw new Error(msg || `HTTP ${response.status}`);
       }
@@ -203,19 +211,6 @@ function JobSubmission() {
                 <option value="Premium">Premium</option>
                 <option value="Other">Other</option>
               </select>
-            </label>
-
-            {/* Additional Customization */}
-            <label className="job-form-label">
-              Additional Customization
-              <input
-                type="text"
-                className="job-form-input"
-                value={additionalCustomization}
-                onChange={(e) => setAdditionalCustomization(e.target.value)}
-                placeholder="e.g., trim size, bleed specifications"
-                maxLength="255"
-              />
             </label>
 
             {/* Additional Comments */}
