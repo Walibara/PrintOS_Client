@@ -78,7 +78,7 @@ function JobSubmission() {
       const cleanBase = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
       
       const session = await fetchAuthSession();
-      const token = session.tokens?.toString();
+      const token = session.tokens?.idToken?.toString();
 
       if (!token) {
         throw new Error ("No authentication token found")
