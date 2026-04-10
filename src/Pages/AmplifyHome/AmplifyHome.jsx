@@ -30,7 +30,7 @@ function AmplifyHome() {
     <div className="home-container">
       <div className="home-card">
 
-        <img src={trustme} className="home-meme-top" />
+        {/*<img src={trustme} className="home-meme-top" /> MEME*/}
 
         <h1 className="home-title">
           Welcome To HP PrintOS Orchestration Application

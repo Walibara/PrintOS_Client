@@ -3,6 +3,7 @@
     font-weight: bold;
     margin-top: 1.5rem;
     color:black;
+    display: flex;
 }
 
 /*Container around the three div classes that have:
@@ -22,7 +23,7 @@ personal information, billing transactions, and settings*/
     background-color: white;
     border-radius: 10px; 
     justify-content: center;
-    margin: 10px;
+    margin: 4px;
     padding: 20px; 
     font-size: 30px;
     width: 16rem;
@@ -74,6 +75,6 @@ personal information, billing transactions, and settings*/
 
 /*Hover over these containers for the first time*/
 .personal-information:hover, .billing-transactions:hover, .settings:hover {
-    background-color: #38a9ff; 
+    background-color: #b2d5f7;
     color: white; 
 }

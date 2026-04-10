@@ -1,5 +1,6 @@
 import "../App/App.css";
 import "./MyAccount.css"; 
+import "./MyAccountResize.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMoneyCheckDollar, faGear } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';

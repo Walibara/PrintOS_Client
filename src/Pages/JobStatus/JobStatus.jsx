@@ -56,14 +56,14 @@ export default function JobStatus() {
     <div className="job-status-container">
       <h1 style={{ color: "black" }}>Job Status</h1>
       <div className="job-status-image-wrapper">
-        <img
+       {/*} <img
           src={unemployed}
           alt="Unemployed"
           className="job-status-image"
-        />
+        />*/}
       </div>
 
-      <h2 className="job-status-bigtext" style={{color:"black"}}>"Ai is NOT taking our JOBS!! its OUTSOURCING!!!" ...  I scream as they drag me to the asylum. </h2>
+      {/*<h2 className="job-status-bigtext" style={{color:"black"}}>"Ai is NOT taking our JOBS!! its OUTSOURCING!!!" ...  I scream as they drag me to the asylum. </h2>*/}
 
       <button className="submit-btn" onClick={() => navigate("/file-upload")}>Submit New Job
       </button>
