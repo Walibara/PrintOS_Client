@@ -9,27 +9,27 @@ export function handleClick(section){
             const hiddenPerson = document.querySelector('.hidden-person-info');
             const personalInfoColor = document.querySelector('.personal-information');  
              
-        if (hiddenPerson.style.display === "none" || hiddenPerson.style.display === "") {
-            hiddenPerson.style.display = "flex"; 
-            personalInfoColor.style.background = "#38a9ff";
-            personalInfoColor.style.color = "#ffffff";
-            personalInfoColor.onmouseenter = null;
-            personalInfoColor.onmouseleave = null;
-        } else {
-            hiddenPerson.style.display = "none"; 
-            personalInfoColor.style.background = "#ffffff";
-            personalInfoColor.style.color = "#003366";
-
-            personalInfoColor.onmouseenter = () => {
-                personalInfoColor.style.background = "#38a9ff";
+            if (hiddenPerson.style.display === "none" || hiddenPerson.style.display === "") {
+                hiddenPerson.style.display = "flex"; 
+                personalInfoColor.style.background = " #b2d5f7";
                 personalInfoColor.style.color = "#ffffff";
-            };
-            personalInfoColor.onmouseleave = () => {
+                personalInfoColor.onmouseenter = null;
+                personalInfoColor.onmouseleave = null;
+            } else {
+                hiddenPerson.style.display = "none"; 
                 personalInfoColor.style.background = "#ffffff";
                 personalInfoColor.style.color = "#003366";
-            };
-        }
-        break;
+
+                personalInfoColor.onmouseenter = () => {
+                    personalInfoColor.style.background = " #b2d5f7";
+                    personalInfoColor.style.color = "#ffffff";
+                };
+                personalInfoColor.onmouseleave = () => {
+                    personalInfoColor.style.background = "#ffffff";
+                    personalInfoColor.style.color = "#003366";
+                };
+            }
+            break;
 
         case 'Billing Transactions':
             const hiddenBilling = document.querySelector('.hidden-billing-info');
@@ -37,7 +37,7 @@ export function handleClick(section){
 
             if (hiddenBilling.style.display === "none"){
                 hiddenBilling.style.display = "flex"; 
-                billingColor.style.background = "#38a9ff";
+                billingColor.style.background =  " #b2d5f7";
                 billingColor.style.color = "#ffffff";
                 billingColor.onmouseenter = null;
                 billingColor.onmouseleave = null;
@@ -47,7 +47,7 @@ export function handleClick(section){
                 billingColor.style.color = "#003366";
 
                 billingColor.onmouseenter = () => {
-                    billingColor.style.background = "#38a9ff";
+                    billingColor.style.background =  " #b2d5f7";
                     billingColor.style.color = "#ffffff";
                 };
                 billingColor.onmouseleave = () => {
@@ -63,7 +63,7 @@ export function handleClick(section){
 
             if (hiddenSettings.style.display === "none"){
                 hiddenSettings.style.display = "flex"; 
-                settingsColor.style.background = "#38a9ff";
+                settingsColor.style.background =  " #b2d5f7";
                 settingsColor.style.color = "#ffffff";
                 settingsColor.onmouseenter = null;
                 settingsColor.onmouseleave = null;
@@ -73,7 +73,7 @@ export function handleClick(section){
                 settingsColor.style.color = "#003366";
 
                 settingsColor.onmouseenter = () => {
-                    settingsColor.style.background = "#38a9ff";
+                    settingsColor.style.background =  " #b2d5f7";
                     settingsColor.style.color = "#ffffff";
                 };
                 settingsColor.onmouseleave = () => {
