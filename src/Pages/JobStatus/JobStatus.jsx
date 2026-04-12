@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 export default function JobStatus() {
 
   const[openModal, setOpenModal] = useState(false);
+  const[openDeleteModal, setOpenDeleteModal] = useState(false); 
   const[selectedJob, setSelectedJob] = useState(null);
   const [jobs, setJobs] = useState([]);
   
@@ -43,6 +44,11 @@ export default function JobStatus() {
     setOpenModal(true);
   }
 
+  const handleViewDelete = (job) => {
+    setSelectedJob(job);
+    setOpenDeleteModal(true); 
+  }
+
   const handleRerunJob = (job) => {
     console.log(`Rerunning job ID: ${job.id}`);
     alert(`Rerunning job ID: ${job.id}`);
@@ -51,6 +57,17 @@ export default function JobStatus() {
   const closeModal = () => {
     setOpenModal(false);
     setSelectedJob(null);
+  }
+  
+  const deleteCloseModal = () => {
+    setOpenDeleteModal(false);
+    setSelectedJob(null); 
+  }
+
+  const deleteJobHelper = () => {
+    statusMethods.deleteJob(selectedJob); 
+    setOpenDeleteModal(false);
+    setSelectedJob(null); 
   }
 
   const navigate = useNavigate();
@@ -78,7 +95,7 @@ export default function JobStatus() {
               />
                 <span className="job-date">{job.date}</span>
                 <FaCheckCircle color="green"style={{ marginRight: "60px" }} size="1.9em"/>
-                <div className="delete" onClick={() => statusMethods.deleteJob(job)}>x</div>
+                <div className="delete" onClick={()=>handleViewDelete(job)}>x</div>
               </div>
             ))}
           </div>
@@ -100,7 +117,7 @@ export default function JobStatus() {
               /> 
                 <span className="job-date">{job.date}</span>
                 <FaClock color="orange" style={{ marginRight: "60px" }} size="1.9em" />
-                <div className="delete" onClick={() => statusMethods.deleteJob(job)}>x</div>
+                <div className="delete" onClick={()=>handleViewDelete(job)}>x</div>
               </div>
             ))}
           </div>
@@ -122,7 +139,7 @@ export default function JobStatus() {
               />
                 <span className="job-date">{job.date}</span>
                 <FaTimesCircle color="red" style={{ marginRight: "60px" }} size="1.9em" />
-                <div className="delete" onClick={() => statusMethods.deleteJob(job)}>x</div>
+                <div className="delete" onClick={()=>handleViewDelete(job)}>x</div>
               </div>
             ))}
           </div>
@@ -135,7 +152,6 @@ export default function JobStatus() {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
               <h2>Receipt for {selectedJob.id}</h2>
-              <button className="close-modal-btn" onClick={closeModal}>X</button>
             </div>
             <div className="receipt-details">
               {selectedJob && (
@@ -155,6 +171,21 @@ export default function JobStatus() {
             <button className="download-receipt-btn">Download PDF</button>
           </div>
           </div>
+          </div>
+        )}
+
+
+        {/*Open Delete Modal*/}
+        {openDeleteModal&&(
+          <div className="delete-modal-overlay" onClick={deleteCloseModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3>Are you sure you want to delete</h3>
+              <div className="job-delete-title">Job {selectedJob.id}?</div>
+              <div className="button-div">
+                <button className="cancelDelete" onClick={deleteCloseModal}>Cancel</button>
+                <button className= "confirmDelete" onClick={deleteJobHelper}>Delete</button>
+              </div>
+            </div>
           </div>
         )}
     </div>
