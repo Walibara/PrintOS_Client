@@ -93,7 +93,7 @@ export default function JobStatus() {
                   onViewReceipt={handleViewReceipt}
                   onRerunJob={handleRerunJob}
               />
-                <span className="job-date">{job.date}</span>
+                <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
                 <FaCheckCircle color="green"style={{ marginRight: "60px" }} size="1.9em"/>
                 <div className="delete" onClick={()=>handleViewDelete(job)}>x</div>
               </div>
@@ -114,8 +114,8 @@ export default function JobStatus() {
                 job={job}
                   onViewReceipt={handleViewReceipt}
                   onRerunJob={handleRerunJob}
-              /> 
-                <span className="job-date">{job.date}</span>
+                /> 
+                <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
                 <FaClock color="orange" style={{ marginRight: "60px" }} size="1.9em" />
                 <div className="delete" onClick={()=>handleViewDelete(job)}>x</div>
               </div>
@@ -137,7 +137,7 @@ export default function JobStatus() {
                   onViewReceipt={handleViewReceipt}
                   onRerunJob={handleRerunJob}
               />
-                <span className="job-date">{job.date}</span>
+                <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
                 <FaTimesCircle color="red" style={{ marginRight: "60px" }} size="1.9em" />
                 <div className="delete" onClick={()=>handleViewDelete(job)}>x</div>
               </div>
