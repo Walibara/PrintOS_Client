@@ -87,3 +87,13 @@
   min-height: 60vh; 
 }
 
+.history-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-list {
+  flex: 1;
+  min-height: 420px; 
+}

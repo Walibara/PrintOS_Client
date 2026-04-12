@@ -10,6 +10,12 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+
+  const [totalJobs, setTotalJobs] = useState(0);
+  const [inProgressJobs, setInprogressJobs] = useState(0);
+  const [failedJobs, setFailedJobs] = useState(0);
+  const [finishedJobs, setFinishedJobs] = useState(0);
+
   // Grab the jobs
   useEffect(() => {
     const fetchJobs = async () => {
@@ -47,16 +53,45 @@ export default function Dashboard() {
           return jobTwoId - jobOneId;
         });
 
-        const latestThree = mappedJobs.slice(0, 3);
+        const latestJobs = mappedJobs.slice(0, 3);
 
         // Update state with the latest three jobs
-        setJobHistory(latestThree);
+        setJobHistory(latestJobs);
 
       } catch (err) {
         setError(err.message || "Failed to load job history");
       } finally {
         setLoading(false);
       }
+
+      //counting the data
+      const data = await statusMethods.getJobs();
+      const total = data.length;
+      let inProgress = 0;
+      let failed = 0;
+      let finished = 0;
+
+      //grouping the jobs by status and counting them
+      for (const job of data) {
+        switch (job.status) {
+          case "IN_PROGRESS":
+            inProgress++;
+            break;
+          case "FAILED":
+            failed++;
+            break;
+          case "FINISHED":
+          finished++;
+          break;
+          default:
+            break;
+        }
+      }
+      setTotalJobs(total);
+      setInprogressJobs(inProgress);
+      setFailedJobs(failed);
+      setFinishedJobs(finished);
+      
     };
 
     fetchJobs();
@@ -94,20 +129,26 @@ export default function Dashboard() {
         <div className="stat-card">
           <h3>Total Jobs Today</h3>
           <hr />
-          <h1>36</h1>
+          <h1>{totalJobs}</h1>
           <p>^ 12% from yesterday</p>
         </div>
         <div className="stat-card">
-          <h3>Processing</h3>
+          <h3>In Progress</h3>
           <hr />
-          <h1>33</h1>
+          <h1>{inProgressJobs}</h1>
           <p>Jobs in Progress</p>
         </div>
         <div className="stat-card">
-          <h3>Needs Review</h3>
+          <h3>Failed</h3>
           <hr />
-          <h1>3</h1>
+          <h1>{failedJobs}</h1>
           <p>Retry Attempts: 3</p>
+        </div>
+        <div className="stat-card">
+          <h3>Finished</h3>
+          <hr />
+          <h1>{finishedJobs}</h1>
+          <p>Jobs Completed</p>
         </div>
       </div>
 
