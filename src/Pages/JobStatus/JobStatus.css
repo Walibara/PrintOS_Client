@@ -57,3 +57,56 @@
 .status-dot.success { background-color: green; size: 1.9em; }
 .status-dot.pending { background-color: orange; size: 1.9em; }
 .status-dot.error { background-color: red; size: 1.9em; }
+
+.delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  color: black;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delete-modal-overlay .modal-content h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.job-delete-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color:#003366;  
+  font-weight: bold; 
+  margin-bottom: 2rem;
+}
+
+.button-div{
+  display: flex; 
+  justify-content: space-between; 
+}
+
+.cancelDelete, .confirmDelete {
+  background-color: #b2d5f7;
+}
+
+.cancelDelete:hover, .confirmDelete:hover {
+  background-color:#003366; 
+  color: white; 
+}
