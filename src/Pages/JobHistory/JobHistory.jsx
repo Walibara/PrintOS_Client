@@ -1,36 +1,83 @@
 import wrongDB from "../../assets/wrong_db.jpeg";
 import "../App/App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
+import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
+import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
 
 
 export default function JobHistory() {
-    const jobHistory = [
-    { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-02-15" },
-    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "success",  date: "2024-02-15" },
-    { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending",  date: "2024-01-15" },
-    { id: "Job-147", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-01-13" },
-    { id: "Job-148", file: "Imposition.photo_cards.pdf", status: "error",  date: "2024-01-13" },
-    { id: "Job-149", file: "Imposition.photo_cards.pdf", status: "error",  date: "2023-12-10"},
-    { id: "Job-150", file: "Imposition.business_cards.pdf", status: "success",  date: "2023-12-11" },
-    { id: "Job-151", file: "Imposition.photo_cards.pdf", status: "error",  date: "2023-12-11" },
-    { id: "Job-152", file: "Imposition.photo_cards.pdf", status: "pending",  date: "2023-12-11" },
-    
-  ];
+  const [jobHistory, setJobHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
+  // Grab the jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await statusMethods.getJobs();
 
-  //the date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  }
+        const mappedJobs = data.map((job) => ({
+          id: `Job-${job.id}`,
+          file: job.originalFile || job.files || "No file",
+          status: mapStatus(job.status),
+          date: job.createdAt,
+        }));
+
+        // Sort jobs by date (newest first)
+        mappedJobs.sort((one, two) => {
+          const jobOneHasADate = !!one.date;
+          const jobTwoHasADate = !!two.date;
+
+          //if one job has a date and the other doesn't, the one with the date is there first
+          if (jobOneHasADate&& !jobTwoHasADate) return -1;
+          if (!jobOneHasADate&& jobTwoHasADate) return 1;
+
+          //if both have dates, sort by date
+          if (jobOneHasADate && jobTwoHasADate) {
+            return new Date(two.date) - new Date(one.date);
+          }
+          //sorting the job by descinging id 
+
+          const jobOneId = Number(String(one.id).replace("Job-", ""));
+          const jobTwoId = Number(String(two.id).replace("Job-", ""));
+
+          return jobTwoId - jobOneId;
+        });
+
+        setJobHistory(mappedJobs);
+      } catch (err) {
+        setError(err.message || "Failed to load job history");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+    const interval = setInterval(fetchJobs, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+
+  const mapStatus = (dbStatus) => {
+    switch (dbStatus) {
+      case "FINISHED":
+        return "success";
+      case "FAILED":
+        return "error";
+      case "CREATED":
+      case "IN_PROGRESS":
+        return "pending";
+      default:
+        return "pending";
+    }
+  };
 
   //calculateing the total pages
 
@@ -41,6 +88,13 @@ export default function JobHistory() {
     setCurrentPage(page);
   };
 
+  //loading jobs
+  if (loading) {
+    return (<p>Loading jobs...</p>);
+  }
+  if (error) {
+    return (<p>An Error has occurred: {error}</p>);
+  }
 
   return (
     <div className="job-history-container">
@@ -52,7 +106,7 @@ export default function JobHistory() {
               <div className={`status-dot ${job.status}`}></div>
               <span className="job-id">{job.id}</span>
               <span className="job-file">{job.file}</span>
-              <span className="job-date">{formatDate(job.date)}</span>
+              <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
               <span className="status-icon">
                 {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
                 {job.status === "error" &&  <FaTimesCircle color="red" size="1.2em" />}
@@ -66,7 +120,7 @@ export default function JobHistory() {
         <button className="pagination-button" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
         <div className="page-numbers">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-            <button className={ `page-number ${currentPage === page ? 'active' : ''}`} onClick={() =>handlePageChange(page)}>{page}</button>
+            <button key={page} className={`page-number ${currentPage === page ? "active" : ""}`} onClick={() => handlePageChange(page)}>{page}</button>
           ))}
 
         </div>
@@ -76,9 +130,7 @@ export default function JobHistory() {
     
     </div>  
 
-    
-
-
-
   );
 }
+
+
