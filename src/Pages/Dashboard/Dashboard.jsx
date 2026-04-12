@@ -27,7 +27,26 @@ export default function Dashboard() {
 
 
         // // Sort jobs by date (newest first)   
-        // mappedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        mappedJobs.sort((one, two) => {
+          const jobOneHasADate = !!one.date;
+          const jobTwoHasADate = !!two.date;
+
+          //if one job has a date and the other doesn't, the one with the date is there first
+          if (jobOneHasADate&& !jobTwoHasADate) return -1;
+          if (!jobOneHasADate&& jobTwoHasADate) return 1;
+
+          //if both have dates, sort by date
+          if (jobOneHasADate && jobTwoHasADate) {
+            return new Date(two.date) - new Date(one.date);
+          }
+          //sorting the job by descinging id 
+
+          const jobOneId = Number(String(one.id).replace("Job-", ""));
+          const jobTwoId = Number(String(two.id).replace("Job-", ""));
+
+          return jobTwoId - jobOneId;
+        });
+
         const latestThree = mappedJobs.slice(0, 3);
 
         // Update state with the latest three jobs

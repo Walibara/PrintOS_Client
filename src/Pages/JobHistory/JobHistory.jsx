@@ -31,7 +31,25 @@ export default function JobHistory() {
         }));
 
         // Sort jobs by date (newest first)
-        mappedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        mappedJobs.sort((one, two) => {
+          const jobOneHasADate = !!one.date;
+          const jobTwoHasADate = !!two.date;
+
+          //if one job has a date and the other doesn't, the one with the date is there first
+          if (jobOneHasADate&& !jobTwoHasADate) return -1;
+          if (!jobOneHasADate&& jobTwoHasADate) return 1;
+
+          //if both have dates, sort by date
+          if (jobOneHasADate && jobTwoHasADate) {
+            return new Date(two.date) - new Date(one.date);
+          }
+          //sorting the job by descinging id 
+
+          const jobOneId = Number(String(one.id).replace("Job-", ""));
+          const jobTwoId = Number(String(two.id).replace("Job-", ""));
+
+          return jobTwoId - jobOneId;
+        });
 
         setJobHistory(mappedJobs);
       } catch (err) {
@@ -102,7 +120,7 @@ export default function JobHistory() {
         <button className="pagination-button" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
         <div className="page-numbers">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-            <button className={ `page-number ${currentPage === page ? 'active' : ''}`} onClick={() =>handlePageChange(page)}>{page}</button>
+            <button key={page} className={`page-number ${currentPage === page ? "active" : ""}`} onClick={() => handlePageChange(page)}>{page}</button>
           ))}
 
         </div>
@@ -114,3 +132,5 @@ export default function JobHistory() {
 
   );
 }
+
+
