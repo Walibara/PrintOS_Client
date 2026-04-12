@@ -4,7 +4,7 @@ const ActionButton = ({job, onViewReceipt, onRerunJob}) => {
 
   // caling the functions based on job the click
   const Clicks = () => {
-    if (job.status === "success" ) {
+    if (job.status === "FINISHED" ) {
       onViewReceipt(job);
     }
     else  {
@@ -15,16 +15,16 @@ const ActionButton = ({job, onViewReceipt, onRerunJob}) => {
     // text to display on the button based on job status
   const buttonText = () => {
 
-    if (job.status === "success") return 'View Receipt';
-    if (job.status === "error" || job.status === "pending") return 'Rerun Job';
+    if (job.status === "FINISHED") return 'View Receipt';
+    if (job.status === "FAILED" || job.status === "IN_PROGRESS") return 'Rerun Job';
     return 'Action';
   };
 
   // css style to apply to the button based on job status
   const buttonStyle = () => {
 
-    if (job.status === "success") return 'view-receipt-btn';
-    if (job.status === "error" || job.status === "pending") return 'rerun-job-btn';
+    if (job.status === "FINISHED") return 'view-receipt-btn';
+    if (job.status === "FAILED" || job.status === "IN_PROGRESS") return 'rerun-job-btn';
     return 'action-btn';
   };
 

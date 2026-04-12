@@ -3,34 +3,38 @@ import "../App/App.css";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import "./JobStatus.css";
 import ActionButton from "../ActionButton/ActionButton.jsx"; 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import * as statusMethods from "./JobStatusUtils.js";  
+import { useState, useEffect } from "react"; 
 
 export default function JobStatus() {
 
   const[openModal, setOpenModal] = useState(false);
   const[selectedJob, setSelectedJob] = useState(null);
-
-      const jobHistory = [
-    { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-02-15" },
-    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "success",  date: "2024-02-15" },
-    { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending",  date: "2024-01-15" },
-    { id: "Job-147", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-01-13" },
-    { id: "Job-148", file: "Imposition.photo_cards.pdf", status: "error",  date: "2024-01-13" },
-    { id: "Job-149", file: "Imposition.photo_cards.pdf", status: "error",  date: "2023-12-10"},
-    { id: "Job-150", file: "Imposition.business_cards.pdf", status: "success",  date: "2023-12-11" },
-    { id: "Job-151", file: "Imposition.photo_cards.pdf", status: "error",  date: "2023-12-11" },
-    { id: "Job-152", file: "Imposition.photo_cards.pdf", status: "pending",  date: "2023-12-11" },
-    
-  ];
-
+  const [jobs, setJobs] = useState([]);
+  
+  //Grab the jobs
+  useEffect(() => {
+      const fetchJobs = async () => {
+        const data = await statusMethods.getJobs(); 
+        const selectColumns = data.map((job) => ({
+          id: job.id,
+          file: job.originalFile,
+          status: job.status,
+          date: job.createdAt
+        }));
+        setJobs(selectColumns);
+      };
+      fetchJobs();
+      const interval = setInterval(fetchJobs, 5000);
+      return () => clearInterval(interval);
+  }, []);
 
   // tallying the jobs by status
   // create lists and counts for each status
-  const completedJobsList = jobHistory.filter((job) => job.status === "success");
-  const inProgressJobsList = jobHistory.filter((job) => job.status === "pending");
-  const failedJobsList = jobHistory.filter((job) => job.status === "error");
+  const completedJobsList = jobs.filter((job) => job.status === "FINISHED");
+  const inProgressJobsList = jobs.filter((job) => job.status === "IN_PROGRESS");
+  const failedJobsList = jobs.filter((job) => job.status === "FAILED");
 
 
   // handlers for action buttons
@@ -55,18 +59,7 @@ export default function JobStatus() {
   return (
     <div className="job-status-container">
       <h1 style={{ color: "black" }}>Job Status</h1>
-      <div className="job-status-image-wrapper">
-       {/*} <img
-          src={unemployed}
-          alt="Unemployed"
-          className="job-status-image"
-        />*/}
-      </div>
-
-      {/*<h2 className="job-status-bigtext" style={{color:"black"}}>"Ai is NOT taking our JOBS!! its OUTSOURCING!!!" ...  I scream as they drag me to the asylum. </h2>*/}
-
-      <button className="submit-btn" onClick={() => navigate("/file-upload")}>Submit New Job
-      </button>
+      <button className="submit-btn" onClick={() => navigate("/file-upload")}>Submit New Job</button>
         
 
         {/*  Completed Jobs */}
@@ -76,7 +69,7 @@ export default function JobStatus() {
             {completedJobsList.map((job) => (
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
-                <span className="job-id">{job.id}</span>
+                <span className="job-id">{"Job Id: " + job.id}</span>
                 <span className="job-file">{job.file}</span> 
                 <ActionButton 
                   job={job}
@@ -85,6 +78,7 @@ export default function JobStatus() {
               />
                 <span className="job-date">{job.date}</span>
                 <FaCheckCircle color="green"style={{ marginRight: "60px" }} size="1.9em"/>
+                <div className="delete" onClick={() => statusMethods.deleteJob(job)}>x</div>
               </div>
             ))}
           </div>
@@ -97,7 +91,7 @@ export default function JobStatus() {
             {inProgressJobsList.map((job) => (
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
-                <span className="job-id">{job.id}</span>
+                <span className="job-id">{"Job Id: " + job.id}</span>
                 <span className="job-file">{job.file}</span>
                 <ActionButton 
                 job={job}
@@ -106,6 +100,7 @@ export default function JobStatus() {
               /> 
                 <span className="job-date">{job.date}</span>
                 <FaClock color="orange" style={{ marginRight: "60px" }} size="1.9em" />
+                <div className="delete" onClick={() => statusMethods.deleteJob(job)}>x</div>
               </div>
             ))}
           </div>
@@ -118,7 +113,7 @@ export default function JobStatus() {
             {failedJobsList.map((job) => (
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
-                <span className="job-id">{job.id}</span>
+                <span className="job-id">{"Job Id: " + job.id}</span>
                 <span className="job-file">{job.file}</span> 
                 <ActionButton 
                 job={job}
@@ -127,6 +122,7 @@ export default function JobStatus() {
               />
                 <span className="job-date">{job.date}</span>
                 <FaTimesCircle color="red" style={{ marginRight: "60px" }} size="1.9em" />
+                <div className="delete" onClick={() => statusMethods.deleteJob(job)}>x</div>
               </div>
             ))}
           </div>
@@ -134,7 +130,6 @@ export default function JobStatus() {
 
 
         {/*  The Modal for Receipt */}
-
         {openModal&& (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
