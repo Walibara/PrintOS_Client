@@ -1,27 +1,62 @@
 import wrongDB from "../../assets/wrong_db.jpeg";
 import "../App/App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
+import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
+import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
 
 
 export default function JobHistory() {
-    const jobHistory = [
-    { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-02-15" },
-    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "success",  date: "2024-02-15" },
-    { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending",  date: "2024-01-15" },
-    { id: "Job-147", file: "Imposition.business_cards.pdf", status: "success",  date: "2024-01-13" },
-    { id: "Job-148", file: "Imposition.photo_cards.pdf", status: "error",  date: "2024-01-13" },
-    { id: "Job-149", file: "Imposition.photo_cards.pdf", status: "error",  date: "2023-12-10"},
-    { id: "Job-150", file: "Imposition.business_cards.pdf", status: "success",  date: "2023-12-11" },
-    { id: "Job-151", file: "Imposition.photo_cards.pdf", status: "error",  date: "2023-12-11" },
-    { id: "Job-152", file: "Imposition.photo_cards.pdf", status: "pending",  date: "2023-12-11" },
-    
-  ];
+  const [jobHistory, setJobHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
+  // Grab the jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await statusMethods.getJobs();
+
+        const mappedJobs = data.map((job) => ({
+          id: `Job-${job.id}`,
+          file: job.originalFile || job.files || "No file",
+          status: mapStatus(job.status),
+          date: job.createdAt,
+        }));
+
+        setJobHistory(mappedJobs);
+      } catch (err) {
+        setError(err.message || "Failed to load job history");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+    const interval = setInterval(fetchJobs, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+
+  const mapStatus = (dbStatus) => {
+    switch (dbStatus) {
+      case "FINISHED":
+        return "success";
+      case "FAILED":
+        return "error";
+      case "CREATED":
+      case "IN_PROGRESS":
+        return "pending";
+      default:
+        return "pending";
+    }
+  };
 
   //the date
   const formatDate = (dateString) => {
@@ -41,6 +76,13 @@ export default function JobHistory() {
     setCurrentPage(page);
   };
 
+  //loading jobs
+  if (loading) {
+    return (<p>Loading jobs...</p>);
+  }
+  if (error) {
+    return (<p>An Error has occurred: {error}</p>);
+  }
 
   return (
     <div className="job-history-container">
@@ -75,10 +117,6 @@ export default function JobHistory() {
       </div>
     
     </div>  
-
-    
-
-
 
   );
 }
