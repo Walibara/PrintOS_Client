@@ -30,6 +30,9 @@ export default function JobHistory() {
           date: job.createdAt,
         }));
 
+        // Sort jobs by date (newest first)
+        mappedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
         setJobHistory(mappedJobs);
       } catch (err) {
         setError(err.message || "Failed to load job history");
@@ -58,15 +61,6 @@ export default function JobHistory() {
     }
   };
 
-  //the date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  }
-
   //calculateing the total pages
 
   const totalPages = Math.ceil(jobHistory.length / itemsPerPage);
@@ -94,7 +88,7 @@ export default function JobHistory() {
               <div className={`status-dot ${job.status}`}></div>
               <span className="job-id">{job.id}</span>
               <span className="job-file">{job.file}</span>
-              <span className="job-date">{formatDate(job.date)}</span>
+              <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
               <span className="status-icon">
                 {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
                 {job.status === "error" &&  <FaTimesCircle color="red" size="1.2em" />}

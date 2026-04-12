@@ -2,13 +2,63 @@ import React from "react";
 import "./Dashboard.css";
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import * as statusMethods from "../JobStatus/JobStatusUtils.js";
 
 export default function Dashboard() {
-  const jobHistory = [
-    { id: "Job-144", file: "Imposition.business_cards.pdf", status: "success" },
-    { id: "Job-145", file: "Imposition.photo_cards.pdf", status: "success" },
-    { id: "Job-146", file: "Imposition.photo_cards.pdf", status: "pending" },
-  ];
+  const [jobHistory, setJobHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Grab the jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await statusMethods.getJobs();
+
+        const mappedJobs = data.map((job) => ({
+          id: `Job-${job.id}`,
+          file: job.originalFile || job.files || "No file",
+          status: mapStatus(job.status),
+          date: job.createdAt,
+        }));
+
+
+        // // Sort jobs by date (newest first)   
+        // mappedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        const latestThree = mappedJobs.slice(0, 3);
+
+        // Update state with the latest three jobs
+        setJobHistory(latestThree);
+
+      } catch (err) {
+        setError(err.message || "Failed to load job history");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+    const interval = setInterval(fetchJobs, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+
+  const mapStatus = (dbStatus) => {
+  switch (dbStatus) {
+    case "FINISHED":
+      return "success";
+    case "FAILED":
+      return "error";
+    case "CREATED":
+    case "IN_PROGRESS":
+      return "pending";
+    default:
+      return "pending";
+  }
+};
 
   const navigate = useNavigate();
 
