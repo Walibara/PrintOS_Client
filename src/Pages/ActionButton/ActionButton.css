@@ -5,7 +5,9 @@
   cursor: pointer;
   font-size: 1.2em;
   margin-right: 50px;
-  max-width: 200px;
+  width: 140px;     
+  min-width: 140px;    
+  text-align: center;
   transition: all 0.3s ease;
 }
 
