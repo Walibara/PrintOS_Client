@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as statusMethods from "./JobStatusUtils.js";  
 import { useState, useEffect } from "react"; 
 
+
 export default function JobStatus() {
 
   const[openModal, setOpenModal] = useState(false);
@@ -17,7 +18,9 @@ export default function JobStatus() {
   //Grab the jobs
   useEffect(() => {
       const fetchJobs = async () => {
-        const data = await statusMethods.getJobs(); 
+        const session = await fetchAuthSession(); 
+        const userId = session.tokens.idToken.payload.sub;
+        const data = await statusMethods.getJobs(userId); 
         const selectColumns = data.map((job) => ({
           id: job.id,
           file: job.originalFile,

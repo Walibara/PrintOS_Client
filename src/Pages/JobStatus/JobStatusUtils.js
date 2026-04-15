@@ -1,9 +1,12 @@
+
 //Emma - borrowed Maria's code in Job Submission where she creates a job
 import { useState, useEffect } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
+
 const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim();
 
-export async function getJobs() {
+
+export async function getJobs(userId) {
 
     try {
         const cleanBase = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
@@ -15,7 +18,7 @@ export async function getJobs() {
             throw new Error ("No authentication token found")
         }
 
-        const response = await fetch(`${cleanBase}/api/jobs`, { 
+        const response = await fetch(`${cleanBase}/api/jobs/${userId}`, { 
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
