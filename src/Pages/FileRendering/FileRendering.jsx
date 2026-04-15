@@ -36,17 +36,16 @@ function FileRendering() {
         const session = await fetchAuthSession();
         const token = session.tokens?.idToken?.toString();
 
-        const headers = {
-          "Content-Type": "application/json",
-        };
-
-        if (token) {
-          headers.Authorization = `Bearer ${token}`;
+        if (!token) {
+          throw new Error("No authentication token found");
         }
 
         const response = await fetch(`${cleanBase}/api/jobs`, {
           method: "GET",
-          headers,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
         });
 
         if (!response.ok) {
@@ -272,6 +271,24 @@ function FileRendering() {
               <p className="file-rendering-summary-note">
                 Current backend status: {backendStatus}
               </p>
+
+              <div className="rendering-actions">
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Go to Dashboard
+                </button>
+
+                <button
+                  type="button"
+                  className="primary-button"
+                  onClick={() => navigate("/job-status")}
+                >
+                  View Job Status
+                </button>
+              </div>
             </div>
           </>
         )}
@@ -279,7 +296,7 @@ function FileRendering() {
         {!jobNotFound && backendStatus !== "ERROR_LOADING" && isFinished && (
           <div className="file-rendering-summary">
             <h2 className="file-rendering-summary-title">
-              Your file has been received and accepted
+              ✅ Your file has been received and accepted
             </h2>
             <p className="file-rendering-summary-text">
               Your job is now in our production queue. You’ll receive an email with
@@ -288,6 +305,24 @@ function FileRendering() {
             <p className="file-rendering-summary-note">
               Digital workers handle this entire workflow automatically.
             </p>
+
+            <div className="rendering-actions">
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => navigate("/dashboard")}
+              >
+                Go to Dashboard
+              </button>
+
+              <button
+                type="button"
+                className="primary-button"
+                onClick={() => navigate("/job-status")}
+              >
+                View Job Status
+              </button>
+            </div>
           </div>
         )}
 
@@ -353,6 +388,14 @@ function FileRendering() {
                   onClick={() => navigate("/file-upload")}
                 >
                   Upload New File
+                </button>
+
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Go to Dashboard
                 </button>
               </div>
             </div>
