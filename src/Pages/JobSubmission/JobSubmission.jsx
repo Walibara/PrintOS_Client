@@ -14,10 +14,11 @@ function JobSubmission() {
   // ---------------------------------------------------------
   const [jobType, setJobType] = useState("Imposition");
   const [quantity, setQuantity] = useState(1);
-  const [material, setMaterial] = useState("");  
-  const [additionalCustomization, setAdditionalCustomization] = useState("");  
-  const [additionalComments, setAdditionalComments] = useState("");  
+  const [material, setMaterial] = useState("");
+  const [additionalCustomization, setAdditionalCustomization] = useState("");
+  const [additionalComments, setAdditionalComments] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState(null);
+
   // ---------------------------------------------------------
   // NEW (no UI change):
   // Get uploaded file info from the previous page.
@@ -37,6 +38,7 @@ function JobSubmission() {
     : fileTypeRaw;
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim(); //Backend base URL (set in Vite/Amplify env vars)
+
   // ---------------------------------------------------------
   // When the user submits, send the job info to backend
   // ---------------------------------------------------------
@@ -65,26 +67,17 @@ function JobSubmission() {
     };
 
     try {
-      //const response = await fetch("/api/jobs/", {
-      //const response = await fetch(`${API_BASE}/api/jobs`, {
-      //  method: "POST",
-       // headers: {
-        //  "Content-Type": "application/json"
-     //   },
-   //     body: JSON.stringify(jobData)
-    //  });
-      // 
       // See if this can help with CORS
       const cleanBase = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
-      
+
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
 
       if (!token) {
-        throw new Error ("No authentication token found")
+        throw new Error("No authentication token found");
       }
 
-      const response = await fetch(`${cleanBase}/api/jobs`, { 
+      const response = await fetch(`${cleanBase}/api/jobs`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +87,7 @@ function JobSubmission() {
       });
 
       if (!response.ok) {
-        // Show backend error message 
+        // Show backend error message
         const msg = await response.text();
         throw new Error(msg || `HTTP ${response.status}`);
       }
@@ -102,22 +95,24 @@ function JobSubmission() {
       const result = await response.json();
       console.log("Job created:", result);
 
-    //commenting this out for now till we get the workers 
-    //  navigate("/file-rendering");
-    
-    //Get Job Submission confirmation with job number from database
-    const jobNumber = result.id || result.jobNumber || result.job_id || "N/A";
+      // Get Job Submission confirmation with job number from database
+      const jobNumber = result.id || result.jobNumber || result.job_id || "N/A";
       setSubmissionStatus({ success: true, jobNumber });
 
+      // Save job id so FileRendering can use it
+      sessionStorage.setItem("currentJobId", jobNumber);
+
       // Navigate after delay so user can see the message
-      //Removing this until we set up the workers 
-      /*
       setTimeout(() => {
-        navigate("/file-rendering");
-      }, 3000); */
+        navigate("/file-rendering", {
+          state: {
+            jobId: jobNumber,
+            fileName: fileName
+          }
+        });
+      }, 3000);
 
     } catch (error) {
-     // console.error("Error submitting job:", error);
       alert(`Failed to submit job. ${error.message}`);
     }
   };
@@ -131,7 +126,7 @@ function JobSubmission() {
     <div className="job-submission-page">
       <div className="job-submission-card">
         <h1 className="job-submission-title">Review &amp; Submit</h1>
-        
+
         {/*Success message display*/}
         {submissionStatus?.success && (
           <div className="success-message">

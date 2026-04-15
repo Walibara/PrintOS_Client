@@ -96,7 +96,7 @@ function FileUpload() {
   };
 
   // ---------------------------------------------------------
-  // Maria 11/16
+  // Malek 
   // User picked a new file and wants to keep going.
   // For now, we pass file info to /job-submission so it can POST correctly.
   // ---------------------------------------------------------
@@ -117,7 +117,7 @@ function FileUpload() {
   };
 
   // ---------------------------------------------------------
-  // Maria 11/16
+  // Malek
   // When someone selects a past file, this is where we handle it.
   // For the demo, we pass the selected file name + derived type.
   // ---------------------------------------------------------
