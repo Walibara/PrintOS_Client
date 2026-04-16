@@ -91,7 +91,13 @@ body {
   justify-content: center;
 }
 
-/* Amplify overrides */
+/* Amplify overrides
+The Amplify <Authenticator> component renders its own wrapper div
+with the attribute [data-amplify-authenticator]. Unlike our own
+custom classes, we can't control this div directly in JSX — Amplify
+generates it automatically. We target it using an attribute selector
+and need !important because Amplify injects its own inline styles. 
+Feel free to change it or play aroung with it- Maria 4/15 */
 [data-amplify-authenticator] {
   display: flex !important;
   justify-content: center !important;
@@ -105,7 +111,7 @@ body {
   border: 1px solid rgba(0, 51, 102, 0.15) !important;
   box-shadow: 0 4px 12px rgba(0, 51, 102, 0.12) !important;
   overflow: hidden;
-  width: 360px;
+  width: 360px !important;
 }
 
 [data-amplify-authenticator] .amplify-tabs__list {
