@@ -6,6 +6,8 @@ import ActionButton from "../ActionButton/ActionButton.jsx";
 import { useNavigate } from "react-router-dom";
 import * as statusMethods from "./JobStatusUtils.js";  
 import { useState, useEffect } from "react"; 
+ import { fetchAuthSession } from 'aws-amplify/auth';
+
 
 export default function JobStatus() {
 
@@ -17,7 +19,9 @@ export default function JobStatus() {
   //Grab the jobs
   useEffect(() => {
       const fetchJobs = async () => {
-        const data = await statusMethods.getJobs(); 
+        const session = await fetchAuthSession(); 
+        const userId = session.tokens.idToken.payload.sub;
+        const data = await statusMethods.getJobs(userId); 
         const selectColumns = data.map((job) => ({
           id: job.id,
           file: job.originalFile,
@@ -178,7 +182,7 @@ export default function JobStatus() {
         {/*Open Delete Modal*/}
         {openDeleteModal&&(
           <div className="delete-modal-overlay" onClick={deleteCloseModal}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="delete-modal-content" onClick={(e) => e.stopPropagation()}>
               <h3>Are you sure you want to delete</h3>
               <div className="job-delete-title">Job {selectedJob.id}?</div>
               <div className="button-div">

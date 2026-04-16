@@ -20,9 +20,12 @@ import JobHistory from '../JobHistory/JobHistory.jsx'
 import JobSubmission from '../JobSubmission/JobSubmission.jsx'
 import FileUpload from '../FileUpload/FileUpload.jsx'
 import FileRendering from '../FileRendering/FileRendering.jsx'
-
+import AboutUs from '../AboutUs/AboutUs.jsx'
+import React, { useState } from 'react'
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Authenticator
       signUpAttributes={['email']}
@@ -72,18 +75,26 @@ function App() {
                 Dashboard
               </Link>
 
-              <div className="nav-item">My Jobs</div>
-              <ul className="nav-submenu">
-                <li>
-                  <Link to="/file-upload">Job Submission</Link>
-                </li>
-                <li>
-                  <Link to="/my-jobs/status">Job Status</Link>
-                </li>
-                <li>
-                  <Link to="/my-jobs/history">Job History</Link>
-                </li>
-              </ul>
+             <div className="dropdown">
+              <div className="nav-item" onClick={() => setIsOpen(!isOpen)}>My Jobs</div>
+              {isOpen && (
+                <ul className="nav-submenu">
+                  <li>
+                    <Link to="/file-upload">Job Submission</Link>
+                  </li>
+                  <li>
+                    <Link to="/my-jobs/status">Job Status</Link>
+                  </li>
+                  <li>
+                    <Link to="/my-jobs/history">Job History</Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+              <Link to="/about-us" className="nav-item">
+                About Us
+              </Link>
 
               <button onClick={signOut} className="logout">Log out</button>
             </nav>
@@ -92,7 +103,7 @@ function App() {
           {/* Main content */}
           <main className="main-content">
             <header className="topbar">
-              <span>(Presentation Demo - Backend not functional yet)</span>
+              <span>Welcome, John</span>
             </header>
 
             <section className="content">
@@ -107,6 +118,7 @@ function App() {
                 <Route path="/job-submission" element={<JobSubmission />} />
                 <Route path="/file-upload" element={<FileUpload/>}/>
                 <Route path="/file-rendering" element={<FileRendering/>}/> 
+                <Route path="/about-us" element={<AboutUs/>}/>
 
               </Routes>
             </section>
