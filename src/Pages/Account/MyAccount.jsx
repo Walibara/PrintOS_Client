@@ -3,10 +3,29 @@ import "./MyAccount.css";
 import "./MyAccountResize.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMoneyCheckDollar, faGear } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
 
 export default function MyAccount() {
   const [activeTab, setActiveTab] = useState('personal');
+  const fullText = "Welcome, John Doe";
+  const [displayText, setDisplayText] = useState("");
+  const [doneTyping, setDoneTyping] = useState(false);
+
+  useEffect(() => {
+	let i = 0;
+
+	const interval = setInterval(() => {
+		setDisplayText(fullText.slice(0, i));
+		i++;
+
+		if (i > fullText.length) {
+			clearInterval(interval);
+			setDoneTyping(true);
+		}
+	}, 100);
+
+	return () => clearInterval(interval);
+	}, []);
 
   return (
 	<div className="my-account-wrapper">
@@ -17,7 +36,10 @@ export default function MyAccount() {
 		<div className="my-account-container p-4">
 
 		<div className="mb-4">
-			<h1 className="fw-bold">Welcome, John</h1>
+			<h1 className="fw-bold">
+				{displayText}
+				{!doneTyping && <span className="cursor">|</span>}
+			</h1>
 		</div>
 
 		<ul className="nav nav-pills mb-4">
