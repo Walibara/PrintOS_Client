@@ -3,19 +3,49 @@ import "./MyAccount.css";
 import "./MyAccountResize.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMoneyCheckDollar, faGear } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
+import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 
 export default function MyAccount() {
   const [activeTab, setActiveTab] = useState('personal');
-  const fullText = "Welcome, John Doe";
+
   const [displayText, setDisplayText] = useState("");
   const [doneTyping, setDoneTyping] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+    const fullText = `Welcome, ${userName}`;
 
   useEffect(() => {
+	const loadUser = async () => {
+		try {
+			const currentUser = await getCurrentUser();
+			const currentAttributes = await fetchUserAttributes(currentUser);
+
+			setUserName(currentUser.username);
+			setUserEmail(currentAttributes.email || "");
+
+		} catch (error) {
+			console.error("Could not load Cognito username", error);
+		}
+	};
+
+	loadUser();
+  }, []);
+
+
+
+
+
+  useEffect(() => {
+	//wait until userName is loaded before starting the typing effect
+	if (!userName) return; 
 	let i = 0;
 
+	setDisplayText("");
+	setDoneTyping(false);
+
 	const interval = setInterval(() => {
-		setDisplayText(fullText.slice(0, i));
+		setDisplayText(fullText.slice(0, i+1));
 		i++;
 
 		if (i > fullText.length) {
@@ -37,7 +67,7 @@ export default function MyAccount() {
 
 		<div className="mb-4">
 			<h1 className="fw-bold">
-				{displayText}
+				{fullText}
 				{!doneTyping && <span className="cursor">|</span>}
 			</h1>
 		</div>
@@ -85,7 +115,7 @@ export default function MyAccount() {
 					<div className="col-md-6">
 					<div className="p-3 bg-light rounded">
 						<small className="text-muted d-block">Account Name</small>
-						<strong>John Doe</strong>
+						<strong>{userName}</strong>
 					</div>
 					</div>
 					<div className="col-md-6">
