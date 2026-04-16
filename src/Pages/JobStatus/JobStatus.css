@@ -81,7 +81,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.delete-modal-overlay .modal-content h3 {
+.delete-modal-overlay .delete-modal-content h3 {
   display: flex;
   justify-content: center;
   align-items: center;

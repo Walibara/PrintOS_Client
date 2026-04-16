@@ -182,7 +182,7 @@ export default function JobStatus() {
         {/*Open Delete Modal*/}
         {openDeleteModal&&(
           <div className="delete-modal-overlay" onClick={deleteCloseModal}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="delete-modal-content" onClick={(e) => e.stopPropagation()}>
               <h3>Are you sure you want to delete</h3>
               <div className="job-delete-title">Job {selectedJob.id}?</div>
               <div className="button-div">

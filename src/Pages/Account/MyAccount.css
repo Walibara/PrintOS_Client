@@ -1,7 +1,7 @@
 .account-title{
     font-size: 3rem;
     font-weight: bold;
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     color:black;
     display: flex;
 }
@@ -77,4 +77,121 @@ personal information, billing transactions, and settings*/
 .personal-information:hover, .billing-transactions:hover, .settings:hover {
     background-color: #b2d5f7;
     color: white; 
+}
+
+.mb-4 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+    margin-top:2rem;
+}
+
+.my-account-container .nav-pills .nav-link.active {
+  background-color:#7cc2ff;
+  color: white;
+}
+
+.my-account-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.wave-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    hsl(356, 81%, 90%),
+    #9489e6,
+    #aad5ff,
+    #c5d3ea
+  );
+  background-size: 400% 400%;
+  animation: waveMove 12s ease-in-out infinite;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+.wave-bg::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+
+  background: repeating-radial-gradient(
+    circle at 30% 50%,
+    rgba(255,255,255,0.15) 0px,
+    rgba(255,255,255,0.15) 2px,
+    transparent 3px,
+    transparent 40px
+  );
+
+  animation: swirlLines 25s linear infinite;
+}
+
+@keyframes swirlLines {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+  50% {
+    transform: rotate(10deg) translateX(-50px);
+  }
+  100% {
+    transform: rotate(0deg) translateX(0);
+  }
+}
+
+@keyframes waveMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.my-account-container {
+  position: relative;
+  z-index: 1;
+}
+
+.lines {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    120deg,
+    rgba(255,255,255,0.1) 0px,
+    rgba(255,255,255,0.1) 1px,
+    transparent 1px,
+    transparent 25px
+  );
+}
+
+.layer1 {
+  animation: swirlLines 20s linear infinite;
+}
+
+.layer2 {
+  animation: swirlLines 35s linear infinite reverse;
+  opacity: 0.3;
+}
+
+.account-card {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-card .card-body {
+  flex: 1;
 }
