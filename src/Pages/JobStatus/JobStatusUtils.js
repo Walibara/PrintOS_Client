@@ -18,7 +18,7 @@ export async function getJobs(userId) {
             throw new Error ("No authentication token found")
         }
 
-        const response = await fetch(`${cleanBase}/api/jobs/${userId}`, { 
+        const response = await fetch(`${cleanBase}/api/jobs?userId=${userId}`, { 
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import ActionButton from "../ActionButton/ActionButton.jsx";
 import { useNavigate } from "react-router-dom";
 import * as statusMethods from "./JobStatusUtils.js";  
 import { useState, useEffect } from "react"; 
+ import { fetchAuthSession } from 'aws-amplify/auth';
 
 
 export default function JobStatus() {
