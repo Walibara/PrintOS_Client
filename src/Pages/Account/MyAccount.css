@@ -195,3 +195,15 @@ personal information, billing transactions, and settings*/
 .account-card .card-body {
   flex: 1;
 }
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
