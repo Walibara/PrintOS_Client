@@ -1,0 +1,196 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #c7e0f9, #ffffff);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+#root {
+  display: contents;
+}
+
+.login-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar-panel {
+  width: 220px;
+  flex-shrink: 0;
+  background-color: #003366;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-panel::before,
+.sidebar-panel::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.sidebar-panel::before {
+  top: -100px;
+  right: -100px;
+  width: 280px;
+  height: 280px;
+  border: 1.5px solid rgba(51, 161, 255, 0.15);
+}
+
+.sidebar-panel::after {
+  bottom: -60px;
+  left: -60px;
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(51, 161, 255, 0.1);
+}
+
+.logo {
+  width: 80px;
+  filter: brightness(0) invert(1);
+}
+
+.sidebar-text {
+  z-index: 1;
+}
+
+.sidebar-text h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #b3d9ff;
+  margin: 0 0 0.5rem;
+}
+
+.sidebar-text p {
+  font-size: 0.78rem;
+  color: #33a1ff;
+  margin: 0;
+}
+
+.sidebar-footer {
+  z-index: 1;
+  font-size: 0.68rem;
+  color: rgba(179, 217, 255, 0.35);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Amplify overrides */
+[data-amplify-authenticator] [data-amplify-router] {
+  border-radius: 8px !important;
+  border: 1px solid rgba(0, 51, 102, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(0, 51, 102, 0.12) !important;
+  overflow: hidden;
+  width: 360px;
+}
+
+[data-amplify-authenticator] .amplify-tabs__list {
+  border-bottom: 1px solid rgba(0, 51, 102, 0.15) !important;
+  background: #ffffff !important;
+}
+
+[data-amplify-authenticator] .amplify-tabs__item {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: rgba(0, 51, 102, 0.4) !important;
+  border-bottom: 2px solid transparent !important;
+  background: none !important;
+  transition: color 0.3s, border-color 0.3s !important;
+}
+
+[data-amplify-authenticator] .amplify-tabs__item--active,
+[data-amplify-authenticator] .amplify-tabs__item[aria-selected="true"] {
+  color: #003366 !important;
+  border-bottom-color: #33a1ff !important;
+}
+
+[data-amplify-authenticator] form {
+  padding: 1.75rem !important;
+  background: #ffffff !important;
+}
+
+[data-amplify-authenticator] .amplify-label {
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #003366 !important;
+}
+
+[data-amplify-authenticator] .amplify-input {
+  height: 40px !important;
+  border: 1px solid rgba(0, 51, 102, 0.25) !important;
+  border-radius: 4px !important;
+  color: #003366 !important;
+  background: #f0f7ff !important;
+}
+
+[data-amplify-authenticator] .amplify-input:focus {
+  border-color: #33a1ff !important;
+  box-shadow: 0 0 0 3px rgba(51, 161, 255, 0.18) !important;
+  background: #ffffff !important;
+}
+
+[data-amplify-authenticator] .amplify-button--primary {
+  background-color: #003366 !important;
+  color: #b3d9ff !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  height: 42px !important;
+  border-radius: 4px !important;
+  border: none !important;
+  transition: background 0.3s !important;
+}
+
+[data-amplify-authenticator] .amplify-button--primary:hover {
+  background-color: #004d99 !important;
+}
+
+[data-amplify-authenticator] .amplify-button--link {
+  color: #33a1ff !important;
+  font-weight: 600 !important;
+}
+
+[data-amplify-authenticator] .amplify-button--link:hover {
+  color: #66ccff !important;
+}
+
+@media (max-width: 600px) {
+  .login-page { flex-direction: column; }
+
+  .sidebar-panel {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 20px;
+    height: auto;
+  }
+
+  .sidebar-text,
+  .sidebar-footer,
+  .sidebar-panel::before,
+  .sidebar-panel::after { display: none; }
+
+  [data-amplify-authenticator] [data-amplify-router] {
+    width: 100% !important;
+    max-width: 360px !important;
+  }
+}
