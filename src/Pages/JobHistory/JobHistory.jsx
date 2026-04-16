@@ -1,10 +1,11 @@
 import wrongDB from "../../assets/wrong_db.jpeg";
 import "../App/App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
-import * as statusMethods from "../JobStatus/JobStatusUtils.js";
-import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
+import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
+import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
+
 
 export default function JobHistory() {
   const [jobHistory, setJobHistory] = useState([]);
@@ -35,14 +36,14 @@ export default function JobHistory() {
           const jobTwoHasADate = !!two.date;
 
           //if one job has a date and the other doesn't, the one with the date is there first
-          if (jobOneHasADate && !jobTwoHasADate) return -1;
-          if (!jobOneHasADate && jobTwoHasADate) return 1;
+          if (jobOneHasADate&& !jobTwoHasADate) return -1;
+          if (!jobOneHasADate&& jobTwoHasADate) return 1;
 
           //if both have dates, sort by date
           if (jobOneHasADate && jobTwoHasADate) {
             return new Date(two.date) - new Date(one.date);
           }
-          //sorting the job by descinging id
+          //sorting the job by descinging id 
 
           const jobOneId = Number(String(one.id).replace("Job-", ""));
           const jobTwoId = Number(String(two.id).replace("Job-", ""));
@@ -63,6 +64,7 @@ export default function JobHistory() {
     return () => clearInterval(interval);
   }, []);
 
+
   const mapStatus = (dbStatus) => {
     switch (dbStatus) {
       case "FINISHED":
@@ -78,21 +80,31 @@ export default function JobHistory() {
   };
 
   //calculateing the total pages
-  const totalPages = Math.ceil(jobHistory.length / itemsPerPage);
+
+  const totalPages = Math.max(1, Math.ceil(jobHistory.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = jobHistory.slice(startIndex, startIndex + itemsPerPage);
 
-  const handlePageChange = (page, e) => {
-    if (e) e.preventDefault();
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+
+    if (currentPage < 1) {
+      setCurrentPage(1);
+    }
+  }, [jobHistory, currentPage, totalPages]);
+
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
   //loading jobs
   if (loading) {
-    return <p>Loading jobs...</p>;
+    return (<p>Loading jobs...</p>);
   }
   if (error) {
-    return <p>An Error has occurred: {error}</p>;
+    return (<p>An Error has occurred: {error}</p>);
   }
 
   return (
@@ -105,63 +117,29 @@ export default function JobHistory() {
               <div className={`status-dot ${job.status}`}></div>
               <span className="job-id">{job.id}</span>
               <span className="job-file">{job.file}</span>
-              <span className="job-date">
-                {job.date
-                  ? new Date(job.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })
-                  : "N/A"}
-              </span>
+              <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
               <span className="status-icon">
-                {job.status === "success" && (
-                  <FaCheckCircle color="green" size="1.2em" />
-                )}
-                {job.status === "error" && (
-                  <FaTimesCircle color="red" size="1.2em" />
-                )}
-                {job.status === "pending" && (
-                  <FaClock color="orange" size="1.2em" />
-                )}
+                {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
+                {job.status === "error" &&  <FaTimesCircle color="red" size="1.2em" />}
+                {job.status === "pending" && <FaClock color="orange" size="1.2em" />}
               </span>
             </div>
           ))}
         </div>
       </div>
-
       <div className="paginations">
-        <button
-          type="button"
-          className="pagination-button"
-          disabled={currentPage === 1}
-          onClick={(e) => handlePageChange(currentPage - 1, e)}
-        >
-          Previous
-        </button>
-
+        <button type="button" className="pagination-button" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
         <div className="page-numbers">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              type="button"
-              key={page}
-              className={`page-number ${currentPage === page ? "active" : ""}`}
-              onClick={(e) => handlePageChange(page, e)}
-            >
-              {page}
-            </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <button type="button" key={page} className={`page-number ${currentPage === page ? "active" : ""}`} onClick={() => handlePageChange(page)}>{page}</button>
           ))}
-        </div>
 
-        <button
-          type="button"
-          className="pagination-button"
-          disabled={currentPage === totalPages}
-          onClick={(e) => handlePageChange(currentPage + 1, e)}
-        >
-          Next
-        </button>
+        </div>
+        <button type="button" className="pagination-button" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+
       </div>
-    </div>
+    
+    </div>  
+
   );
 }
