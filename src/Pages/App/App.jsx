@@ -9,6 +9,7 @@ import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react'
 
 import './App.css'
+import './Auth.css'
 import './indexResize.css'
 import hpLogo from '../../assets/HP_logo_2012.svg'
 import AmplifyHome from '../AmplifyHome/AmplifyHome.jsx'// we can remove this later
