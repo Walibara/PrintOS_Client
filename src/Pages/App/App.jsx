@@ -21,6 +21,7 @@ import JobHistory from '../JobHistory/JobHistory.jsx'
 import JobSubmission from '../JobSubmission/JobSubmission.jsx'
 import FileUpload from '../FileUpload/FileUpload.jsx'
 import FileRendering from '../FileRendering/FileRendering.jsx'
+import MyLibrary from '../MyLibrary/MyLibrary.jsx'
 import AboutUs from '../AboutUs/AboutUs.jsx'
 import React, { useState, useEffect } from 'react'
 import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
