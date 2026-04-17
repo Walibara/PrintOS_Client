@@ -33,7 +33,7 @@ export default function JobHistory() {
 
         const mappedJobs = data.map((job) => ({
           id: job.id,
-          displayId: `Job-${job.id}`,
+          displayId: `Job-${job.jobNumber}`,
           file: job.originalFile || job.files || "No file",
           dbStatus: job.status,
           status: mapStatus(job.status),
@@ -54,7 +54,6 @@ export default function JobHistory() {
             return new Date(two.date) - new Date(one.date);
           }
           //sorting the job by descinging id 
-
           const jobOneId = Number(String(one.id).replace("Job-", ""));
           const jobTwoId = Number(String(two.id).replace("Job-", ""));
 
