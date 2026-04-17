@@ -3,7 +3,7 @@ import "./MyAccount.css";
 import "./MyAccountResize.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMoneyCheckDollar, faGear } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect, use } from "react";
+import { useState, useEffect} from "react";
 import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 
 export default function MyAccount() {
@@ -19,7 +19,7 @@ export default function MyAccount() {
 	const loadUser = async () => {
 		try {
 			const currentUser = await getCurrentUser();
-			const currentAttributes = await fetchUserAttributes(currentUser);
+			const currentAttributes = await fetchUserAttributes();
 
 			setUserName(currentUser.username);
 			setUserEmail(currentAttributes.email || "");
@@ -55,7 +55,7 @@ export default function MyAccount() {
 	}, 100);
 
 	return () => clearInterval(interval);
-	}, []);
+	}, [userName, fullText]);
 
   return (
 	<div className="my-account-wrapper">
@@ -67,7 +67,7 @@ export default function MyAccount() {
 
 		<div className="mb-4">
 			<h1 className="fw-bold">
-				{fullText}
+				{displayText}
 				{!doneTyping && <span className="cursor">|</span>}
 			</h1>
 		</div>
@@ -118,6 +118,13 @@ export default function MyAccount() {
 						<strong>{userName}</strong>
 					</div>
 					</div>
+					<div className="col-md-6">
+					<div className="p-3 bg-light rounded">
+						<small className="text-muted d-block">Email</small>
+						<strong>{userEmail}</strong>
+					</div>
+					</div>
+					
 					<div className="col-md-6">
 					<div className="p-3 bg-light rounded">
 						<small className="text-muted d-block">Account Created</small>
