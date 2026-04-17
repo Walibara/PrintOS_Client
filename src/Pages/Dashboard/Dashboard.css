@@ -51,7 +51,7 @@
 .stat-card h2 {
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #0A2A43; /* navy like upload page */
+  color: #0A2A43;    
 }
 
 .stat-card hr {
@@ -83,6 +83,8 @@
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   color: #0A2A43;
 }
+
+
 
 .history-section h2 {
   margin-bottom: 1rem;
@@ -123,7 +125,7 @@
 }
 
 .status-dot.error {
-  background-color: brown; /* keep if you want */
+  background-color: brown; 
 }
 
 .status-dot.pending {
