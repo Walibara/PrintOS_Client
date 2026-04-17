@@ -12,6 +12,20 @@ export default function MyLibrary() {
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
 
+  const fetchViewUrl = async (s3Key, token) => {
+    try {
+      const res = await fetch(
+        `${API_BASE}/api/s3/view-url?s3Key=${encodeURIComponent(s3Key)}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.viewUrl;
+    } catch {
+      return null;
+    }
+  }
+
   useEffect(() => {
     const fetchLibrary = async () => {
       try {
@@ -25,6 +39,18 @@ export default function MyLibrary() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setFiles(data);
+
+        const urls = {};
+        await Promise.all(
+          data.map(async (file) => {
+            if (isImage(file.fileType) && file.s3Key) {
+              const url = await fetchViewUrl(file.s3Key, token);
+              if (url) urls[file.id] = url;
+            }
+          })
+        );
+        setPreviewUrls(urls);
+
       } catch (err) {
         setError("Failed to load your library.");
       } finally {
@@ -55,7 +81,7 @@ export default function MyLibrary() {
     );
   }
 
-    return (
+  return (
     <div className="library-page">
       <h1 className="library-title">My Library</h1>
       <p className="library-subtitle">
@@ -75,9 +101,14 @@ export default function MyLibrary() {
             className="library-card"
             onClick={() => setSelectedFile(file)}
           >
-            {/* Image or icon preview */}
             <div className="library-card-image">
-              {isImage(file.fileType) ? "🖼️" : "📄"}
+              {previewUrls[file.id] ? (
+                <img
+                  src={previewUrls[file.id]}
+                  alt={file.originalFile}
+                  onError={(e) => { e.target.replaceWith(document.createTextNode("🖼️")); }}
+                />
+              ) : isImage(file.fileType) ? "🖼️" : "📄"}
             </div>
 
             <div className="library-card-body">
@@ -126,7 +157,12 @@ export default function MyLibrary() {
             <h2 className="library-modal-title">{selectedFile.originalFile}</h2>
 
             <div className="library-modal-preview">
-              {isImage(selectedFile.fileType) ? "🖼️" : "📄"}
+              {previewUrls[selectedFile.id] ? (
+                <img
+                  src={previewUrls[selectedFile.id]}
+                  alt={selectedFile.originalFile}
+                />
+              ) : isImage(selectedFile.fileType) ? "🖼️" : "📄"}
             </div>
 
             <p className="library-modal-meta">
