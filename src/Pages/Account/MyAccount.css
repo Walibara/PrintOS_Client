@@ -186,7 +186,7 @@ personal information, billing transactions, and settings*/
 }
 
 .my-account-wrapper {
-  background: linear-gradient(270deg, #d6aaf3, #a6e5f8, #93bbe3);
+  background: linear-gradient(270deg, #e5c2fd, #d1f4ff, #c8e3fe);
   background-size: 400% 400%;
   animation: gradientShift 6s ease infinite;
 }
@@ -195,4 +195,17 @@ personal information, billing transactions, and settings*/
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+.password {
+  margin-bottom: .3rem; 
+}
+
+.delete-info{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.delete-info .p1 {
+  font-weight: bold; 
 }

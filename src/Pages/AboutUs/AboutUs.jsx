@@ -56,13 +56,13 @@ export default function AboutUs() {
 
       <div className="our-story">
         <h2>About Us</h2>
-        <p>The HP PrintOS Capstone web application was created by students of Washington State University from September 2025 to May 2026.
+        <p>The HP PrintOS Capstone web application was created by students of Washington State University frosm September 2025 to May 2026.
            <br />Student Developers include: Maria Stefanovic, Fatimah Diallo, Malek Abualya, Mona Abualya, and Emma Sturm. 
             <br />The goal of this project is to create an application where users are able to create print and manage their different print requests.</p>
       </div>
       <div className= "our-sponsors">
         <h2>Our Sponsors</h2>
-        <p>HP PrintOS Team: Kendra Swafford, James Keirnan, Thieu Dang, and Kelvin Sapathy.</p></div>
+        <p>HP PrintOS Team: Kendra Swafford, James Keirnan, Thieu Dang, Jon Lewis, and Kelvin Sapathy.</p></div>
     </div>
   );
 }
