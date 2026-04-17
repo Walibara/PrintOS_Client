@@ -149,6 +149,7 @@ export default function Dashboard() {
           <h1>{finishedJobs}</h1>
           <p>Jobs Completed</p>
         </div>
+        
       </div>
 
       <div className="history-section">
