@@ -222,19 +222,42 @@ export default function JobHistory() {
       </div>
       <div className="history-section">
         <div className="history-list">
-          {currentItems.map((job) => (
-            <div key={job.id} className="history-item">
+          {currentItems.length === 0 ? (
+            <p>No jobs found for the selected filter.</p>
+          ) : (
+            currentItems.map((job) => (
+              <div key={job.id} className="history-item">
+
               <div className={`status-dot ${job.status}`}></div>
-              <span className="job-id">{job.id}</span>
+              <span className="job-id">{job.displayId}</span>
               <span className="job-file">{job.file}</span>
+              <ActionButton
+                  job={job}
+                  onViewReceipt={handleViewReceipt}
+                  onRerunJob={handleRerunJob}
+                />
               <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
               <span className="status-icon">
                 {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
                 {job.status === "error" &&  <FaTimesCircle color="red" size="1.2em" />}
                 {job.status === "pending" && <FaClock color="orange" size="1.2em" />}
               </span>
+              <div
+                  className="delete"
+                  onClick={() => handleViewDelete(job)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleViewDelete(job);
+                    }
+                  }}
+                >
+                  x
+              </div>
             </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
       <div className="paginations">
@@ -248,6 +271,65 @@ export default function JobHistory() {
         <button type="button" className="pagination-button" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
 
       </div>
+
+            {openModal && selectedJob && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Receipt for {selectedJob.displayId}</h2>
+            </div>
+
+            <div className="receipt-details">
+              <p>
+                <strong>Job ID:</strong> {selectedJob.displayId}
+              </p>
+              <p>
+                <strong>File:</strong> {selectedJob.file}
+              </p>
+              <p>
+                <strong>Status:</strong> {selectedJob.dbStatus}
+              </p>
+              <p>
+                <strong>Date:</strong>{" "}
+                {selectedJob.date
+                  ? new Date(selectedJob.date).toLocaleString()
+                  : "N/A"}
+              </p>
+              <div className="receipt-amount">
+                <p>
+                  <strong>Amount Paid:</strong> $50.00
+                </p>
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button className="print-receipt-btn">Print Receipt</button>
+              <button className="download-receipt-btn">Download PDF</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openDeleteModal && selectedJob && (
+        <div className="delete-modal-overlay" onClick={deleteCloseModal}>
+          <div
+            className="delete-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Are you sure you want to delete</h3>
+            <div className="job-delete-title">{selectedJob.displayId}?</div>
+
+            <div className="button-div">
+              <button className="cancelDelete" onClick={deleteCloseModal}>
+                Cancel
+              </button>
+              <button className="confirmDelete" onClick={deleteJobHelper}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     
     </div>  
 
