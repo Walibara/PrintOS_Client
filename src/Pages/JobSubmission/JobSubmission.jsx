@@ -37,6 +37,7 @@ function JobSubmission() {
     ? fileTypeRaw.split("/")[1]
     : fileTypeRaw;
 
+  const s3Key = location.state?.s3Key || sessionStorage.getItem("uploadedS3Key") || "";
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim(); //Backend base URL (set in Vite/Amplify env vars)
 
   // ---------------------------------------------------------
@@ -62,8 +63,9 @@ function JobSubmission() {
       material: material || "default",
       originalFile: fileName,
       fileType: fileType,
-      additionalComments: additionalComments
-      // FIX: removed uploadedByUserId (was hardcoded + likely wrong type -> 400)
+      additionalComments: additionalComments,
+      s3Key: s3Key
+      // FIX: removed uploadedByUserId (was hardcoded + likely wrong type -> 400),
     };
 
     try {
@@ -96,7 +98,7 @@ function JobSubmission() {
       console.log("Job created:", result);
 
       // Get Job Submission confirmation with job number from database
-      const jobNumber = result.id || result.jobNumber || result.job_id || "N/A";
+      const jobNumber = result.jobNumber || result.job_number || result..id || "N/A";
       setSubmissionStatus({ success: true, jobNumber });
 
       // Save job id so FileRendering can use it
