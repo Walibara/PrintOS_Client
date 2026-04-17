@@ -23,35 +23,69 @@
   color: red;
 }
 
+/* ---- Card Grid ---- */
 .library-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
 }
 
 .library-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 51, 102, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.library-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 51, 102, 0.15);
+  transform: translateY(-2px);
+}
+
+.library-card-image {
+  width: 100%;
+  height: 180px;
+  background: #f0f7ff;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: #ffffff;
-  border: 1px solid rgba(0, 51, 102, 0.15);
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 51, 102, 0.08);
+  justify-content: center;
+  font-size: 3rem;
+  overflow: hidden;
 }
 
-.library-card-icon {
-  font-size: 2rem;
+.library-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.library-card-info {
+.library-card-body {
+  padding: 1rem;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.library-card-label {
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .library-file-name {
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: #003366;
-  margin: 0 0 0.25rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .library-file-meta {
@@ -60,7 +94,112 @@
   margin: 0;
 }
 
+.library-card-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.08);
+  display: flex;
+  justify-content: flex-end;
+}
+
 .library-resubmit-btn {
+  background: none;
+  border: none;
+  color: #0066cc;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.library-resubmit-btn:hover {
+  color: #003366;
+}
+
+/* ---- Modal ---- */
+.library-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.library-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 500px;
+  max-width: 90vw;
+  position: relative;
+}
+
+.library-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.library-modal-title {
+  font-size: 1.2rem;
+  color: #003366;
+  margin: 0 0 1.5rem;
+  padding-right: 2rem;
+}
+
+.library-modal-preview {
+  background: #f0f7ff;
+  border-radius: 8px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  font-size: 4rem;
+}
+
+.library-modal-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.library-modal-meta {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.library-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.library-cancel-btn {
+  background: none;
+  border: 1px solid rgba(0, 51, 102, 0.3);
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  color: #003366;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.library-cancel-btn:hover {
+  background: #f0f7ff;
+}
+
+.library-modal-resubmit-btn {
   background-color: #003366;
   color: #b3d9ff;
   border: none;
@@ -71,6 +210,6 @@
   transition: background 0.3s;
 }
 
-.library-resubmit-btn:hover {
+.library-modal-resubmit-btn:hover {
   background-color: #004d99;
 }
