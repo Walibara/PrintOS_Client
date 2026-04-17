@@ -178,8 +178,49 @@ export default function JobHistory() {
 
   return (
     <div className="job-history-container">
-      <div className="history-section">
+      <div className="history-header">
         <h1>Job History</h1>
+        <button
+          className="submit-btn"
+          onClick={() => navigate("/file-upload")}
+        >
+          Submit New Job
+        </button>
+      </div>
+      <div className="history-filters">
+        <button
+          type="button"
+          className={`filter-btn ${statusFilter === "ALL" ? "active" : ""}`}
+          onClick={() => setStatusFilter("ALL")}
+        >
+          All
+        </button>
+
+        <button
+          type="button"
+          className={`filter-btn ${statusFilter === "COMPLETED" ? "active" : ""}`}
+          onClick={() => setStatusFilter("COMPLETED")}
+        >
+          Completed
+        </button>
+
+        <button
+          type="button"
+          className={`filter-btn ${statusFilter === "IN_PROGRESS" ? "active" : ""}`}
+          onClick={() => setStatusFilter("IN_PROGRESS")}
+        >
+          In Progress
+        </button>
+
+        <button
+          type="button"
+          className={`filter-btn ${statusFilter === "FAILED" ? "active" : ""}`}
+          onClick={() => setStatusFilter("FAILED")}
+        >
+          Failed
+        </button>
+      </div>
+      <div className="history-section">
         <div className="history-list">
           {currentItems.map((job) => (
             <div key={job.id} className="history-item">
