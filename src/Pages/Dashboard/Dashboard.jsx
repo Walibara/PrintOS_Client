@@ -126,29 +126,30 @@ export default function Dashboard() {
 
       <div className="stats-grid">
         <div className="stat-card">
-          <h3>Total Jobs Today</h3>
+          <h2>Jobs Today</h2>
           <hr />
           <h1>{totalJobs}</h1>
           <p>^ 12% from yesterday</p>
         </div>
         <div className="stat-card">
-          <h3>In Progress</h3>
+          <h2>In Progress</h2>
           <hr />
           <h1>{inProgressJobs}</h1>
           <p>Jobs in Progress</p>
         </div>
         <div className="stat-card">
-          <h3>Failed</h3>
+          <h2>Failed</h2>
           <hr />
           <h1>{failedJobs}</h1>
           <p>Retry Attempts: 3</p>
         </div>
         <div className="stat-card">
-          <h3>Finished</h3>
+          <h2>Finished</h2>
           <hr />
           <h1>{finishedJobs}</h1>
           <p>Jobs Completed</p>
         </div>
+        
       </div>
 
       <div className="history-section">
