@@ -7,6 +7,7 @@ export default function MyLibrary() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null); 
   const navigate = useNavigate();
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
@@ -48,10 +49,18 @@ export default function MyLibrary() {
     });
   };
 
-  return (
+  const isImage = (fileType) => {
+    return ["jpg", "jpeg", "png", "gif", "webp", "svg"].includes(
+      fileType?.toLowerCase()
+    );
+  }
+
+    return (
     <div className="library-page">
       <h1 className="library-title">My Library</h1>
-      <p className="library-subtitle">All files you have uploaded. Resubmit any file as a new job.</p>
+      <p className="library-subtitle">
+        All files you have uploaded. Click a file to preview and resubmit.
+      </p>
 
       {loading && <p className="library-status">Loading your files...</p>}
       {error && <p className="library-status error">{error}</p>}
@@ -61,27 +70,91 @@ export default function MyLibrary() {
 
       <div className="library-grid">
         {files.map((file) => (
-          <div key={file.id} className="library-card">
-            <div className="library-card-icon">📄</div>
-            <div className="library-card-info">
+          <div
+            key={file.id}
+            className="library-card"
+            onClick={() => setSelectedFile(file)}
+          >
+            {/* Image or icon preview */}
+            <div className="library-card-image">
+              {isImage(file.fileType) ? "🖼️" : "📄"}
+            </div>
+
+            <div className="library-card-body">
+              <span className="library-card-label">
+                {file.fileType?.toUpperCase() || "File"}
+              </span>
               <p className="library-file-name">{file.originalFile}</p>
               <p className="library-file-meta">
-                {file.fileType?.toUpperCase()} · {file.createdAt
+                {file.createdAt
                   ? new Date(file.createdAt).toLocaleDateString("en-US", {
                       year: "numeric", month: "2-digit", day: "2-digit"
                     })
                   : "N/A"}
               </p>
             </div>
-            <button
-              className="library-resubmit-btn"
-              onClick={() => handleResubmit(file)}
-            >
-              Resubmit
-            </button>
+
+            <div className="library-card-footer">
+              <button
+                className="library-resubmit-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleResubmit(file);
+                }}
+              >
+                ↗ Resubmit
+              </button>
+            </div>
           </div>
         ))}
       </div>
+
+      {/* Modal */}
+      {selectedFile && (
+        <div
+          className="library-modal-overlay"
+          onClick={() => setSelectedFile(null)}
+        >
+          <div className="library-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="library-modal-close"
+              onClick={() => setSelectedFile(null)}
+            >
+              ✕
+            </button>
+
+            <h2 className="library-modal-title">{selectedFile.originalFile}</h2>
+
+            <div className="library-modal-preview">
+              {isImage(selectedFile.fileType) ? "🖼️" : "📄"}
+            </div>
+
+            <p className="library-modal-meta">
+              Uploaded:{" "}
+              {selectedFile.createdAt
+                ? new Date(selectedFile.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric", month: "long", day: "2-digit",
+                  })
+                : "N/A"}
+            </p>
+
+            <div className="library-modal-actions">
+              <button
+                className="library-cancel-btn"
+                onClick={() => setSelectedFile(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="library-modal-resubmit-btn"
+                onClick={() => handleResubmit(selectedFile)}
+              >
+                Resubmit as New Job
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
