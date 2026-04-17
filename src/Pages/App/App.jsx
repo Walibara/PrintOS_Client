@@ -113,6 +113,10 @@ function App() {
                 </ul>
               )}
             </div>
+              
+              <Link to="/my-library" className="nav-item">
+                My Library
+              </Link>
 
               <Link to="/about-us" className="nav-item">
                 About Us
@@ -141,6 +145,7 @@ function App() {
                 <Route path="/file-upload" element={<FileUpload/>}/>
                 <Route path="/file-rendering" element={<FileRendering/>}/> 
                 <Route path="/about-us" element={<AboutUs/>}/>
+                <Route path="/my-library" element={<MyLibrary />} />
 
               </Routes>
             </section>
