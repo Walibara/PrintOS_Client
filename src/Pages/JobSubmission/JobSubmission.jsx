@@ -98,7 +98,7 @@ function JobSubmission() {
       console.log("Job created:", result);
 
       // Get Job Submission confirmation with job number from database
-      const jobNumber = result.jobNumber || result.job_number || result..id || "N/A";
+      const jobNumber = result.jobNumber || result.job_number || result.id || "N/A";
       setSubmissionStatus({ success: true, jobNumber });
 
       // Save job id so FileRendering can use it
