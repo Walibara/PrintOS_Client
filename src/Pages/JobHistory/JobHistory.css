@@ -85,7 +85,9 @@
   display: flex;
   flex-direction: column;
   min-height: 60vh; 
+  padding: 0 30px 30px 30px; 
 }
+
 
 .history-section {
   flex: 1;
@@ -157,6 +159,7 @@
   margin-bottom: 1rem;
   gap: 1rem;
   flex-wrap: wrap;
+  padding: 16px 24px 0;
 }
 
 .history-filters {
@@ -175,6 +178,8 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.2s ease;
+  center-content: true;
+
 }
 
 .filter-btn:hover {
@@ -198,4 +203,3 @@
   font-size: 1rem;
   background-color: #fafafa;
 }
-
