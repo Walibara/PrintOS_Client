@@ -8,12 +8,19 @@ import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 
 export default function MyAccount() {
   const [activeTab, setActiveTab] = useState('personal');
-
   const [displayText, setDisplayText] = useState("");
+
   const [doneTyping, setDoneTyping] = useState(false);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-    const fullText = `Welcome, ${userName}`;
+  const [name, setName] = useState("John Doe");
+  const [showUsernameModal, setShowUsernameModal] = useState(false);
+  const [showPasswordModal, setPasswordModal] = useState(false); 
+  const [showMultiModal, setMultiModal] = useState(false); 
+  const [showPrivacyModal, setPrivacyModal] = useState(false); 
+
+  const fullText = `Welcome, ${name}`;
+  const description = 'This page provides access to your account information, most recent billing transaction, and settings.'
 
   useEffect(() => {
 	const loadUser = async () => {
@@ -21,8 +28,13 @@ export default function MyAccount() {
 			const currentUser = await getCurrentUser();
 			const currentAttributes = await fetchUserAttributes();
 
+			console.log("currentUser:", currentUser);
+			console.log("currentAttributes:", currentAttributes);
+			console.log("currentUser:", currentUser);
+
 			setUserName(currentUser.username);
 			setUserEmail(currentAttributes.email || "");
+			setName(currentAttributes.name || ""); 
 
 		} catch (error) {
 			console.error("Could not load Cognito username", error);
@@ -32,13 +44,9 @@ export default function MyAccount() {
 	loadUser();
   }, []);
 
-
-
-
-
   useEffect(() => {
 	//wait until userName is loaded before starting the typing effect
-	if (!userName) return; 
+	if (!userName || !name) return; 
 	let i = 0;
 
 	setDisplayText("");
@@ -55,7 +63,7 @@ export default function MyAccount() {
 	}, 100);
 
 	return () => clearInterval(interval);
-	}, [userName, fullText]);
+	}, [name, fullText]);
 
   return (
 	<div className="my-account-wrapper">
@@ -66,11 +74,13 @@ export default function MyAccount() {
 		<div className="my-account-container p-4">
 
 		<div className="mb-4">
-			<h1 className="fw-bold">
+			<h1 className="fw-bold">boop
 				{displayText}
 				{!doneTyping && <span className="cursor">|</span>}
 			</h1>
 		</div>
+
+		<div className="description"><p>{description} {doneTyping && <span className="cursor">|</span>} </p></div>
 
 		<ul className="nav nav-pills mb-4">
 			<li className="nav-item">
@@ -108,7 +118,7 @@ export default function MyAccount() {
 			{activeTab === 'personal' && (
 				<div>
 				<h4 className="card-title mb-4">
-					<FontAwesomeIcon icon={faUser} className="me-2 text-primary" />
+					<FontAwesomeIcon icon={faUser} className="font-awesome" />
 					Personal Information
 				</h4>
 				<div className="row g-3">
@@ -144,7 +154,7 @@ export default function MyAccount() {
 			{activeTab === 'billing' && (
 				<div>
 				<h4 className="card-title mb-4">
-					<FontAwesomeIcon icon={faMoneyCheckDollar} className="me-2 text-primary" />
+					<FontAwesomeIcon icon={faMoneyCheckDollar} className="font-awesome" />
 					Billing Transactions
 				</h4>
 				<div className="row g-3">
@@ -172,12 +182,6 @@ export default function MyAccount() {
 						<strong>10/25/2025</strong>
 					</div>
 					</div>
-					<div className="col-md-6">
-					<div className="p-3 bg-light rounded">
-						<small className="text-muted d-block">Amount</small>
-						<strong className="text-success">$150.00</strong>
-					</div>
-					</div>
 				</div>
 				</div>
 			)}
@@ -185,23 +189,27 @@ export default function MyAccount() {
 			{activeTab === 'settings' && (
 				<div>
 				<h4 className="card-title mb-4">
-					<FontAwesomeIcon icon={faGear} className="me-2 text-primary" />
+					<FontAwesomeIcon icon={faGear} className="font-awesome" />
 					Settings
 				</h4>
 				<div className="list-group">
-					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+					onClick={() => setShowUsernameModal(true)} >
 					Change Username
 					<span className="text-muted">›</span>
 					</button>
-					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+					onClick={() => setPasswordModal(true)} >
 					Change Password
 					<span className="text-muted">›</span>
 					</button>
-					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+					onClick={() => setMultiModal(true)} >
 					Multifactor Authentication Set-Up
 					<span className="text-muted">›</span>
 					</button>
-					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					<button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+					onClick={() => setPrivacyModal(true)} >
 					Privacy Settings
 					<span className="text-muted">›</span>
 					</button>
@@ -212,6 +220,78 @@ export default function MyAccount() {
 			</div>
 		</div>
 		</div>
+
+		{/* Username Modal */}
+		{showUsernameModal && (
+		<div className="custom-modal-overlay" onClick={() => setShowUsernameModal(false)}>
+			<div className="custom-modal-content" onClick={(e) => e.stopPropagation()}>
+
+				<div className="user-modal-content">
+					<h3>Change Username</h3>
+					<input type="text" className="new-username" placeholder="Enter new username" />
+				</div>
+
+				<div className="buttons">
+					<button className="cancel-button" onClick={() => setShowUsernameModal(false)}>Cancel</button>
+					<button className="save-button">Save</button>{/*Where to update username for incognito -Emma */}
+				</div>
+
+			</div>
+		</div>
+		)}
+
+		{/* Password Modal */}
+		{showPasswordModal && (
+		<div className="custom-modal-overlay" onClick={() => setPasswordModal(false)}>
+			<div className="custom-modal-content" onClick={(e) => e.stopPropagation()}>
+				
+				<div className="user-modal-content">
+					<h3>Change Password</h3>
+					<input type="text" className="new-username" placeholder="Enter new username" />
+				</div>
+
+				<div className="buttons">
+					<button className="cancel-button" onClick={() => setPasswordModal(false)}>Cancel</button>
+					<button className="save-button">Save</button>{/*Where to update user password for incognito -Emma */}
+				</div>
+
+			</div>
+		</div>
+		)}
+
+		{/* MultiFactor Authentification */}
+		{showMultiModal && (
+		<div className="custom-modal-overlay" onClick={() => setMultiModal(false)}>
+			<div className="custom-modal-content" onClick={(e) => e.stopPropagation()}>
+				
+				<div className="user-modal-content">
+					<p>Multifactor Authentification not supported right now</p>
+				</div>
+
+				<div className="buttons">
+					<button className="cancel-button" onClick={() => setMultiModal(false)}>Go Back</button>
+				</div>
+
+			</div>
+		</div>
+		)}
+
+		{/* Privacy Settings */}
+		{showPrivacyModal && (
+		<div className="custom-modal-overlay" onClick={() => setPrivacyModal(false)}>
+			<div className="custom-modal-content" onClick={(e) => e.stopPropagation()}>
+				
+				<div className="user-modal-content">
+					<p>Privacy settings are not available right now</p>
+				</div>
+
+				<div className="buttons">
+					<button className="cancel-button" onClick={() => setPrivacyModal(false)}>Go Back</button>
+				</div>
+
+			</div>
+		</div>
+		)}
 	</div>
   );
 }

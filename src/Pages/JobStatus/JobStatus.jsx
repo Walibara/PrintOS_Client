@@ -153,9 +153,9 @@ export default function JobStatus() {
 
         {/*  The Modal for Receipt */}
         {openModal&& (
-          <div className="modal-overlay" onClick={closeModal}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
+          <div className="custom-modal-overlay" onClick={closeModal}>
+            <div className="custom-modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="custom-modal-header">
               <h2>Receipt for {selectedJob.jobNumber}</h2>
             </div>
             <div className="receipt-details">
@@ -171,7 +171,7 @@ export default function JobStatus() {
             </>
             )}
           </div>
-          <div className="modal-footer">
+          <div className="custom-modal-footer">
             <button className="print-receipt-btn">Print Receipt</button>
             <button className="download-receipt-btn">Download PDF</button>
           </div>

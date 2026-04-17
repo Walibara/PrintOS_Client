@@ -30,7 +30,7 @@
 }
 
 
-.modal-overlay {
+.custom-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -43,7 +43,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.custom-modal-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -53,7 +53,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.modal-header {
+.custom-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,12 +62,12 @@
   padding-bottom: 10px;
 }
 
-.modal-header h2 {
+.custom-modal-header h2 {
   margin: 0;
   color: #333;
 }
 
-.modal-close-btn {
+.custom-modal-close-btn {
   background: none;
   border: none;
   font-size: 24px;
@@ -75,7 +75,7 @@
   color: #666;
 }
 
-.modal-close-btn:hover {
+.custom-modal-close-btn:hover {
   color: #333;
 }
 
@@ -94,7 +94,7 @@
   margin-top: 15px;
 }
 
-.modal-footer {
+.custom-modal-footer {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
