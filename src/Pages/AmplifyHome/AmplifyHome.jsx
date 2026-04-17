@@ -57,7 +57,7 @@ function AmplifyHome() {
             </div>
           </Link>
 
-          <Link to="/my-jobs/status" className="home-grid-item">
+          <Link to="/my-jobs/history" className="home-grid-item">
             <div className="grid-text">
               <h3>Job Status</h3>
               <p>Track active, in progress, or completed jobs</p>
