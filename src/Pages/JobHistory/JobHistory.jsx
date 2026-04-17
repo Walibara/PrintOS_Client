@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
 import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
-
+import ActionButton from "../ActionButton/ActionButton.jsx";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 export default function JobHistory() {
   const [jobHistory, setJobHistory] = useState([]);
@@ -15,16 +16,24 @@ export default function JobHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const navigate = useNavigate();
+  
+
   // Grab the jobs
   useEffect(() => {
-    const fetchJobs = async () => {
+    const fetchJobs = async (userId) => {
       try {
         setLoading(true);
         setError("");
-        const data = await statusMethods.getJobs();
+        const data = await statusMethods.getJobs(userId);
 
         const mappedJobs = data.map((job) => ({
           id: `Job-${job.id}`,
+          displayId: `Job-${job.id}`,
           file: job.originalFile || job.files || "No file",
           status: mapStatus(job.status),
           date: job.createdAt,
@@ -59,6 +68,7 @@ export default function JobHistory() {
       }
     };
 
+
     fetchJobs();
     const interval = setInterval(fetchJobs, 5000);
     return () => clearInterval(interval);
@@ -79,7 +89,18 @@ export default function JobHistory() {
     }
   };
 
+    const filteredJobs = jobHistory.filter((job) => {
+    if (statusFilter === "ALL") return true;
+    if (statusFilter === "COMPLETED") return job.dbStatus === "FINISHED";
+    if (statusFilter === "IN_PROGRESS") {
+      return job.dbStatus === "IN_PROGRESS" || job.dbStatus === "CREATED";
+    }
+    if (statusFilter === "FAILED") return job.dbStatus === "FAILED";
+    return true;
+  });
+
   //calculateing the total pages
+
 
   const totalPages = Math.max(1, Math.ceil(jobHistory.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -98,6 +119,54 @@ export default function JobHistory() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  const handleViewReceipt = (job) => {
+    setSelectedJob(job);
+    setOpenModal(true);
+  };
+
+  const handleViewDelete = (job) => {
+    setSelectedJob(job);
+    setOpenDeleteModal(true);
+  };
+
+  const handleRerunJob = (job) => {
+    console.log(`Rerunning job ID: ${job.id}`);
+    alert(`Rerunning job ID: ${job.id}`);
+  };
+
+  const closeModal = () => {
+    setOpenModal(false);
+    setSelectedJob(null);
+  };
+
+   const deleteCloseModal = () => {
+    setOpenDeleteModal(false);
+    setSelectedJob(null);
+  };
+
+  const deleteJobHelper = async () => {
+    try {
+      await statusMethods.deleteJob(selectedJob.id);
+      setJobHistory((prev) => prev.filter((job) => job.id !== selectedJob.id));
+    } catch (err) {
+      console.error("Failed to delete job:", err);
+      alert(err.message || "Failed to delete job.");
+    } finally {
+      setOpenDeleteModal(false);
+      setSelectedJob(null);
+    }
+  };
+ const renderStatusIcon = (job) => {
+    if (job.status === "success") {
+      return <FaCheckCircle color="green" size="1.2em" />;
+    }
+    if (job.status === "error") {
+      return <FaTimesCircle color="red" size="1.2em" />;
+    }
+    return <FaClock color="orange" size="1.2em" />;
+  };
+
 
   //loading jobs
   if (loading) {
