@@ -29,6 +29,7 @@ function App() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
     useEffect(() => {
     const loadUser = async () => {
