@@ -284,7 +284,7 @@ function FileRendering() {
                 <button
                   type="button"
                   className="primary-button"
-                  onClick={() => navigate("/my-jobs/status")}
+                  onClick={() => navigate("/my-jobs/history")}
                 >
                   View Job Status
                 </button>
