@@ -22,10 +22,30 @@ import JobSubmission from '../JobSubmission/JobSubmission.jsx'
 import FileUpload from '../FileUpload/FileUpload.jsx'
 import FileRendering from '../FileRendering/FileRendering.jsx'
 import AboutUs from '../AboutUs/AboutUs.jsx'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 
 function App() {
+
   const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        const currentAttributes = await fetchUserAttributes();
+  
+        setUserName(currentUser.username);
+        setUserEmail(currentAttributes.email || "");
+  
+      } catch (error) {
+        console.error("Could not load Cognito username", error);
+      }
+    };
+  
+    loadUser();
+    }, []);
 
   return (
     <Authenticator
@@ -104,7 +124,7 @@ function App() {
           {/* Main content */}
           <main className="main-content">
             <header className="topbar">
-              <span>Welcome, John</span>
+              <span>Welcome, {userName}</span>
             </header>
 
             <section className="content">
@@ -129,6 +149,11 @@ function App() {
   )}
   </Authenticator>
   )
+
+
+
 }
+
+
 
 export default App
