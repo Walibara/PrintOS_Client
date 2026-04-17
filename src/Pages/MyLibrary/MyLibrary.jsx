@@ -8,6 +8,7 @@ export default function MyLibrary() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null); 
+  const [previewUrls, setPreviewUrls] = useState({});
   const navigate = useNavigate();
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
