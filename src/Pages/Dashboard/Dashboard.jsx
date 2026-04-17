@@ -25,7 +25,8 @@ export default function Dashboard() {
         const data = await statusMethods.getJobs();
 
         const mappedJobs = data.map((job) => ({
-          id: `Job-${job.id}`,
+          id: job.id,
+          jobNumber: job.jobNumber, 
           file: job.originalFile || job.files || "No file",
           status: mapStatus(job.status),
           date: job.createdAt,
@@ -47,10 +48,8 @@ export default function Dashboard() {
           }
           //sorting the job by descinging id 
 
-          const jobOneId = Number(String(one.id).replace("Job-", ""));
-          const jobTwoId = Number(String(two.id).replace("Job-", ""));
-
-          return jobTwoId - jobOneId;
+          
+          return two.id - one.id;
         });
 
         const latestJobs = mappedJobs.slice(0, 3);
@@ -158,7 +157,7 @@ export default function Dashboard() {
           {jobHistory.map((job) => (
             <div key={job.id} className="history-item">
               <div className={`status-dot ${job.status}`}></div>
-              <span className="job-id">{job.id}</span>
+              <span className="job-id">{"Job #" + job.jobNumber}</span>
               <span className="job-file">{job.file}</span>
               <span className="status-icon">
                 {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
