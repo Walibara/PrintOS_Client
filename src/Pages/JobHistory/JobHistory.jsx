@@ -136,7 +136,7 @@ const handleViewReceipt = (job) => {
 
   const handleRerunJob = (job) => {
     console.log(`Rerunning job ID: ${job.id}`);
-    alert(`Rerunning job ID: ${job.id}`);
+    navigate("/file-upload");
   }
 
   const closeModal = () => {
