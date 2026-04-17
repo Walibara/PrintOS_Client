@@ -15,6 +15,9 @@ export default function Dashboard() {
   const [inProgressJobs, setInprogressJobs] = useState(0);
   const [failedJobs, setFailedJobs] = useState(0);
   const [finishedJobs, setFinishedJobs] = useState(0);
+  const [jobsToday, setJobsToday] = useState(0);
+  const [jobsYesterday, setJobsYesterday] = useState(0);
+  const [jobsPercentChange, setJobsPercentChange] = useState(0);
 
   // Grab the jobs
   useEffect(() => {
@@ -23,6 +26,7 @@ export default function Dashboard() {
         setLoading(true);
         setError("");
         const data = await statusMethods.getJobs();
+        
 
         const mappedJobs = data.map((job) => ({
           id: job.id,
@@ -31,6 +35,56 @@ export default function Dashboard() {
           status: mapStatus(job.status),
           date: job.createdAt,
         }));
+
+        /// the date
+
+      const formatDay = (dateValue) => {
+        const date = new Date(dateValue);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      };
+
+      const today = new Date();
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+
+      const todayKey = formatDay(today);
+      const yesterdayKey = formatDay(yesterday);
+
+      const jobsByDate = {};
+
+      //yesterday and today's total
+
+      for (const job of data) {
+        if (!job.createdAt) continue;
+
+        const dateKey = formatDay(job.createdAt);
+
+        if (!jobsByDate[dateKey]) {
+          jobsByDate[dateKey] = 0;
+        }
+
+        jobsByDate[dateKey]++;
+      }
+
+      const todayCount = jobsByDate[todayKey] || 0;
+      const yesterdayCount = jobsByDate[yesterdayKey] || 0;
+
+      setJobsToday(todayCount);
+      setJobsYesterday(yesterdayCount);
+      
+      //calculate the percentage
+      let percentChange = 0;
+
+      if (yesterdayCount === 0 && todayCount > 0) {
+        percentChange = 100;
+      } else if (yesterdayCount > 0) {
+        percentChange = ((todayCount - yesterdayCount) / yesterdayCount) * 100;
+      }
+
+      setJobsPercentChange(percentChange);
 
 
         // // Sort jobs by date (newest first)   
@@ -129,7 +183,8 @@ export default function Dashboard() {
           <h2>Jobs Today</h2>
           <hr />
           <h1>{totalJobs}</h1>
-          <p>^ 12% from yesterday</p>
+          <p>{jobsPercentChange >= 0 ? "↑" : "↓"} {Math.abs(jobsPercentChange).toFixed(1)}% from yesterday</p>
+          
         </div>
         <div className="stat-card">
           <h2>In Progress</h2>
@@ -141,7 +196,7 @@ export default function Dashboard() {
           <h2>Failed</h2>
           <hr />
           <h1>{failedJobs}</h1>
-          <p>Retry Attempts: 3</p>
+          <p>Jobs Failed </p>
         </div>
         <div className="stat-card">
           <h2>Finished</h2>
