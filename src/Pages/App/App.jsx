@@ -30,7 +30,9 @@ function App() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState("");
+  const [firstName, setName] = useState(""); 
   const [userEmail, setUserEmail] = useState("");
+
 
     useEffect(() => {
     const loadUser = async () => {
@@ -40,6 +42,7 @@ function App() {
   
         setUserName(currentAttributes['cognito:username'] || currentAttributes.email?.split('@')[0] || currentUser.username);
         setUserEmail(currentAttributes.email || "");
+        setName(currentAttributes.name || ""); 
   
       } catch (error) {
         console.error("Could not load Cognito username", error);
@@ -54,6 +57,12 @@ function App() {
       signUpAttributes={['email']}
       formFields={{
         signUp: {
+          name: {                       
+            order: 1,
+            placeholder: 'Enter your first name',
+            label: 'First Name',
+            isRequired: true,
+          },
           username: {
             order: 1,
             placeholder: 'Choose a username',
@@ -71,8 +80,11 @@ function App() {
         },
       }}
 >
-      {({ signOut, user }) => ( 
-      <BrowserRouter>
+      {({ signOut, user }) => {                                      
+          const displayName = firstName || user?.attributes?.name || "";
+
+        return (
+<BrowserRouter>
         <div className="app-container">
           {/* Sidebar */}
           <aside className="sidebar">
@@ -129,8 +141,9 @@ function App() {
 
           {/* Main content */}
           <main className="main-content">
+
             <header className="topbar">
-              <span>Welcome, {userName}</span>
+              <span>Welcome{displayName ? `, ${displayName}` : ""}</span>
             </header>
 
             <section className="content">
@@ -153,14 +166,11 @@ function App() {
           </main>
         </div>
       </BrowserRouter>
-  )}
+      
+    ); 
+      }}
   </Authenticator>
   )
-
-
-
 }
-
-
 
 export default App

@@ -104,6 +104,10 @@ Feel free to change it or play aroung with it- Maria 4/15 */
   align-items: center !important;
   width: 100% !important;
   height: 100vh !important;
+
+  background: linear-gradient(270deg, #e5c2fd, #d1f4ff, #c8e3fe) !important;
+  background-size: 400% 400% !important;
+  animation: gradientShift 6s ease infinite !important;
 }
 
 [data-amplify-authenticator] [data-amplify-router] {
@@ -139,6 +143,8 @@ Feel free to change it or play aroung with it- Maria 4/15 */
 [data-amplify-authenticator] form {
   padding: 1.75rem !important;
   background: #ffffff !important;
+  align-items: center !important; 
+  width: 100% !important;
 }
 
 [data-amplify-authenticator] .amplify-label {
@@ -161,17 +167,6 @@ Feel free to change it or play aroung with it- Maria 4/15 */
   border-color: #33a1ff !important;
   box-shadow: 0 0 0 3px rgba(51, 161, 255, 0.18) !important;
   background: #ffffff !important;
-}
-
-[data-amplify-authenticator] .amplify-button--primary {
-  background-color: #003366 !important;
-  color: #b3d9ff !important;
-  font-size: 0.875rem !important;
-  font-weight: 700 !important;
-  height: 42px !important;
-  border-radius: 4px !important;
-  border: none !important;
-  transition: background 0.3s !important;
 }
 
 [data-amplify-authenticator] .amplify-button--primary:hover {
