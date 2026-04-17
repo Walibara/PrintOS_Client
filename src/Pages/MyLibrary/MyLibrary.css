@@ -1,0 +1,76 @@
+.library-page {
+  padding: 2rem;
+}
+
+.library-title {
+  font-size: 2rem;
+  color: #003366;
+  margin-bottom: 0.5rem;
+}
+
+.library-subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.library-status {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.library-status.error {
+  color: red;
+}
+
+.library-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.library-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 51, 102, 0.08);
+}
+
+.library-card-icon {
+  font-size: 2rem;
+}
+
+.library-card-info {
+  flex: 1;
+}
+
+.library-file-name {
+  font-weight: 600;
+  color: #003366;
+  margin: 0 0 0.25rem;
+}
+
+.library-file-meta {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0;
+}
+
+.library-resubmit-btn {
+  background-color: #003366;
+  color: #b3d9ff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.library-resubmit-btn:hover {
+  background-color: #004d99;
+}
