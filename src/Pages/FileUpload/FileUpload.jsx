@@ -50,6 +50,7 @@ function FileUpload() {
   // ---------------------------------------------------------
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFilePreview, setSelectedFilePreview] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   // ---------------------------------------------------------
   // For the “previously uploaded” option: - Maria 11/16
@@ -100,21 +101,51 @@ function FileUpload() {
   // User picked a new file and wants to keep going.
   // For now, we pass file info to /job-submission so it can POST correctly.
   // ---------------------------------------------------------
-  const handleContinueWithNew = () => {
+  // Changes so we can use s3Bucket - Maria 4/16
+  const handleContinueWithNew = async () => {
     if (!selectedFile) return;
 
-    // Pass uploaded file info to Job Submission (no UI change)
-    const nextState = {
-      fileName: selectedFile.name,
-      fileType: selectedFile.type
-    };
+  try {
+      setUploading(true);
 
-    // Fallback for refreshes / direct navigation
-    sessionStorage.setItem("uploadedFileName", nextState.fileName);
-    sessionStorage.setItem("uploadedFileType", nextState.fileType);
+      const cleanBase = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
 
-    navigate("/job-submission", { state: nextState });
+      // Step 1: Get pre-signed URL from server
+      const presignRes = await fetch(
+        `${cleanBase}/api/s3/presigned-url?fileName=${encodeURIComponent(selectedFile.name)}&fileType=${encodeURIComponent(selectedFile.type)}`
+      );
+      if (!presignRes.ok) throw new Error("Failed to get upload URL");
+      const { uploadUrl, s3Key } = await presignRes.json();
+
+      // Step 2: Upload file directly to S3
+      const uploadRes = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": selectedFile.type },
+        body: selectedFile
+      });
+      if (!uploadRes.ok) throw new Error("Failed to upload file to S3");
+
+      // Step 3: Navigate with s3Key
+      const nextState = {
+        fileName: selectedFile.name,
+        fileType: selectedFile.type,
+        s3Key: s3Key
+      };
+
+      sessionStorage.setItem("uploadedFileName", nextState.fileName);
+      sessionStorage.setItem("uploadedFileType", nextState.fileType);
+      sessionStorage.setItem("uploadedS3Key", s3Key);
+
+      navigate("/job-submission", { state: nextState });
+
+    } catch (err) {
+      alert(`Upload failed: ${err.message}`);
+    } finally {
+      setUploading(false);
+    }
   };
+
+   
 
   // ---------------------------------------------------------
   // Malek
@@ -191,10 +222,10 @@ function FileUpload() {
 
             <button
               className="primary-button"
-              disabled={!selectedFile}
+              disabled={!selectedFile || uploading}
               onClick={handleContinueWithNew}
             >
-              Continue with New File
+              {uploading ? "Uploading..." : "Continue with New File"} 
             </button>
           </section>
 
