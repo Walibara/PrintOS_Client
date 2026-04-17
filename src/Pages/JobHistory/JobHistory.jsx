@@ -61,9 +61,13 @@ export default function JobHistory() {
         });
 
         setJobHistory(mappedJobs);
-      } catch (err) {
-        setError(err.message || "Failed to load job history");
-      } finally {
+      }catch (err) {
+        if (err?.status === 404 || err?.message?.includes("User not found")) {
+          setJobHistory([]);  
+          setError("");       
+          setError(err.message || "Failed to load job history");
+        }
+      }finally {
         setLoading(false);
       }
     };
@@ -176,7 +180,7 @@ const handleViewReceipt = (job) => {
     return (<p>Loading jobs...</p>);
   }
   if (error) {
-    return (<p>An Error has occurred: {error}</p>);
+    return <p>No job history available</p>;
   }
 
   return (
