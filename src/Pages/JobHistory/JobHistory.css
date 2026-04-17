@@ -97,3 +97,105 @@
   flex: 1;
   min-height: 420px; 
 }
+
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.custom-modal-content {
+  background: white;
+  color: black;
+  width: 90%;
+  max-width: 650px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.custom-modal-header {
+  margin-bottom: 1rem;
+}
+
+.custom-modal-header h2 {
+  margin: 0;
+  color: black;
+}
+
+.custom-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.receipt-details p {
+  margin-bottom: 0.8rem;
+  color: black;
+}
+
+.receipt-amount {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.history-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background-color: #f1f1f1;
+  color: black;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: #e4e4e4;
+}
+
+.filter-btn.active {
+  background-color: #38a9ff;
+  color: white;
+  border-color: #38a9ff;
+}
+
+.empty-history {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  color: #666;
+  font-size: 1rem;
+  background-color: #fafafa;
+}
+
