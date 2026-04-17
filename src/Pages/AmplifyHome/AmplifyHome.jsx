@@ -36,11 +36,7 @@ function AmplifyHome() {
           Welcome To HP PrintOS Orchestration Application
         </h1>
 
-        <p className="home-sub">
-          Hello User, select any action below of your choosing.
-        </p>
-
-        <div className="system-banner">
+       {/*} <div className="system-banner">
           <div>
             <strong>System Status: All Services Online</strong>
             <p className="system-sub">
@@ -50,7 +46,7 @@ function AmplifyHome() {
               Backend says: {message}
             </p>
           </div>
-        </div>
+        </div>*/}
 
         <div className="home-grid">
 
@@ -91,10 +87,6 @@ function AmplifyHome() {
         <button className="hidden-debug-btn" onClick={() => setCount(count + 1)}>
           count is {count}
         </button>
-
-        <p className="home-note">
-          This section is only used for verifying the Amplify → Backend connection.
-        </p>
 
       </div>
     </div>

@@ -47,7 +47,8 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
-.stat-card h3 {
+
+.stat-card h2 {
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #0A2A43; /* navy like upload page */
