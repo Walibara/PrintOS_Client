@@ -104,9 +104,9 @@ function App() {
                   <li>
                     <Link to="/file-upload">Job Submission</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/my-jobs/status">Job Status</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/my-jobs/history">Job History</Link>
                   </li>
