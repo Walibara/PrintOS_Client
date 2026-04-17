@@ -37,7 +37,7 @@ function App() {
         const currentUser = await getCurrentUser();
         const currentAttributes = await fetchUserAttributes();
   
-        setUserName(currentUser.username);
+        setUserName(currentAttributes['cognito:username'] || currentAttributes.email?.split('@')[0] || currentUser.username);
         setUserEmail(currentAttributes.email || "");
   
       } catch (error) {
