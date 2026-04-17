@@ -70,7 +70,7 @@ export default function JobHistory() {
 
 
     fetchJobs();
-    const interval = setInterval(fetchJobs, 5000);
+    const interval = setInterval(fetchJobs, 10000000);
     return () => clearInterval(interval);
   }, []);
 
