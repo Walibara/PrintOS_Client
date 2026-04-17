@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
 import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
 import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
-import ActionButton from "../ActionButton/ActionButton.jsx";
+import ActionButton from "../ActionButton/ActionButton.jsx"; 
 import { fetchAuthSession } from "aws-amplify/auth";
 
 export default function JobHistory() {
@@ -32,9 +32,10 @@ export default function JobHistory() {
         const data = await statusMethods.getJobs(userId);
 
         const mappedJobs = data.map((job) => ({
-          id: `Job-${job.id}`,
+          id: job.id,
           displayId: `Job-${job.id}`,
           file: job.originalFile || job.files || "No file",
+          dbStatus: job.status,
           status: mapStatus(job.status),
           date: job.createdAt,
         }));
@@ -102,44 +103,47 @@ export default function JobHistory() {
   //calculateing the total pages
 
 
-  const totalPages = Math.max(1, Math.ceil(jobHistory.length / itemsPerPage));
+  const totalPages = Math.max(1, Math.ceil(filteredJobs.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = jobHistory.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = filteredJobs.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
 
+    
+
     if (currentPage < 1) {
       setCurrentPage(1);
     }
-  }, [jobHistory, currentPage, totalPages]);
+  }, [filteredJobs, currentPage, totalPages]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const handleViewReceipt = (job) => {
-    setSelectedJob(job);
-    setOpenModal(true);
-  };
+const handleViewReceipt = (job) => {
+  console.log("opening modal for", job);
+  setSelectedJob(job);
+  setOpenModal(true);
+};
 
   const handleViewDelete = (job) => {
     setSelectedJob(job);
-    setOpenDeleteModal(true);
-  };
+    setOpenDeleteModal(true); 
+  }
 
   const handleRerunJob = (job) => {
     console.log(`Rerunning job ID: ${job.id}`);
     alert(`Rerunning job ID: ${job.id}`);
-  };
+  }
 
   const closeModal = () => {
     setOpenModal(false);
     setSelectedJob(null);
-  };
-
+  }
+  
    const deleteCloseModal = () => {
     setOpenDeleteModal(false);
     setSelectedJob(null);
@@ -231,11 +235,11 @@ export default function JobHistory() {
               <div className={`status-dot ${job.status}`}></div>
               <span className="job-id">{job.displayId}</span>
               <span className="job-file">{job.file}</span>
-              <ActionButton
-                  job={job}
+              <ActionButton 
+                job={job}
                   onViewReceipt={handleViewReceipt}
                   onRerunJob={handleRerunJob}
-                />
+                /> 
               <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
               <span className="status-icon">
                 {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
@@ -272,39 +276,31 @@ export default function JobHistory() {
 
       </div>
 
-            {openModal && selectedJob && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+      {openModal && selectedJob && (
+        <div className="custom-modal-overlay" onClick={closeModal}>
+          <div className="custom-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="custom-modal-header">
               <h2>Receipt for {selectedJob.displayId}</h2>
             </div>
 
             <div className="receipt-details">
-              <p>
-                <strong>Job ID:</strong> {selectedJob.displayId}
-              </p>
-              <p>
-                <strong>File:</strong> {selectedJob.file}
-              </p>
-              <p>
-                <strong>Status:</strong> {selectedJob.dbStatus}
-              </p>
+              <p><strong>Job ID:</strong> {selectedJob.displayId}</p>
+              <p><strong>File:</strong> {selectedJob.file}</p>
+              <p><strong>Status:</strong> {selectedJob.dbStatus}</p>
               <p>
                 <strong>Date:</strong>{" "}
-                {selectedJob.date
-                  ? new Date(selectedJob.date).toLocaleString()
-                  : "N/A"}
+                {selectedJob.date ? new Date(selectedJob.date).toLocaleString() : "N/A"}
               </p>
+
               <div className="receipt-amount">
-                <p>
-                  <strong>Amount Paid:</strong> $50.00
-                </p>
+                <p><strong>Amount Paid:</strong> $50.00</p>
               </div>
             </div>
 
-            <div className="modal-footer">
+            <div className="custom-modal-footer">
               <button className="print-receipt-btn">Print Receipt</button>
               <button className="download-receipt-btn">Download PDF</button>
+              <button className="cancelDelete" onClick={closeModal}>Close</button>
             </div>
           </div>
         </div>
