@@ -84,9 +84,6 @@ export default function MyLibrary() {
   return (
     <div className="library-page">
       <h1 className="library-title">My Library</h1>
-      <p className="library-subtitle">
-        All files you have uploaded. Click a file to preview and resubmit.
-      </p>
 
       {loading && <p className="library-status">Loading your files...</p>}
       {error && <p className="library-status error">{error}</p>}
