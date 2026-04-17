@@ -24,6 +24,7 @@ export default function JobStatus() {
         const data = await statusMethods.getJobs(userId); 
         const selectColumns = data.map((job) => ({
           id: job.id,
+          jobNumber: job.jobNumber,
           file: job.originalFile,
           status: job.status,
           date: job.createdAt
@@ -90,7 +91,7 @@ export default function JobStatus() {
             {completedJobsList.map((job) => (
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
-                <span className="job-id">{"Job Id: " + job.id}</span>
+                <span className="job-id">{"Job #" + job.jobNumber}</span>
                 <span className="job-file">{job.file}</span> 
                 <ActionButton 
                   job={job}
@@ -112,7 +113,7 @@ export default function JobStatus() {
             {inProgressJobsList.map((job) => (
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
-                <span className="job-id">{"Job Id: " + job.id}</span>
+                <span className="job-id">{"Job #" + job.jobNumber}</span>
                 <span className="job-file">{job.file}</span>
                 <ActionButton 
                 job={job}
@@ -134,7 +135,7 @@ export default function JobStatus() {
             {failedJobsList.map((job) => (
               <div key={job.id} className="job-item">
                 <div className={`status-dot ${job.status}`}></div>
-                <span className="job-id">{"Job Id: " + job.id}</span>
+                <span className="job-id">{"Job #" + job.jobNumber}</span>
                 <span className="job-file">{job.file}</span> 
                 <ActionButton 
                 job={job}
@@ -155,12 +156,12 @@ export default function JobStatus() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
-              <h2>Receipt for {selectedJob.id}</h2>
+              <h2>Receipt for {selectedJob.jobNumber}</h2>
             </div>
             <div className="receipt-details">
               {selectedJob && (
                 <>
-                  <p><strong>Job ID:</strong> {selectedJob.id}</p>
+                  <p><strong>Job ID:</strong> {selectedJob.jobNumber}</p>
                   <p><strong>File:</strong> {selectedJob.file}</p>
                   <p><strong>Status:</strong> {selectedJob.status}</p>
                   <p><strong>Date:</strong> {selectedJob.date}</p>
@@ -184,7 +185,7 @@ export default function JobStatus() {
           <div className="delete-modal-overlay" onClick={deleteCloseModal}>
             <div className="delete-modal-content" onClick={(e) => e.stopPropagation()}>
               <h3>Are you sure you want to delete</h3>
-              <div className="job-delete-title">Job {selectedJob.id}?</div>
+              <div className="job-delete-title">Job {selectedJob.jobNumber}?</div>
               <div className="button-div">
                 <button className="cancelDelete" onClick={deleteCloseModal}>Cancel</button>
                 <button className= "confirmDelete" onClick={deleteJobHelper}>Delete</button>
