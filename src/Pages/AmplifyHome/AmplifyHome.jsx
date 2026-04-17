@@ -12,7 +12,7 @@ function AmplifyHome() {
 
     if (!baseUrl) {
       if (window.location.hostname.includes("amplifyapp.com")) {
-        baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+        baseUrl = "https://dkdavnbhgrmho.cloudfront.net"
       } else {
         baseUrl = "http://localhost:8080";
       }
