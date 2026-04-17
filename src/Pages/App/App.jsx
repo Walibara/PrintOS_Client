@@ -152,7 +152,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/my-account" element={<MyAccount />} />
                 <Route path="/my-jobs" element={<MyJobs />} />
-                <Route path="/my-jobs/status" element={<JobStatus />} />
+                <Route path="/my-jobs/status" element={<JobHistory />} />
                 <Route path="/my-jobs/history" element={<JobHistory />} />
                 <Route path="/my-jobs/submit" element={<JobSubmission />} />
                 <Route path="/job-submission" element={<JobSubmission />} />
