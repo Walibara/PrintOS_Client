@@ -19,24 +19,24 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FileUpload.css";
 
-import codingHumor1 from "../../assets/coding_humor1.jpg";
+/*import codingHumor1 from "../../assets/coding_humor1.jpg";
 import codingHumor2 from "../../assets/coding_humor2.png";
 import codingHumor3 from "../../assets/coding_humor3.jpg";
 import codingHumor4 from "../../assets/coding_humor4.jpg";
-import PickMeChooseMe from "../../assets/BennyFront.png";
+import PickMeChooseMe from "../../assets/BennyFront.png";*/
 
 // -----------------------------------------------------------
 // DEMO-ONLY DATA: - Maria 11/16
 // This list of “previous files” is just hardcoded for now.
 // Later on, this will come from the database.
 // -----------------------------------------------------------
-const previouslyUploadedFiles = [
+/*const previouslyUploadedFiles = [
   { id: "humor1", name: "Coding Humor 1", thumbnail: codingHumor1 },
   { id: "humor2", name: "Coding Humor 2", thumbnail: codingHumor2 },
   { id: "humor3", name: "Coding Humor 3", thumbnail: codingHumor3 },
   { id: "humor4", name: "Coding Humor 4", thumbnail: codingHumor4 },
   { id: "humor5", name: "Pick me, Choose Me", thumbnail: PickMeChooseMe },
-];
+];*/
 
 function FileUpload() {
   const navigate = useNavigate();
@@ -59,10 +59,10 @@ function FileUpload() {
   //
   // Later this will tie into real files from the backend.
   // ---------------------------------------------------------
-  const [selectedPreviousId, setSelectedPreviousId] = useState("");
+  /*const [selectedPreviousId, setSelectedPreviousId] = useState("");
   const selectedPreviousFile = previouslyUploadedFiles.find(
     (f) => f.id === selectedPreviousId
-  );
+  );*/
 
   // ---------------------------------------------------------
   // Maria 11/16
@@ -92,9 +92,9 @@ function FileUpload() {
   //
   // Later on, this will fetch the real file details from the server.
   // ---------------------------------------------------------
-  const handlePreviousChange = (e) => {
+  /*const handlePreviousChange = (e) => {
     setSelectedPreviousId(e.target.value);
-  };
+  };*/
 
   // ---------------------------------------------------------
   // Malek 
@@ -146,13 +146,12 @@ function FileUpload() {
   };
 
    
-
   // ---------------------------------------------------------
   // Malek
   // When someone selects a past file, this is where we handle it.
   // For the demo, we pass the selected file name + derived type.
   // ---------------------------------------------------------
-  const handleContinueWithPrevious = () => {
+  /*const handleContinueWithPrevious = () => {
     if (!selectedPreviousFile) return;
 
     // Demo previous files only include a name + thumbnail, so derive a type from the thumbnail.
@@ -169,7 +168,7 @@ function FileUpload() {
     sessionStorage.setItem("uploadedFileType", nextState.fileType);
 
     navigate("/job-submission", { state: nextState });
-  };
+  };*/
 
   // ---------------------------------------------------------
   // Maria 11/16
@@ -182,7 +181,7 @@ function FileUpload() {
       <div className="file-upload-card">
         <h1 className="file-upload-title">Upload Your File</h1>
         <p className="file-upload-subtitle">
-          Choose a new file from your device or reuse something you uploaded earlier.
+          Choose a new file from your device or reuse something from your library.
         </p>
 
         <div className="file-upload-grid">
@@ -233,10 +232,10 @@ function FileUpload() {
           <section className="file-upload-section">
             <h2>Previously Uploaded</h2>
             <p className="section-description">
-              Reuse a file you have already uploaded.
+              Pick a file from your library.
             </p>
 
-            <select
+            {/*<select
               className="file-select"
               value={selectedPreviousId}
               onChange={handlePreviousChange}
@@ -256,14 +255,13 @@ function FileUpload() {
                   alt={selectedPreviousFile.name}
                 />
               </div>
-            )}
+            )} */}
 
             <button
               className="secondary-button"
-              disabled={!selectedPreviousFile}
-              onClick={handleContinueWithPrevious}
+              onClick={() => navigate("/my-library")}
             >
-              Continue with Selected File
+              Go to My Library
             </button>
           </section>
         </div>
