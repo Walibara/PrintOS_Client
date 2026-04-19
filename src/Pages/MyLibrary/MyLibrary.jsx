@@ -13,6 +13,8 @@ export default function MyLibrary() {
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
 
+  /*
+  Commenting this out since I changed the way to get the pics from the s3 bucket
   const fetchViewUrl = async (s3Key, token) => {
     try {
       const res = await fetch(
@@ -25,7 +27,7 @@ export default function MyLibrary() {
     } catch {
       return null;
     }
-  }
+  }*/
 
   useEffect(() => {
     const fetchLibrary = async () => {
@@ -45,8 +47,14 @@ export default function MyLibrary() {
         await Promise.all(
           data.map(async (file) => {
             if (isImage(file.fileType) && file.s3Key) {
-              const url = await fetchViewUrl(file.s3Key, token);
-              if (url) urls[file.id] = url;
+              const res = await fetch(
+                `${API_BASE}/api/s3/file/${encodeURIComponent(file.s3Key)}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+              );
+              if (res.ok) {
+                const blob = await res.blob();
+                urls[file.id] = URL.createObjectURL(blob);
+              }
             }
           })
         );
