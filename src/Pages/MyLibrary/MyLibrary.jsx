@@ -11,7 +11,7 @@ export default function MyLibrary() {
   const [previewUrls, setPreviewUrls] = useState({});
   const navigate = useNavigate();
 
-  const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
+  const API_BASE = import.meta.env.VITE_API_URL?.trim().replace(/\/$/, "");
 
   /*
   Commenting this out since I changed the way to get the pics from the s3 bucket
@@ -48,7 +48,7 @@ export default function MyLibrary() {
           data.map(async (file) => {
             if (isImage(file.fileType) && file.s3Key) {
               const res = await fetch(
-                `${API_BASE}/api/s3/file/${encodeURIComponent(file.s3Key)}`,
+                `${API_BASE}/api/s3/file/${file.s3Key}`,
                 { headers: { Authorization: `Bearer ${token}` } }
               );
               if (res.ok) {
