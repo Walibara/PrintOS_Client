@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./JobSubmission.css";
 import BennyFront from "../../assets/BennyFront.png";
@@ -18,6 +18,7 @@ function JobSubmission() {
   const [additionalCustomization, setAdditionalCustomization] = useState("");
   const [additionalComments, setAdditionalComments] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   // ---------------------------------------------------------
   // NEW (no UI change):
@@ -39,6 +40,27 @@ function JobSubmission() {
 
   const s3Key = location.state?.s3Key || sessionStorage.getItem("uploadedS3Key") || "";
   const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim(); //Backend base URL (set in Vite/Amplify env vars)
+
+  //Lets get the actual image from the S3 Bucket
+  useEffect(() => {
+    const fetchPreview = async () => {
+      if (!s3Key) return;
+      try {
+        const session = await fetchAuthSession();
+        const token = session.tokens?.idToken?.toString();
+        const res = await fetch(`${API_BASE}/api/s3/file/${s3Key}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const blob = await res.blob();
+          setPreviewUrl(URL.createObjectURL(blob));
+        }
+      } catch (err) {
+        console.error("Preview fetch failed:", err);
+      }
+    };
+    fetchPreview();
+  }, [s3Key]);
 
   // ---------------------------------------------------------
   // When the user submits, send the job info to backend
@@ -141,27 +163,18 @@ function JobSubmission() {
           {/* LEFT SIDE: file preview */}
           <div className="job-preview-card">
             <div className="job-preview-inner">
-              <div className="job-preview-page">
+              {previewUrl ? (
                 <img
-                  src={BennyFront}
-                  alt="Front of business card"
+                  src={previewUrl}
+                  alt={fileName}
                   className="job-preview-image"
-                />
-                <p className="job-preview-page-label">Front</p>
-              </div>
-
-              <div className="job-preview-page">
-                <img
-                  src={BennyBack}
-                  alt="Back of business card"
-                  className="job-preview-image"
-                />
-                <p className="job-preview-page-label">Back</p>
-              </div>
+                  />
+              ):(
+              <p className="job-preview-caption"> Loading Preview...</p>
+              )}
             </div>
-
-            <p className="job-preview-caption">Your file</p>
-          </div>
+            <p className="job-preview-caption">{fileName}</p>
+            </div>
 
           {/* RIGHT SIDE: job type form and buttons */}
           <form className="job-form" onSubmit={handleSubmit}>
