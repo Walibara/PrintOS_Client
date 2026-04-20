@@ -230,8 +230,10 @@ const handleViewReceipt = (job) => {
     <div className="job-history-container">
       <div className="job-history-inner">
       <div className="history-header">
+      <div className="history-title-group">
         <h1>Job History</h1>
-        <p>Review your past print jobs, check their status, and manage them all in one place.</p>
+        <p className="job-history-subtitle">Review and manage your print jobs.</p>
+      </div>
         <button
           className="submit-btn"
           onClick={() => navigate("/file-upload")}
