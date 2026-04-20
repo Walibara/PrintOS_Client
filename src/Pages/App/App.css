@@ -12,6 +12,9 @@ html, body, #root {
   height: 100vh;      
   width: 100vw;
   overflow: hidden;  
+  position: relative;
+  z-index: 100;
+  background: linear-gradient(to bottom, #c7e0f9, #ffffff);
 }
 
 /* Sidebar */

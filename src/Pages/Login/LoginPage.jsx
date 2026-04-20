@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import "./Auth.css";
 
 import login1 from "../../assets/login1.png";
@@ -12,7 +13,7 @@ import login8 from "../../assets/login8.png";
 
 const collageImages = [login1, login2, login3, login4, login5, login6, login7, login8];
 
-//Got these from one of the PrintOS pics... I thought it would be good to include them 
+//Got these from one of the PrintOS pics... I thought it would be good to include them
 const taglines = [
   "Achieve The Highest Color Standards",
   "Automate Production",
@@ -22,7 +23,29 @@ const taglines = [
   "Adopt Best Practices",
 ];
 
-export default function LoginPage({ children, isAuthenticated }) {
+export default function LoginPage({ children }) {
+
+  const { authStatus } = useAuthenticator();
+  const isAuthenticated = authStatus === "authenticated";
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [collageDimmed, setCollageDimmed] = useState(false);
+  const [textVisible, setTextVisible] = useState(false);
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [taglineIndex, setTaglineIndex] = useState(0);
+  const [taglineFade, setTaglineFade] = useState(true);
+
+  if (authStatus === "configuring") {
+    return null;
+  }
+
+  if (isAuthenticated) {
+    return <>{children}</>;
+  }
+
+  return <LoginAnimation>{children}</LoginAnimation>;
+}
+
+function LoginAnimation({ children }) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [collageDimmed, setCollageDimmed] = useState(false);
   const [textVisible, setTextVisible] = useState(false);
@@ -31,7 +54,6 @@ export default function LoginPage({ children, isAuthenticated }) {
   const [taglineFade, setTaglineFade] = useState(true);
 
   useEffect(() => {
-    if (isAuthenticated) return;
 
     // images one by one
     const imageInterval = setInterval(() => {
@@ -57,7 +79,7 @@ export default function LoginPage({ children, isAuthenticated }) {
     }, 600);
 
     return () => clearInterval(imageInterval);
-  }, [isAuthenticated]);
+}, []);
 
   // Cycle taglines
   useEffect(() => {
@@ -73,10 +95,6 @@ export default function LoginPage({ children, isAuthenticated }) {
 
     return () => clearInterval(cycle);
   }, [textVisible]);
-
-  if (isAuthenticated) {
-    return <>{children}</>;
-  }
 
   return (
     <div className="login-screen">
