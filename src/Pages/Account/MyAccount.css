@@ -1,15 +1,17 @@
 .account-title{
-    font-size: 3rem;
+    font-size: 3.2rem;
     font-weight: bold;
-    margin-top: 3rem;
-    color:black;
+    margin-top: 0rem;
     display: flex;
+    background: linear-gradient(90deg, rgb(199, 139, 238), #2190df,rgb(204, 141, 247));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 /*Container around the three div classes that have:
 personal information, billing transactions, and settings*/
 .flex-container {
-    margin-top: 1rem; 
     display: flex;
     justify-content: center;
     border-radius: 10px; 
@@ -33,6 +35,7 @@ personal information, billing transactions, and settings*/
     border: 0.2rem solid rgba(0, 51, 102, 0.2);
     box-shadow: 0 4px 8px rgba(0, 51, 102, 0.5);
     color:black;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 /*Hidden Container for Personal Information*/
@@ -59,6 +62,7 @@ personal information, billing transactions, and settings*/
     font-size: .9rem;
     border: 0.2rem solid rgba(0, 51, 102, 0.2);
     box-shadow: 0 4px 8px rgba(0, 51, 102, 0.5);
+    font-family: 'Segoe UI', sans-serif;
 }
 
 /*Font color for element containers: personal info, billing trans, settings*/
@@ -93,7 +97,7 @@ personal information, billing transactions, and settings*/
 
 .my-account-wrapper {
   position: relative;
-  min-height: 100vh;
+  min-height: 100%; 
   overflow: hidden;
 }
 
@@ -182,7 +186,8 @@ personal information, billing transactions, and settings*/
 .description {
     display: flex;
     justify-content: center;
-    font-weight: bold; 
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.1rem; 
 }
 
 .my-account-wrapper {
@@ -208,4 +213,5 @@ personal information, billing transactions, and settings*/
 
 .delete-info .p1 {
   font-weight: bold; 
+  font-family: 'Segoe UI', sans-serif;
 }
