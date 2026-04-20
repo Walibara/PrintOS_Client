@@ -314,8 +314,9 @@
 
 .job-id {
   margin: 0 0 0.75rem;
-  color: #6b7280;
-  font-size: 0.98rem;
+  color: #000000;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
  .job-meta {
@@ -419,6 +420,7 @@
   .job-card {
     grid-template-columns: 60px 1fr;
   }
+
 
   .job-side {
     grid-column: 1 / -1;
