@@ -464,3 +464,15 @@
     gap: 0.7rem;
   }
 }
+
+.jobs-panel {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 30px;
+  padding: 26px 34px;
+  min-height: 720px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #edf2f7;
+}
