@@ -9,7 +9,7 @@ import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react'
 
 import './App.css'
-import './Auth.css'
+import "../Login/Auth.css";
 import './indexResize.css'
 import hpLogo from '../../assets/HP_logo_2012.svg'
 import AmplifyHome from '../AmplifyHome/AmplifyHome.jsx'// we can remove this later
@@ -25,6 +25,7 @@ import MyLibrary from '../MyLibrary/MyLibrary.jsx'
 import AboutUs from '../AboutUs/AboutUs.jsx'
 import React, { useState, useEffect } from 'react'
 import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
+import LoginPage from '../Login/LoginPage.jsx'
 
 function App() {
 
@@ -53,35 +54,36 @@ function App() {
     }, []);
 
   return (
-    <Authenticator
-      signUpAttributes={['email']}
-      formFields={{
-        signUp: {
-          name: {                       
-            order: 1,
-            placeholder: 'Enter your first name',
-            label: 'First Name',
-            isRequired: true,
+    <LoginPage>
+      <Authenticator
+        signUpAttributes={['email']}
+        formFields={{
+          signUp: {
+            name: {                       
+              order: 1,
+              placeholder: 'Enter your first name',
+              label: 'First Name',
+              isRequired: true,
+            },
+            username: {
+              order: 1,
+              placeholder: 'Choose a username',
+            },
+            email: {
+              order: 2,
+              placeholder: 'Enter your email',
+            },
+            password: {
+              order: 3,
+            },
+            confirm_password: {
+              order: 4,
+            },
           },
-          username: {
-            order: 1,
-            placeholder: 'Choose a username',
-          },
-          email: {
-            order: 2,
-            placeholder: 'Enter your email',
-          },
-          password: {
-            order: 3,
-          },
-          confirm_password: {
-            order: 4,
-          },
-        },
-      }}
->
-      {({ signOut, user }) => {                                      
-          const displayName = firstName || user?.attributes?.name || "";
+        }}
+  >
+        {({ signOut, user }) => {                                      
+            const displayName = firstName || user?.attributes?.name || "";
 
         return (
 <BrowserRouter>
@@ -170,6 +172,7 @@ function App() {
     ); 
       }}
   </Authenticator>
+  </LoginPage>
   )
 }
 
