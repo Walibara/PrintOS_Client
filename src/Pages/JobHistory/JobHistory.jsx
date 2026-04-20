@@ -298,70 +298,72 @@ const handleViewReceipt = (job) => {
       </div>
       <div className="job-history-content">
         <div className="jobs-panel">
-          {currentItems.length === 0 ? (
-            <div className="empty-history">No jobs found for the selected filter.</div>
-          ) : (
-            currentItems.map((job) => {
-              const statusConfig = renderStatusIcon(job.status);
+          <div className="jobs-list">
+            {currentItems.length === 0 ? (
+              <div className="empty-history">No jobs found for the selected filter.</div>
+            ) : (
+              currentItems.map((job) => {
+                const statusConfig = renderStatusIcon(job.status);
 
-              return (
-                <article key={job.id} className="job-card">
-                  <div className={statusConfig.iconWrapClass}>
-                    {statusConfig.icon}
-                  </div>
-
-                  <div className="job-main">
-                    <h3 className="job-name">{job.title}</h3>
-                    <p className="job-id">{job.displayId}</p>
-
-                    <div className="job-meta">
-                      <span>
-                        <CalendarDays size={17} />
-                        {job.date
-                          ? new Date(job.date).toLocaleDateString("en-CA")
-                          : "N/A"}
-                      </span>
+                return (
+                  <article key={job.id} className="job-card">
+                    <div className={statusConfig.iconWrapClass}>
+                      {statusConfig.icon}
                     </div>
-                  </div>
 
-                  <div className="job-side">
-                    <span className={statusConfig.badgeClass}>
-                      {statusConfig.label}
-                    </span>
+                    <div className="job-main">
+                      <h3 className="job-name">{job.title}</h3>
+                      <p className="job-id">{job.displayId}</p>
 
-                    {statusConfig.actionType === "receipt" ? (
+                      <div className="job-meta">
+                        <span>
+                          <CalendarDays size={17} />
+                          {job.date
+                            ? new Date(job.date).toLocaleDateString("en-CA")
+                            : "N/A"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="job-side">
+                      <span className={statusConfig.badgeClass}>
+                        {statusConfig.label}
+                      </span>
+
+                      {statusConfig.actionType === "receipt" ? (
+                        <button
+                          type="button"
+                          className="action-btn receipt-btn"
+                          onClick={() => handleViewReceipt(job)}
+                        >
+                          <ReceiptText size={18} />
+                          View Receipt
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="action-btn rerun-btn"
+                          onClick={() => handleRerunJob(job)}
+                        >
+                          <RotateCcw size={18} />
+                          Rerun
+                        </button>
+                      )}
+
                       <button
                         type="button"
-                        className="action-btn receipt-btn"
-                        onClick={() => handleViewReceipt(job)}
+                        className="icon-delete-btn"
+                        onClick={() => handleViewDelete(job)}
+                        aria-label={`Delete ${job.displayId}`}
                       >
-                        <ReceiptText size={18} />
-                        View Receipt
+                        <Trash2 size={18} />
                       </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="action-btn rerun-btn"
-                        onClick={() => handleRerunJob(job)}
-                      >
-                        <RotateCcw size={18} />
-                        Rerun
-                      </button>
-                    )}
-
-                    <button
-                      type="button"
-                      className="icon-delete-btn"
-                      onClick={() => handleViewDelete(job)}
-                      aria-label={`Delete ${job.displayId}`}
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
-                </article>
-              );
-            })
-          )}
+                    </div>
+                  </article>
+                );
+              })
+            )}
+          </div>
         </div>
       </div>
       <div className="paginations">
