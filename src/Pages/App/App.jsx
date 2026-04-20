@@ -104,7 +104,7 @@ function App() {
 
               <nav className="nav-menu">
                 <Link to="/" className="nav-item">
-                  Amplify Home
+                  Home
                 </Link>
 
                 <Link to="/my-account" className="nav-item">
