@@ -1,3 +1,7 @@
+html, body {
+  background: linear-gradient(to bottom, #c7e0f9, #ffffff) !important;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
