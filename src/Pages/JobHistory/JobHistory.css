@@ -143,6 +143,8 @@
 
 .history-filters {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
@@ -477,4 +479,10 @@
   flex-direction: column;
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
   border: 1px solid #edf2f7;
+}
+
+.job-history-inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
 }

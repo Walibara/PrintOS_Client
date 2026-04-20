@@ -228,8 +228,10 @@ const handleViewReceipt = (job) => {
 
   return (
     <div className="job-history-container">
+      <div className="job-history-inner">
       <div className="history-header">
         <h1>Job History</h1>
+        <p>Review your past print jobs, check their status, and manage them all in one place.</p>
         <button
           className="submit-btn"
           onClick={() => navigate("/file-upload")}
@@ -397,6 +399,7 @@ const handleViewReceipt = (job) => {
         >
           Next
         </button>
+      </div>
       </div>
 
       {openModal && selectedJob && (
