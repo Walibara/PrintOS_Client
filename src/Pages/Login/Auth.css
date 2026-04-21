@@ -113,9 +113,14 @@
 .welcome-title {
   font-size: 3rem;
   font-weight: 700;
-  color: #ffffff;
   margin: 0 0 16px;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  padding-bottom: 0.2rem;
+  display: inline-block;
+  background: linear-gradient(90deg, rgb(199, 139, 238), #2190df, rgb(204, 141, 247));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI', sans-serif;
+  text-shadow: none;
 }
 
 /* Cycling tagline — JS toggles fade-in/fade-out to swap phrases */

@@ -1,40 +1,58 @@
-/* Main page layout – centers the job submission card on a soft blue background */
+/* Page wrapper — Thank you, Emma!  */
 .job-submission-page {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 40px;
-  background: linear-gradient(180deg, #f5f8ff 0%, #ffffff 60%);
   overflow-y: auto;
   box-sizing: border-box;
+  background: linear-gradient(270deg, #e5c2fd, #d1f4ff, #c8e3fe);
+  background-size: 400% 400%;
+  animation: gradientShift 6s ease infinite;
 }
 
-/* Main card that holds the preview + job type form */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/*  Main card */
 .job-submission-card {
   background: #ffffff;
-  border-radius: 24px;
+  border-radius: 10px;
+  border: 0.2rem solid rgba(0, 51, 102, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 51, 102, 0.5);
   max-width: 1100px;
   width: 100%;
   padding: 32px 40px 28px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-/* Big title at the top of the job submission card */
+/* Title */
 .job-submission-title {
-  font-size: 28px;
+  font-size: 2rem;
+  font-weight: bold;
   margin: 0 0 6px;
-  color: #0a2a43;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+  background: linear-gradient(90deg, rgb(199, 139, 238), #2190df, rgb(204, 141, 247));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Short explanation line under the title */
+/* Subtitle */
 .job-submission-subtitle {
   margin: 0 0 20px;
   color: #555;
   font-size: 14px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Layout: left side = file preview, right side = job type form */
+/*  Grid layout */
 .job-submission-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -43,43 +61,40 @@
   margin-top: 8px;
 }
 
-/* Card around the “Your file” preview */
+/* File preview card */
 .job-preview-card {
   background-color: #f5f8ff;
   padding: 22px 22px 18px;
-  border-radius: 18px;
-  border: 1px solid #e1e8f5;
+  border-radius: 10px;
+  border: 0.2rem solid rgba(0, 51, 102, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 51, 102, 0.1);
   text-align: center;
 }
 
-/* Inner box that holds the front + back images */
 .job-preview-inner {
   background-color: #ffffff;
   padding: 18px;
-  border-radius: 14px;
-  border: 1px solid #dde5f3;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 51, 102, 0.15);
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Single “page” block for each side of the card (Front / Back) */
 .job-preview-page {
   background-color: #f7f9ff;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 12px 12px 10px;
 }
 
-/* Preview image for each side of the card */
 .job-preview-image {
   display: block;
   width: 100%;
   max-width: 400px;
   margin: 0 auto 6px auto;
-  object-fit: cover;
+  object-fit: contain;
 }
 
-/* Label under each preview image (“Front” / “Back”) */
 .job-preview-page-label {
   font-size: 12px;
   font-weight: 600;
@@ -87,54 +102,52 @@
   text-align: center;
 }
 
-/* Small caption under the whole preview (“Your file”) */
 .job-preview-caption {
   margin-top: 12px;
   font-weight: 600;
   font-size: 13px;
-  color: #0a2a43;
+  color: #003366;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Right-hand side form that lets the user pick the job type */
+/* Job form  */
 .job-form {
   display: flex;
   flex-direction: column;
   padding: 18px 18px 20px;
-  border-radius: 18px;
-  border: 1px solid #e3e7f0;
+  border-radius: 10px;
+  border: 0.2rem solid rgba(0, 51, 102, 0.15);
   background: #f5f8ff;
+  box-shadow: 0 2px 6px rgba(0, 51, 102, 0.1);
 }
 
-/* Label + select combo for the job type dropdown */
 .job-form-label {
   display: flex;
   flex-direction: column;
   font-weight: 600;
   font-size: 14px;
-  color: #0a2a43;
+  color: #003366;
   margin-bottom: 16px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Dropdown where the user chooses Imposition, Proofing, etc. */
 .job-type-select {
   margin-top: 8px;
   padding: 9px 10px;
   font-size: 13px;
   border-radius: 10px;
-  border: 1px solid #c5d3ea;
-  color: #2b3850;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  color: #003366;
   background: #ffffff;
 }
 
-/* Row that holds the Go Back + Submit buttons */
+/*  Button row */
 .job-button-row {
   display: flex;
   gap: 10px;
   margin-top: 8px;
 }
 
-/* Optional: if you ever use a dedicated job-submit button class
-   (right now your JSX uses .primary-button / .secondary-button instead) */
 .job-submit-button {
   margin-top: 10px;
   padding: 10px 40px;
@@ -143,15 +156,16 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  background-color: #0094ff;
+  background-color: #003366;
   color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .job-submit-button:hover {
-  filter: brightness(0.95);
+  background-color: #004d99;
 }
 
-/* Tiny note at the very bottom of the card */
+/*  Footer */
 .job-submission-footer {
   margin: 0;
   font-size: 11px;
@@ -159,15 +173,15 @@
   text-align: right;
 }
 
-/* Form inputs (text, number) */
+/* Form inputs  */
 .job-form-input {
   width: 100%;
   padding: 9px 10px;
-  border: 1px solid #c5d3ea;
+  border: 1px solid rgba(0, 51, 102, 0.25);
   border-radius: 10px;
   font-size: 13px;
   font-family: inherit;
-  color: #2b3850;
+  color: #003366;
   background: #ffffff;
   transition: border-color 0.2s;
   box-sizing: border-box;
@@ -175,18 +189,18 @@
 
 .job-form-input:focus {
   outline: none;
-  border-color: #0094ff;
+  border-color: #2190df;
 }
 
-/* Textarea for comments */
+/* Textarea */
 .job-form-textarea {
   width: 100%;
   padding: 9px 10px;
-  border: 1px solid #c5d3ea;
+  border: 1px solid rgba(0, 51, 102, 0.25);
   border-radius: 10px;
   font-size: 13px;
   font-family: inherit;
-  color: #2b3850;
+  color: #003366;
   background: #ffffff;
   transition: border-color 0.2s;
   resize: vertical;
@@ -196,16 +210,16 @@
 
 .job-form-textarea:focus {
   outline: none;
-  border-color: #0094ff;
+  border-color: #2190df;
 }
 
-/* Required field asterisk */
+/* Required asterisk  */
 .required {
   color: #dc3545;
   margin-left: 4px;
 }
 
-/* Sucess Message */
+/* Success message */
 .success-message {
   background: #d4edda;
   border: 1px solid #c3e6cb;
@@ -228,8 +242,6 @@
   font-size: 14px;
 }
 
-
-
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -239,4 +251,45 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Featured collection banner */
+.featured-banner {
+  background: #f0f7ff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-left: 3px solid #2190df;
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #003366;
+  margin-bottom: 1.5rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Success modal */
+.library-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.library-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 500px;
+  max-width: 90vw;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 51, 102, 0.3);
+}
+
+.library-modal-title {
+  font-size: 1.2rem;
+  color: #003366;
+  margin: 0 0 1.5rem;
+  font-family: 'Segoe UI', sans-serif;
 }

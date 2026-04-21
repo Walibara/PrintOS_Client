@@ -91,7 +91,8 @@ export default function MyLibrary() {
   }
 
   return (
-    <div className="library-page">
+  <div className="library-page">
+    <div className="library-card-wrapper">
       <h1 className="library-title">My Library</h1>
 
       {loading && <p className="library-status">Loading your files...</p>}
@@ -145,58 +146,59 @@ export default function MyLibrary() {
           </div>
         ))}
       </div>
+    </div>
 
-      {/* Modal */}
-      {selectedFile && (
-        <div
-          className="library-modal-overlay"
-          onClick={() => setSelectedFile(null)}
-        >
-          <div className="library-modal" onClick={(e) => e.stopPropagation()}>
+    {/* Modal — outside card wrapper so overlay covers full screen */}
+    {selectedFile && (
+      <div
+        className="library-modal-overlay"
+        onClick={() => setSelectedFile(null)}
+      >
+        <div className="library-modal" onClick={(e) => e.stopPropagation()}>
+          <button
+            className="library-modal-close"
+            onClick={() => setSelectedFile(null)}
+          >
+            ✕
+          </button>
+
+          <h2 className="library-modal-title">{selectedFile.originalFile}</h2>
+
+          <div className="library-modal-preview">
+            {previewUrls[selectedFile.id] ? (
+              <img
+                src={previewUrls[selectedFile.id]}
+                alt={selectedFile.originalFile}
+              />
+            ) : isImage(selectedFile.fileType) ? "🖼️" : "📄"}
+          </div>
+
+          <p className="library-modal-meta">
+            Uploaded:{" "}
+            {selectedFile.createdAt
+              ? new Date(selectedFile.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric", month: "long", day: "2-digit",
+                })
+              : "N/A"}
+          </p>
+
+          <div className="library-modal-actions">
             <button
-              className="library-modal-close"
+              className="library-cancel-btn"
               onClick={() => setSelectedFile(null)}
             >
-              ✕
+              Cancel
             </button>
-
-            <h2 className="library-modal-title">{selectedFile.originalFile}</h2>
-
-            <div className="library-modal-preview">
-              {previewUrls[selectedFile.id] ? (
-                <img
-                  src={previewUrls[selectedFile.id]}
-                  alt={selectedFile.originalFile}
-                />
-              ) : isImage(selectedFile.fileType) ? "🖼️" : "📄"}
-            </div>
-
-            <p className="library-modal-meta">
-              Uploaded:{" "}
-              {selectedFile.createdAt
-                ? new Date(selectedFile.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric", month: "long", day: "2-digit",
-                  })
-                : "N/A"}
-            </p>
-
-            <div className="library-modal-actions">
-              <button
-                className="library-cancel-btn"
-                onClick={() => setSelectedFile(null)}
-              >
-                Cancel
-              </button>
-              <button
-                className="library-modal-resubmit-btn"
-                onClick={() => handleResubmit(selectedFile)}
-              >
-                Resubmit as New Job
-              </button>
-            </div>
+            <button
+              className="library-modal-resubmit-btn"
+              onClick={() => handleResubmit(selectedFile)}
+            >
+              Resubmit as New Job
+            </button>
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }
