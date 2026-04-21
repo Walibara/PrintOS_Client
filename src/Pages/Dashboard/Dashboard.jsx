@@ -10,7 +10,6 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
   const [totalJobs, setTotalJobs] = useState(0);
   const [inProgressJobs, setInprogressJobs] = useState(0);
   const [failedJobs, setFailedJobs] = useState(0);
@@ -26,89 +25,102 @@ export default function Dashboard() {
         setLoading(true);
         setError("");
         const data = await statusMethods.getJobs();
-        
 
         const mappedJobs = data.map((job) => ({
           id: job.id,
-          jobNumber: job.jobNumber, 
+          jobNumber: job.jobNumber,
           file: job.originalFile || job.files || "No file",
           status: mapStatus(job.status),
           date: job.createdAt,
         }));
 
-        /// the date
+        // Format date helper
+        const formatDay = (dateValue) => {
+          const date = new Date(dateValue);
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          return `${year}-${month}-${day}`;
+        };
 
-      const formatDay = (dateValue) => {
-        const date = new Date(dateValue);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      };
+        const today = new Date();
+        const yesterday = new Date();
+        yesterday.setDate(today.getDate() - 1);
 
-      const today = new Date();
-      const yesterday = new Date();
-      yesterday.setDate(today.getDate() - 1);
+        const todayKey = formatDay(today);
+        const yesterdayKey = formatDay(yesterday);
 
-      const todayKey = formatDay(today);
-      const yesterdayKey = formatDay(yesterday);
+        const jobsByDate = {};
 
-      const jobsByDate = {};
-
-      //yesterday and today's total
-
-      for (const job of data) {
-        if (!job.createdAt) continue;
-
-        const dateKey = formatDay(job.createdAt);
-
-        if (!jobsByDate[dateKey]) {
-          jobsByDate[dateKey] = 0;
+        // Count jobs per day
+        for (const job of data) {
+          if (!job.createdAt) continue;
+          const dateKey = formatDay(job.createdAt);
+          if (!jobsByDate[dateKey]) {
+            jobsByDate[dateKey] = 0;
+          }
+          jobsByDate[dateKey]++;
         }
 
-        jobsByDate[dateKey]++;
-      }
+        const todayCount = jobsByDate[todayKey] || 0;
+        const yesterdayCount = jobsByDate[yesterdayKey] || 0;
 
-      const todayCount = jobsByDate[todayKey] || 0;
-      const yesterdayCount = jobsByDate[yesterdayKey] || 0;
+        setJobsToday(todayCount);
+        setJobsYesterday(yesterdayCount);
 
-      setJobsToday(todayCount);
-      setJobsYesterday(yesterdayCount);
-      
-      //calculate the percentage
-      let percentChange = 0;
+        // Calculate percentage change
+        let percentChange = 0;
+        if (yesterdayCount === 0 && todayCount > 0) {
+          percentChange = 100;
+        } else if (yesterdayCount > 0) {
+          percentChange = ((todayCount - yesterdayCount) / yesterdayCount) * 100;
+        }
+        setJobsPercentChange(percentChange);
 
-      if (yesterdayCount === 0 && todayCount > 0) {
-        percentChange = 100;
-      } else if (yesterdayCount > 0) {
-        percentChange = ((todayCount - yesterdayCount) / yesterdayCount) * 100;
-      }
+        // Count jobs by status
+        const total = data.length;
+        let inProgress = 0;
+        let failed = 0;
+        let finished = 0;
 
-      setJobsPercentChange(percentChange);
+        for (const job of data) {
+          switch (job.status) {
+            case "IN_PROGRESS":
+            case "CREATED":
+              inProgress++;
+              break;
+            case "FAILED":
+              failed++;
+              break;
+            case "FINISHED":
+              finished++;
+              break;
+            default:
+              break;
+          }
+        }
 
+        setTotalJobs(total);
+        setInprogressJobs(inProgress);
+        setFailedJobs(failed);
+        setFinishedJobs(finished);
 
-        // // Sort jobs by date (newest first)   
+        // Sort jobs by date (newest first)
         mappedJobs.sort((one, two) => {
           const jobOneHasADate = !!one.date;
           const jobTwoHasADate = !!two.date;
 
-          //if one job has a date and the other doesn't, the one with the date is there first
-          if (jobOneHasADate&& !jobTwoHasADate) return -1;
-          if (!jobOneHasADate&& jobTwoHasADate) return 1;
+          if (jobOneHasADate && !jobTwoHasADate) return -1;
+          if (!jobOneHasADate && jobTwoHasADate) return 1;
 
-          //if both have dates, sort by date
           if (jobOneHasADate && jobTwoHasADate) {
             return new Date(two.date) - new Date(one.date);
           }
-          //sorting the job by descinging id 
 
-          
           return two.id - one.id;
         });
 
         const latestJobs = mappedJobs.slice(0, 3);
-
-        // Update state with the latest three jobs
         setJobHistory(latestJobs);
 
       } catch (err) {
@@ -116,35 +128,6 @@ export default function Dashboard() {
       } finally {
         setLoading(false);
       }
-
-      //counting the data
-      const data = await statusMethods.getJobs();
-      const total = data.length;
-      let inProgress = 0;
-      let failed = 0;
-      let finished = 0;
-
-      //grouping the jobs by status and counting them
-      for (const job of data) {
-        switch (job.status) {
-          case "IN_PROGRESS":
-            inProgress++;
-            break;
-          case "FAILED":
-            failed++;
-            break;
-          case "FINISHED":
-          finished++;
-          break;
-          default:
-            break;
-        }
-      }
-      setTotalJobs(total);
-      setInprogressJobs(inProgress);
-      setFailedJobs(failed);
-      setFinishedJobs(finished);
-      
     };
 
     fetchJobs();
@@ -154,24 +137,24 @@ export default function Dashboard() {
 
 
   const mapStatus = (dbStatus) => {
-  switch (dbStatus) {
-    case "FINISHED":
-      return "success";
-    case "FAILED":
-      return "error";
-    case "CREATED":
-    case "IN_PROGRESS":
-      return "pending";
-    default:
-      return "pending";
-  }
-};
+    switch (dbStatus) {
+      case "FINISHED":
+        return "success";
+      case "FAILED":
+        return "error";
+      case "CREATED":
+      case "IN_PROGRESS":
+        return "pending";
+      default:
+        return "pending";
+    }
+  };
 
   const navigate = useNavigate();
 
   return (
     <div className="dashboard">
-      <button 
+      <button
         className="submit-btn"
         onClick={() => navigate("/file-upload")}
       >
@@ -184,7 +167,6 @@ export default function Dashboard() {
           <hr />
           <h1>{totalJobs}</h1>
           <p>{jobsPercentChange >= 0 ? "↑" : "↓"} {Math.abs(jobsPercentChange).toFixed(1)}% from yesterday</p>
-          
         </div>
         <div className="stat-card">
           <h2>In Progress</h2>
@@ -196,7 +178,7 @@ export default function Dashboard() {
           <h2>Failed</h2>
           <hr />
           <h1>{failedJobs}</h1>
-          <p>Jobs Failed </p>
+          <p>Jobs Failed</p>
         </div>
         <div className="stat-card">
           <h2>Finished</h2>
@@ -204,7 +186,6 @@ export default function Dashboard() {
           <h1>{finishedJobs}</h1>
           <p>Jobs Completed</p>
         </div>
-        
       </div>
 
       <div className="history-section">

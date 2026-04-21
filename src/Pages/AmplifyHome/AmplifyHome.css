@@ -1,22 +1,36 @@
 /* Main container */
 .home-container {
   width: 100%;
+  height: 100%; 
   display: flex;
   justify-content: center;
   padding-top: 40px;
+  background: linear-gradient(270deg, #e5c2fd, #d1f4ff, #c8e3fe);
+  background-size: 400% 400%;
+  animation: gradientShift 6s ease infinite;
 }
 
 /* Page card */
 .home-card {
   width: 70%;
-  background: white;
   border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
-  padding: 40px 50px;
+  padding: 1rem 1rem; 
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
   height: 70vh; 
-  margin-top: 2rem;
+  margin-top: .8rem;
+}
+
+.welcome-friend {
+  margin-bottom: 3rem; 
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.1rem; 
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes fadeIn {
@@ -24,20 +38,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Meme */
-.home-meme-top {
-  width: 130px;
-  border-radius: 8px;
-  margin: 0 auto 10px auto;
-  display: block;
-}
-
 /* Title */
 .home-title {
-  font-size: 28px;
+  font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 3rem;
-  color: #0a2a43;
+  margin-bottom: 1rem;
+  margin-top: 0rem; 
+  background: linear-gradient(90deg, rgb(214, 161, 249), #2190df,rgb(211, 157, 247));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .home-sub {
@@ -80,23 +90,26 @@
 .home-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   margin-top: 15px;
+  width: 90%;
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 /* Buttons (cards) */
 .home-grid-item {
-  background: #dee7fd;
-  border-radius: 10px;
-  padding: 50px 75px;
-  border: 1px solid #9db6e8;
+  background: #fefefe;
+  border-radius: 2rem;
+  height: 25vh; 
+  box-shadow: 0 4px 20px rgba(33, 144, 223, 0.4);
   transition: 0.2s ease;
   text-decoration: none;
   color: #0a2a43;
-
   display: flex;
   justify-content: center; 
   align-items: center;
+  width: 100%; 
 }
 
 /* Text block — FIXED INDENTATION */
@@ -113,9 +126,10 @@
 .grid-text h3 {
   margin: 0 !important;
   padding: 0 !important;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   color: #0a2a43;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .grid-text p {
@@ -123,12 +137,13 @@
   padding: 0 !important;
   font-size: 13px;
   color: #555;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /* Hover effect */
 .home-grid-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
 }
 
 /* Footer */
@@ -148,3 +163,38 @@
   font-size: 12px;
 }
 
+.grid-icon svg {
+  stroke: white;        
+  background: rgb(252, 168, 182);  
+  border-radius: 8px;  
+  margin-bottom: 1rem; 
+}
+
+.grid-icon-dashboard svg{
+  stroke: white; 
+  background: rgb(152, 146, 228); 
+  border-radius: 8px; 
+  margin-bottom: 1rem;
+}
+
+.grid-icon-library svg{
+  stroke: white;
+  background: rgb(233, 156, 233); 
+  border-radius: 8px;
+  margin-bottom: 1rem; 
+}
+
+.grid-icon-history svg{
+  stroke: white; 
+  background: rgb(247, 202, 136); 
+  border-radius: 8px;
+  margin-bottom: 1rem; 
+}
+
+.home-grid-item svg {
+  transition: transform 0.3s ease;
+}
+
+.home-grid-item:hover svg {
+  transform: rotate(15deg);
+}

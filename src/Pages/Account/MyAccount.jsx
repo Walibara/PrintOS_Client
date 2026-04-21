@@ -133,7 +133,7 @@ export default function MyAccount() {
 			<div className="my-account-container p-4">
 
 			<div className="mb-4">
-				<h1 className="fw-bold">
+				<h1 className="account-title">
 					{displayText}
 					{!doneTyping && <span className="cursor">|</span>}
 				</h1>
