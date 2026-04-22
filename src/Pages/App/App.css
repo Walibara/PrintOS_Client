@@ -3,7 +3,7 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /* Main flex container */
@@ -21,7 +21,7 @@ html, body, #root {
 .sidebar {
   width: 220px;
   background-color: #003366;
-  color: #33a1ff;
+  color: #b8d9f6;
   padding: 25px 20px;
   display: flex;
   flex-direction: column;
@@ -40,13 +40,17 @@ html, body, #root {
   flex-direction: column;
   width: 100%;
   list-style: none;
+  color: #c6e2fe;
 }
 
 .nav-item {
+  color: #b8d9f6;
   margin: 10px 0;
   font-weight: 500;
+  font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .nav-item:hover {
@@ -59,12 +63,13 @@ html, body, #root {
   margin-top: 5px;
   margin-bottom: 20px;
   padding-left: 10px;
-  color: #66ccff;
+  color: #b8d9f6;
 }
 
 .nav-submenu li {
   margin: 5px 0;
   cursor: pointer;
+  color: #c6e2fe;
 }
 
 .nav-submenu li:hover {
@@ -109,10 +114,15 @@ html, body, #root {
 
 /* Log out at bottom */
 .logout {
-  margin-top: 1rem;
-  color: #33a1ff;
-  font-weight: 600;
+  margin-top: .5rem;
   cursor: pointer;
+  padding: 0; 
+  width: 50%; 
+  font-weight: 500; 
+  font-size: 1rem; 
+  font-family: 'Segoe UI', sans-serif;
+  background: none; 
+  color: #b8d9f6;
 } 
 
 /* Main content area */
@@ -128,7 +138,7 @@ html, body, #root {
 /* Top bar */
 .topbar {
   background-color: #003366;
-  color: #b3d9ff;
+  color: #c6e2fe;
   padding: 15px 25px;
   font-size: 1.2rem;
   font-weight: 600;

@@ -139,8 +139,7 @@ function App() {
                 <Link to="/about-us" className="nav-item">
                   About Us
                 </Link>
-
-                <button onClick={signOut} className="logout">Log out</button>
+                <span tabindex="0" role="button" className="logout" onClick={signOut}>Log Out</span>
               </nav>
             </aside>
 
