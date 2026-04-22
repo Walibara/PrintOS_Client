@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
 import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
-import { FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
+import { Printer, CheckCircle2, Clock3, XCircle, CalendarDays, FileText, Copy, ReceiptText, RotateCcw, Trash2} from "lucide-react";
 import ActionButton from "../ActionButton/ActionButton.jsx"; 
 import { fetchAuthSession } from "aws-amplify/auth";
 
@@ -34,6 +34,7 @@ export default function JobHistory() {
         const mappedJobs = data.map((job) => ({
           id: job.id,
           displayId: `Job-${job.jobNumber}`,
+          title: job.originalFile || job.files || "No file",
           file: job.originalFile || job.files || "No file",
           dbStatus: job.status,
           status: mapStatus(job.status),
@@ -103,6 +104,8 @@ export default function JobHistory() {
     return true;
   });
 
+
+
   //calculateing the total pages
 
 
@@ -164,14 +167,43 @@ const handleViewReceipt = (job) => {
       setSelectedJob(null);
     }
   };
+
  const renderStatusIcon = (job) => {
-    if (job.status === "success") {
-      return <FaCheckCircle color="green" size="1.2em" />;
-    }
-    if (job.status === "error") {
-      return <FaTimesCircle color="red" size="1.2em" />;
-    }
-    return <FaClock color="orange" size="1.2em" />;
+  switch(job){
+    case "success":
+      return {
+        label: "Completed",
+        icon: <CheckCircle2 size={22} strokeWidth={2.2} />,
+        badgeClass: "status-badge badge-success",
+        iconWrapClass: "job-icon success",
+        actionType: "receipt"
+      }
+
+    case "error":
+      return {
+        label: "Failed",
+        icon: <XCircle size={22} strokeWidth={2.2} />,
+        badgeClass: "status-badge badge-error",
+        iconWrapClass: "job-icon error",
+        actionType: "rerun"
+      };
+    default:
+      return {
+        label: "In Progress",
+        icon: <Clock3 size={22} strokeWidth={2.2} />,
+        badgeClass: "status-badge badge-pending",
+        iconWrapClass: "job-icon pending",
+        actionType: "rerun"
+      };
+
+  }
+    // if (job.status === "success") {
+    //   return <FaCheckCircle color="green" size="1.2em" />;
+    // }
+    // if (job.status === "error") {
+    //   return <FaTimesCircle color="red" size="1.2em" />;
+    // }
+    // return <FaClock color="orange" size="1.2em" />;
   };
 
 
@@ -183,16 +215,57 @@ const handleViewReceipt = (job) => {
     return <p>No job history available</p>;
   }
 
+  const stats = {
+    total: jobHistory.length,
+    completed: jobHistory.filter((j) => j.dbStatus === "FINISHED").length,
+    inProgress: jobHistory.filter(
+      (j) => j.dbStatus === "IN_PROGRESS" || j.dbStatus === "CREATED"
+    ).length,
+    failed: jobHistory.filter((j) => j.dbStatus === "FAILED").length,
+};
+
+
+
   return (
     <div className="job-history-container">
+      <div className="job-history-inner">
       <div className="history-header">
+      <div className="history-title-group">
         <h1>Job History</h1>
+        <p className="job-history-subtitle">Review and manage your print jobs.</p>
+      </div>
         <button
           className="submit-btn"
           onClick={() => navigate("/file-upload")}
         >
           Submit New Job
         </button>
+      </div>
+
+      <div className="stats-grid">
+        <div className="stat-card purple">
+          <div className="stat-icon"><Printer size={20} /></div>
+          <h2>{stats.total}</h2>
+          <p>Total Jobs</p>
+        </div>
+
+        <div className="stat-card green">
+          <div className="stat-icon"><Printer size={20} /></div>
+          <h2>{stats.completed}</h2>
+          <p>Completed</p>
+        </div>
+
+        <div className="stat-card orange">
+          <div className="stat-icon"><Printer size={20} /></div>
+          <h2>{stats.inProgress}</h2>
+          <p>In Progress</p>
+        </div>
+
+        <div className="stat-card red">
+          <div className="stat-icon"><Printer size={20} /></div>
+          <h2>{stats.failed}</h2>
+          <p>Failed</p>
+        </div>
       </div>
       <div className="history-filters">
         <button
@@ -227,56 +300,108 @@ const handleViewReceipt = (job) => {
           Failed
         </button>
       </div>
-      <div className="history-section">
-        <div className="history-list">
-          {currentItems.length === 0 ? (
-            <p>No jobs found for the selected filter.</p>
-          ) : (
-            currentItems.map((job) => (
-              <div key={job.id} className="history-item">
+      <div className="job-history-content">
+        <div className="jobs-panel">
+          <div className="jobs-list">
+            {currentItems.length === 0 ? (
+              <div className="empty-history">No jobs found for the selected filter.</div>
+            ) : (
+              currentItems.map((job) => {
+                const statusConfig = renderStatusIcon(job.status);
 
-              <div className={`status-dot ${job.status}`}></div>
-              <span className="job-id">{job.displayId}</span>
-              <span className="job-file">{job.file}</span>
-              <ActionButton 
-                job={job}
-                  onViewReceipt={handleViewReceipt}
-                  onRerunJob={handleRerunJob}
-                /> 
-              <span className="job-date">{job.date ? new Date(job.date).toLocaleDateString("en-US", {year: "numeric",month: "2-digit",day: "2-digit"}) : "N/A"}</span>
-              <span className="status-icon">
-                {job.status === "success" && <FaCheckCircle color="green" size="1.2em" />}
-                {job.status === "error" &&  <FaTimesCircle color="red" size="1.2em" />}
-                {job.status === "pending" && <FaClock color="orange" size="1.2em" />}
-              </span>
-              <div
-                  className="delete"
-                  onClick={() => handleViewDelete(job)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleViewDelete(job);
-                    }
-                  }}
-                >
-                  x
-              </div>
-            </div>
-            ))
-          )}
+                return (
+                  <article key={job.id} className="job-card">
+                    <div className={statusConfig.iconWrapClass}>
+                      {statusConfig.icon}
+                    </div>
+
+                    <div className="job-main">
+                      <h3 className="job-name">{job.title}</h3>
+                      <p className="job-id">{job.displayId}</p>
+
+                      <div className="job-meta">
+                        <span>
+                          <CalendarDays size={17} />
+                          {job.date
+                            ? new Date(job.date).toLocaleDateString("en-CA")
+                            : "N/A"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="job-side">
+                      <span className={statusConfig.badgeClass}>
+                        {statusConfig.label}
+                      </span>
+
+                      {statusConfig.actionType === "receipt" ? (
+                        <button
+                          type="button"
+                          className="action-btn receipt-btn"
+                          onClick={() => handleViewReceipt(job)}
+                        >
+                          <ReceiptText size={18} />
+                          View Receipt
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="action-btn rerun-btn"
+                          onClick={() => handleRerunJob(job)}
+                        >
+                          <RotateCcw size={18} />
+                          Rerun
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        className="icon-delete-btn"
+                        onClick={() => handleViewDelete(job)}
+                        aria-label={`Delete ${job.displayId}`}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </article>
+                );
+              })
+            )}
+          </div>
         </div>
       </div>
       <div className="paginations">
-        <button type="button" className="pagination-button" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+        <button
+          type="button"
+          className="pagination-button"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Previous
+        </button>
+
         <div className="page-numbers">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-            <button type="button" key={page} className={`page-number ${currentPage === page ? "active" : ""}`} onClick={() => handlePageChange(page)}>{page}</button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              type="button"
+              key={page}
+              className={`page-number ${currentPage === page ? "active" : ""}`}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </button>
           ))}
-
         </div>
-        <button type="button" className="pagination-button" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
 
+        <button
+          type="button"
+          className="pagination-button"
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Next
+        </button>
+      </div>
       </div>
 
       {openModal && selectedJob && (

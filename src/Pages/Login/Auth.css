@@ -1,0 +1,324 @@
+.login-screen {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#root {
+  display: contents;
+}
+
+/* Full screen login container */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+   COLLAGE
+   4x2 CSS grid that fills the entire screen.
+   Images slot in automatically left to right,
+   top to bottom. JS controls when each cell
+   becomes visible via the .visible class.
+    */
+.collage-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+}
+
+/* Each cell starts invisible — JS adds .visible one by one */
+.collage-cell {
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.collage-cell.visible {
+  opacity: 1;
+}
+
+/* Dims the pics when the welcome text appears */
+.collage-cell.dimmed {
+  opacity: 0.15;
+  transition: opacity 1.2s ease;
+}
+
+.collage-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/*
+   DARK OVERLAY
+   Sits above the collage, deepens when the
+   welcome text and login card appear so text
+   stays readable against the busy background.
+    */
+.login-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 1.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.login-overlay.deep {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* 
+   WELCOME TEXT BLOCK
+   Centered above the login card.
+   Contains the PrintOS brand label, headline,
+   and a cycling tagline that fades in and out.
+   */
+.welcome-block {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 3;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.welcome-block.visible {
+  opacity: 1;
+}
+
+/* Small "WSUV Capstone Project" label above the headline */
+.welcome-brand {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #33a1ff;
+  margin: 0 0 8px;
+}
+
+/* Main headline */
+.welcome-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+  background: linear-gradient(90deg, rgb(199, 139, 238), #2190df, rgb(204, 141, 247));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI', sans-serif;
+  text-shadow: none;
+}
+
+/* Cycling tagline — JS toggles fade-in/fade-out to swap phrases */
+.welcome-tagline {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  transition: opacity 0.4s ease;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.welcome-tagline.fade-in {
+  opacity: 1;
+}
+
+.welcome-tagline.fade-out {
+  opacity: 0;
+}
+
+/* 
+   LOGIN CARD WRAPPER
+   Positioned below the welcome text.
+   Fades in after the text has been visible
+   for a few seconds. Contains the Amplify
+   Authenticator component.
+    */
+.login-card-wrapper {
+  position: absolute;
+  top: 64%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card-wrapper.visible {
+  opacity: 1;
+}
+
+/* 
+   AMPLIFY AUTHENTICATOR OVERRIDES
+   Amplify injects its own styles so we need
+   !important to override them. Targets the
+   wrapper, router card, tabs, inputs, and
+   buttons to match the PrintOS design system.
+   */
+
+/* Outer authenticator wrapper — transparent so our bg shows through */
+[data-amplify-authenticator] {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: auto !important;
+  background: transparent !important;
+}
+
+/* The actual card — frosted glass effect with blur and semi-transparent white */
+[data-amplify-authenticator] [data-amplify-router] {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+  width: 400px !important;
+  max-width: 400px !important;
+  margin: 0 auto !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+/* Tab bar — Sign In / Create Account */
+[data-amplify-authenticator] .amplify-tabs__list {
+  border-bottom: 1px solid rgba(0, 51, 102, 0.15) !important;
+  background: transparent !important;
+}
+
+/* Inactive tab */
+[data-amplify-authenticator] .amplify-tabs__item {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: rgba(0, 51, 102, 0.4) !important;
+  border-bottom: 2px solid transparent !important;
+  background: none !important;
+  transition: color 0.3s, border-color 0.3s !important;
+}
+
+/* Active tab */
+[data-amplify-authenticator] .amplify-tabs__item--active,
+[data-amplify-authenticator] .amplify-tabs__item[aria-selected="true"] {
+  color: #003366 !important;
+  border-bottom-color: #33a1ff !important;
+}
+
+/* Form — stretch children to full width */
+[data-amplify-authenticator] form {
+  padding: 1.75rem !important;
+  background: transparent !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  box-sizing: border-box !important;
+}
+
+/* Amplify flex containers — force full width column layout */
+[data-amplify-authenticator] .amplify-flex {
+  width: 100% !important;
+  flex-direction: column !important;
+}
+
+/* Field labels */
+[data-amplify-authenticator] .amplify-label {
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #003366 !important;
+}
+
+/* Text inputs — webkit-box-shadow trick overrides browser autofill yellow */
+[data-amplify-authenticator] .amplify-input {
+  height: 40px !important;
+  border: 1px solid rgba(0, 51, 102, 0.25) !important;
+  border-radius: 4px !important;
+  color: #003366 !important;
+  background: #ffffff !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #003366 !important;
+}
+
+[data-amplify-authenticator] .amplify-input:focus {
+  border-color: #33a1ff !important;
+  box-shadow: 0 0 0 3px rgba(51, 161, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Primary button — Sign in / Create Account */
+[data-amplify-authenticator] .amplify-button--primary {
+  width: 100% !important;
+  background-color: #003366 !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+  padding: 10px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border: none !important;
+}
+
+[data-amplify-authenticator] .amplify-button--primary:hover {
+  background-color: #004d99 !important;
+}
+
+/* Link buttons — Forgot password, etc. */
+[data-amplify-authenticator] .amplify-button--small,
+[data-amplify-authenticator] .amplify-button--link {
+  width: auto !important;
+  align-self: center !important;
+  color: #33a1ff !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+[data-amplify-authenticator] .amplify-button--link:hover {
+  color: #66ccff !important;
+}
+
+/* 
+   RESPONSIVE — mobile
+   Collapses to 2x4 grid on small screens,
+   shrinks text and card to fit viewport width.
+   */
+@media (max-width: 600px) {
+  .collage-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .welcome-title {
+    font-size: 2rem;
+    white-space: normal;
+    padding: 0 1rem;
+  }
+
+  .login-card-wrapper {
+    width: 90vw;
+    top: 65%;
+  }
+
+  [data-amplify-authenticator] [data-amplify-router] {
+    width: 90vw !important;
+  }
+}

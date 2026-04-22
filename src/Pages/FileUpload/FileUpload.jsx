@@ -15,9 +15,11 @@
 // - Moving on to /job-submission after a file is chosen
 // -----------------------------------------------------------
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchAuthSession } from "aws-amplify/auth";
 import "./FileUpload.css";
+
 
 /*import codingHumor1 from "../../assets/coding_humor1.jpg";
 import codingHumor2 from "../../assets/coding_humor2.png";
@@ -38,6 +40,18 @@ import PickMeChooseMe from "../../assets/BennyFront.png";*/
   { id: "humor5", name: "Pick me, Choose Me", thumbnail: PickMeChooseMe },
 ];*/
 
+import col1 from "../../assets/ColorUpColection001.png";
+import col2 from "../../assets/ColorUpColection002.png";
+import col3 from "../../assets/ColorUpColection003.png";
+
+
+const featuredCollection = [
+  { id: 1, image: col1, title: "Color Up 001" },
+  { id: 2, image: col2, title: "Color Up 002" },
+  { id: 3, image: col3, title: "Color Up 003" },
+ 
+];
+
 function FileUpload() {
   const navigate = useNavigate();
 
@@ -51,7 +65,50 @@ function FileUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFilePreview, setSelectedFilePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [recentFiles, setRecentFiles] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState({});
+  const [selectedFeatured, setSelectedFeatured] = useState(null);
 
+  const API_BASE = import.meta.env.VITE_API_URL?.trim().replace(/\/$/, "");
+
+
+  const isPreviewable = (fileType) =>
+  ["jpg", "jpeg", "png", "gif", "webp", "svg"].includes(fileType?.toLowerCase());
+
+// Fetch 3 most recent uploads for the bottom section
+useEffect(() => {
+  const fetchRecent = async () => {
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      const res = await fetch(`${API_BASE}/api/jobs/library`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const recent = data.slice(0, 3);
+      setRecentFiles(recent);
+      const urls = {};
+      await Promise.all(
+        recent.map(async (file) => {
+          if (isPreviewable(file.fileType) && file.s3Key) {
+            const r = await fetch(`${API_BASE}/api/s3/file/${file.s3Key}`, {
+              headers: { Authorization: `Bearer ${token}` }
+            });
+            if (r.ok) {
+              const blob = await r.blob();
+              urls[file.id] = URL.createObjectURL(blob);
+            }
+          }
+        })
+      );
+      setPreviewUrls(urls);
+    } catch (err) {
+      console.error("Could not load recent files", err);
+    }
+  };
+  fetchRecent();
+}, []);
   // ---------------------------------------------------------
   // For the “previously uploaded” option: - Maria 11/16
   // - selectedPreviousId is whatever they pick in the dropdown
@@ -145,6 +202,14 @@ function FileUpload() {
     }
   };
 
+  const handleResubmit = (file) => {
+  sessionStorage.setItem("uploadedFileName", file.originalFile);
+  sessionStorage.setItem("uploadedFileType", file.fileType || "");
+  sessionStorage.setItem("uploadedS3Key", file.s3Key);
+  navigate("/job-submission", {
+    state: { fileName: file.originalFile, fileType: file.fileType || "", s3Key: file.s3Key }
+  });
+};
    
   // ---------------------------------------------------------
   // Malek
@@ -184,14 +249,21 @@ function FileUpload() {
           Choose a new file from your device or reuse something from your library.
         </p>
 
+        {/* Why PrintOS */}
+        <p className="why-printos-text">
+          PrintOS automates your print workflow from submission to completion,
+          ensuring color accuracy, eliminating manual handoffs, and giving you
+          real-time visibility into every job. Upload your file and let the magic happen.
+        </p>
+
+        {/* Upload grid */}
         <div className="file-upload-grid">
-          {/* LEFT SIDE: New Upload */}
+          {/* LEFT: New Upload */}
           <section className="file-upload-section">
             <h2>New Upload</h2>
             <p className="section-description">
               Upload a print-ready file directly from your computer.
             </p>
-
             <label className="upload-dropzone">
               <input
                 type="file"
@@ -201,7 +273,6 @@ function FileUpload() {
               <p className="dropzone-title">Click to browse</p>
               <p className="dropzone-subtitle">or drag and drop a file here</p>
             </label>
-
             {selectedFile && (
               <div className="file-info">
                 <div className="file-info-text">
@@ -212,64 +283,115 @@ function FileUpload() {
                 </div>
               </div>
             )}
-
             {selectedFilePreview && (
               <div className="file-preview">
                 <img src={selectedFilePreview} alt="New upload preview" />
               </div>
             )}
-
             <button
               className="primary-button"
               disabled={!selectedFile || uploading}
               onClick={handleContinueWithNew}
             >
-              {uploading ? "Uploading..." : "Continue with New File"} 
+              {uploading ? "Uploading..." : "Continue with New File"}
             </button>
           </section>
 
-          {/* RIGHT SIDE: Previously Uploaded (demo) */}
+          {/* RIGHT: Previously Uploaded */}
           <section className="file-upload-section">
             <h2>Previously Uploaded</h2>
             <p className="section-description">
               Pick a file from your library.
             </p>
-
-            {/*<select
-              className="file-select"
-              value={selectedPreviousId}
-              onChange={handlePreviousChange}
-            >
-              <option value="">Select a file…</option>
-              {previouslyUploadedFiles.map((file) => (
-                <option key={file.id} value={file.id}>
-                  {file.name}
-                </option>
-              ))}
-            </select>
-
-            {selectedPreviousFile && (
-              <div className="file-preview">
-                <img
-                  src={selectedPreviousFile.thumbnail}
-                  alt={selectedPreviousFile.name}
-                />
-              </div>
-            )} */}
-
             <button
               className="secondary-button"
               onClick={() => navigate("/my-library")}
             >
-              Go to My Library
+              Go to My Library →
             </button>
           </section>
+        </div>
+
+        {/* Featured Collection */}
+        <div className="upload-bottom-section">
+          <div className="recent-header">
+            <div>
+              <h2 className="upload-section-heading">Featured Collection</h2>
+              <p className="featured-subtitle">
+                Sample CMYK poster set enhanced with Color Up extended gamut.
+                Best printed on the HP Indigo 12000 or HP Indigo 15K Presses.
+              </p>
+            </div>
+          </div>
+          <div className="featured-how-to">
+            <span>✦ How to try it:</span> Browse the collection below, click any image to preview it, then hit <strong>Print This</strong> to submit it as a new job.
+          </div>
+          <div className="recent-grid">
+            {featuredCollection.map((item) => (
+              <div key={item.id} className="recent-card" onClick={() => setSelectedFeatured(item)}>
+                <div className="recent-card-image">
+                  <img src={item.image} alt="" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <p className="file-upload-footer">
           Need help? Don&apos;t contact us yet... we&apos;re still figuring it out too.
         </p>
       </div>
+
+      {/* Featured image modal */}
+      {selectedFeatured && (
+        <div className="library-modal-overlay" onClick={() => setSelectedFeatured(null)}>
+          <div className="library-modal" onClick={(e) => e.stopPropagation()} style={{ textAlign: "center" }}>
+            <button
+              className="library-modal-close"
+              onClick={() => setSelectedFeatured(null)}
+            >
+              ✕
+            </button>
+            <h2 className="library-modal-title">Featured Collection — Color Up by HP</h2>
+            <div className="library-modal-preview">
+              <img
+                src={selectedFeatured.image}
+                alt=""
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
+            </div>
+            <p style={{ fontSize: "0.8rem", color: "#888", margin: "0.5rem 0 1rem" }}>
+              Sample CMYK poster enhanced with Color Up extended gamut.
+              Best printed on the HP Indigo 12000 or HP Indigo 15K Presses.
+            </p>
+            <div className="library-modal-actions" style={{ justifyContent: "center" }}>
+              <button
+                className="library-cancel-btn"
+                onClick={() => setSelectedFeatured(null)}
+              >
+                Close
+              </button>
+              <button
+                className="library-modal-resubmit-btn"
+                onClick={() => {
+                  setSelectedFeatured(null);
+                  navigate("/job-submission", {
+                    state: {
+                      fileName: `ColorUp_Featured_${selectedFeatured.id}.png`,
+                      fileType: "png",
+                      s3Key: null,
+                      isFeatured: true,
+                      featuredImage: selectedFeatured.image
+                    }
+                  });
+                }}
+              >
+                🖨 Print This
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
