@@ -14,6 +14,8 @@ import photo6 from "../../assets/hp-photo-6.webp";
 import photo7 from "../../assets/hp-photo-7.jpg"; 
 import photo9 from "../../assets/hp-photo-9.webp"; 
 import photo10 from "../../assets/hp-photo-10.avif"; 
+import photoPrintOS from "../../assets/printOS.svg"; 
+import photo11 from "../../assets/Untitled-7 copy.svg"; 
 
 
 export default function AboutUs() {
@@ -35,13 +37,13 @@ export default function AboutUs() {
             <img src={photo5} className="d-block w-100" alt="Photo 1" />
           </div>
           <div className="carousel-item">
-            <img src={photo7} className="d-block w-100" alt="Photo 2" />
+            <img src={photoPrintOS} className="d-block w-100" alt="Photo 2" />
           </div>
           <div className="carousel-item">
-            <img src={photo4} className="d-block w-100" alt="Photo 3" />
+            <img src={photo7} className="d-block w-100" alt="Photo 3" />
           </div>
           <div className="carousel-item">
-            <img src={photo10} className="d-block w-100" alt="Photo 3" />
+            <img src={photo11} className="d-block w-100" alt="Photo 3" />
           </div>
         </div>
 
@@ -56,7 +58,7 @@ export default function AboutUs() {
 
       <div className="our-story">
         <h2>About Us</h2>
-        <p>The HP PrintOS Capstone web application was created by students of Washington State University frosm September 2025 to May 2026.
+        <p>The HP PrintOS Capstone web application was created by students of Washington State University from September 2025 to May 2026.
            <br />Student Developers include: Maria Stefanovic, Fatimah Diallo, Malek Abualya, Mona Abualya, and Emma Sturm. 
             <br />The goal of this project is to create an application where users are able to create print and manage their different print requests.</p>
       </div>

@@ -2,29 +2,51 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, #f5f8ff, #F5FAFF);
-  min-height: 100vh;
-  padding: 2rem;
+  background: linear-gradient(270deg, #d6aaf3, #a6e5f8, #93bbe3);
+  background-size: 400% 400%;
+  animation: gradientShift 6s ease infinite;
+  padding: 2rem 2rem;
+  box-sizing: border-box; 
+  position: relative;
+  min-height: 100%; 
+  overflow: hidden;
+}
+
+.dashboard h1{
+  margin-top: 2rem; 
   font-family: "Inter", sans-serif;
+  font-weight: bold; 
+  background: linear-gradient(90deg, rgb(199, 139, 238), #2190df,rgb(204, 141, 247));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard .printjobs {
+  margin-bottom: 2rem; 
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* --- Button (Matches "Continue with New File") --- */
 .submit-btn {
-  background-color: #6fb7fa;
+  background-color: #8cc0f0;
   color: white;
   border: none;
-  border-radius: 30px;
-  padding: 0.8rem 2.5rem;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-family: "Inter", sans-serif;
   font-size: 1.1rem;
-  font-weight: 600;
   cursor: pointer;
-  margin-bottom: 2rem;
   box-shadow: 0 4px 10px rgba(75, 168, 255, 0.35);
   transition: background 0.2s ease;
 }
 
 .submit-btn:hover {
-  background-color: #3194F0;
+  background-color: #76aadc;
 }
 
 /* --- Stats Grid --- */
@@ -33,31 +55,30 @@
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1.5rem;
   width: 100%;
-  max-width: 1000px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: black;
 }
 
 .stat-card {
+  position: relative; 
   background-color: #FFFFFF;
   border-radius: 16px;
   padding: 1.5rem;
-  text-align: center;
   border: 1px solid #DCEAF8;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  height: 10rem; 
+  transition: 0.2s ease;
 }
 
+.stat-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+}
 
 .stat-card h2 {
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #0A2A43;    
-}
-
-.stat-card hr {
-  width: 45%;
-  margin: 0.5rem auto;
-  border: 1px solid #0A2A43;
 }
 
 .stat-card h1 {
@@ -73,23 +94,22 @@
 }
 
 /* --- History Section (Updated to match Upload Page cards) --- */
-.history-section {
+.db-history-section {
+  margin-top: .5rem;
   background-color: #FFFFFF;
   border-radius: 20px;
-  padding: 1.5rem 2rem;
+  padding: 1rem 1rem;
   width: 100%;
-  max-width: 900px;
   border: 1px solid #DCEAF8;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   color: #0A2A43;
+  max-height: 20rem; 
 }
 
-
-
-.history-section h2 {
+.db-history-section h2 {
   margin-bottom: 1rem;
-  font-weight: 600;
   color: #0A2A43;
+  font-family: "Inter", sans-serif;
 }
 
 /* --- Job List --- */
@@ -103,7 +123,7 @@
   display: flex;
   align-items: center;
   background-color: #f4f6ff;
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 0.7rem 1.2rem;
   color: black;
   justify-content: space-between;
@@ -121,7 +141,7 @@
 }
 
 .status-dot.success {
-  background-color: #2ECC71; /* green */
+  background-color: #2ECC71; 
 }
 
 .status-dot.error {
@@ -129,7 +149,7 @@
 }
 
 .status-dot.pending {
-  background-color: #F5B041; /* soft yellow */
+  background-color: #F5B041;
 }
 
 .job-id {
@@ -149,4 +169,69 @@
   font-size: 1.3rem;
   margin-left: auto;
   color: #0A2A43;
+}
+
+.statistics {
+  gap: 1rem; 
+  width: 100%; 
+  margin-bottom: 1rem; 
+  display: flex; 
+}
+
+.statistics .graph-card, .statistics .donut-card { 
+  background-color: white;
+  width: 100%; 
+  border-radius: 16px;
+  padding: 1rem; 
+}
+
+.grid-icon-printer{
+  color: white; 
+  background-color: #7ebdeb;
+  border-radius: 8px;
+  display: inline-flex; 
+}
+
+.grid-icon-check{
+  color: white;
+  background-color: #96df8a;
+  border-radius: 8px;
+  display: inline-flex; 
+}
+
+.grid-icon-timer{
+  color: white;
+  background-color: #f3a974;
+  border-radius: 8px;
+  display: inline-flex; 
+}
+
+.grid-icon-failed{
+  color: white;
+  background-color: #f88080;
+  border-radius: 8px;
+  display: inline-flex; 
+}
+
+.grid-icon-trending{
+  color: white;
+  background-color: rgb(199, 139, 238); 
+  border-radius: 8px;
+  display: inline-flex; 
+}
+
+.grid-icon-calendar{
+  color: white;
+  background-color: rgb(175, 219, 253); 
+  border-radius: 8px;
+  display: inline-flex; 
+}
+
+.top-of-card{
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #d99cfa;
 }
