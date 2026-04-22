@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./JobHistory.css";
 import * as statusMethods from "../JobStatus/JobStatusUtils.js";  
-import { Printer, CheckCircle2, Clock3, XCircle, CalendarDays, FileText, Copy, ReceiptText, RotateCcw, Trash2} from "lucide-react";
+import { Printer, CheckCircle2, Clock3, XCircle, CalendarDays, FileText, Copy, ReceiptText, RotateCcw, Trash2, Clock8, CircleX, SquareCheck} from "lucide-react";
 import ActionButton from "../ActionButton/ActionButton.jsx"; 
 import { fetchAuthSession } from "aws-amplify/auth";
 
@@ -244,25 +244,25 @@ const handleViewReceipt = (job) => {
 
       <div className="stats-grid">
         <div className="stat-card purple">
-          <div className="stat-icon"><Printer size={20} /></div>
+          <div className="stat-icon"><Printer size={50} /></div>
           <h2>{stats.total}</h2>
           <p>Total Jobs</p>
         </div>
 
         <div className="stat-card green">
-          <div className="stat-icon"><Printer size={20} /></div>
+          <div className="stat-icon"><SquareCheck size={50} /></div>
           <h2>{stats.completed}</h2>
           <p>Completed</p>
         </div>
 
         <div className="stat-card orange">
-          <div className="stat-icon"><Printer size={20} /></div>
+          <div className="stat-icon"><Clock8 size={50} /></div>
           <h2>{stats.inProgress}</h2>
           <p>In Progress</p>
         </div>
 
         <div className="stat-card red">
-          <div className="stat-icon"><Printer size={20} /></div>
+          <div className="stat-icon"><CircleX size={50} /></div>
           <h2>{stats.failed}</h2>
           <p>Failed</p>
         </div>
