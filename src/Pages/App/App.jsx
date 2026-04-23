@@ -26,7 +26,7 @@ import AboutUs from '../AboutUs/AboutUs.jsx'
 import React, { useState, useEffect } from 'react'
 import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 import LoginPage from '../Login/LoginPage.jsx'
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
+
 
 
 function App() {
