@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Link,
+  Navigate,
 } from 'react-router-dom'
 
 import { Authenticator } from '@aws-amplify/ui-react'
@@ -26,6 +27,7 @@ import AboutUs from '../AboutUs/AboutUs.jsx'
 import React, { useState, useEffect } from 'react'
 import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 import LoginPage from '../Login/LoginPage.jsx'
+
 
 
 function App() {
@@ -164,6 +166,7 @@ function App() {
                   <Route path="/file-rendering" element={<FileRendering/>}/> 
                   <Route path="/about-us" element={<AboutUs/>}/>
                   <Route path="/my-library" element={<MyLibrary />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
 
                 </Routes>
               </section>

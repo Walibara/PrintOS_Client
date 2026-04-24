@@ -145,7 +145,8 @@ function FileRendering() {
   const isFailure =
     backendStatus === "FAILED" || backendStatus === "ERROR";
 
-  const isFinished = backendStatus === "FINISHED";
+  const isFinished =
+    backendStatus === "FINISHED";
 
   const isProcessing =
     backendStatus === "CREATED" || backendStatus === "IN_PROGRESS";
@@ -209,15 +210,11 @@ function FileRendering() {
         {!jobNotFound && backendStatus !== "ERROR_LOADING" && isProcessing && (
           <>
             <div className="file-rendering-steps">
-              <div className={`render-step ${step >= 1 ? "render-step-done" : ""}`}>
-                <div
-                  className={`render-step-icon ${
-                    step >= 1 ? "render-step-icon-done" : "render-step-icon-spinner"
-                  }`}
-                >
-                  {step >= 1 ? "✓" : <ClipLoader size={18} color="#1a73e8" />}
-                </div>
 
+              <div className="render-step">
+                <div className="render-step-icon render-step-icon-spinner">
+                  <ClipLoader size={18} color="#1a73e8" />
+                </div>
                 <div className="render-step-text">
                   <h2 className="render-step-title">File Validation</h2>
                   <p className="render-step-description">
@@ -226,15 +223,10 @@ function FileRendering() {
                 </div>
               </div>
 
-              <div className={`render-step ${step >= 2 ? "render-step-done" : ""}`}>
-                <div
-                  className={`render-step-icon ${
-                    step >= 2 ? "render-step-icon-done" : "render-step-icon-spinner"
-                  }`}
-                >
-                  {step >= 2 ? "✓" : <ClipLoader size={18} color="#1a73e8" />}
+              <div className="render-step">
+                <div className="render-step-icon render-step-icon-spinner">
+                  <ClipLoader size={18} color="#1a73e8" />
                 </div>
-
                 <div className="render-step-text">
                   <h2 className="render-step-title">Imposition Layout</h2>
                   <p className="render-step-description">
@@ -243,15 +235,10 @@ function FileRendering() {
                 </div>
               </div>
 
-              <div className={`render-step ${step >= 3 ? "render-step-done" : ""}`}>
-                <div
-                  className={`render-step-icon ${
-                    step >= 3 ? "render-step-icon-done" : "render-step-icon-spinner"
-                  }`}
-                >
-                  {step >= 3 ? "✓" : <ClipLoader size={18} color="#1a73e8" />}
+              <div className="render-step">
+                <div className="render-step-icon render-step-icon-spinner">
+                  <ClipLoader size={18} color="#1a73e8" />
                 </div>
-
                 <div className="render-step-text">
                   <h2 className="render-step-title">File Optimization</h2>
                   <p className="render-step-description">
@@ -259,6 +246,7 @@ function FileRendering() {
                   </p>
                 </div>
               </div>
+
             </div>
 
             <div className="file-rendering-summary">
@@ -294,36 +282,70 @@ function FileRendering() {
         )}
 
         {!jobNotFound && backendStatus !== "ERROR_LOADING" && isFinished && (
-          <div className="file-rendering-summary">
-            <h2 className="file-rendering-summary-title">
-              ✅ Your file has been received and accepted
-            </h2>
-            <p className="file-rendering-summary-text">
-              Your job is now in our production queue. You’ll receive an email with
-              print and shipping details soon.
-            </p>
-            <p className="file-rendering-summary-note">
-              Digital workers handle this entire workflow automatically.
-            </p>
+          <>
+            <div className="file-rendering-steps">
+              <div className="render-step render-step-done">
+                <div className="render-step-icon render-step-icon-done">✓</div>
+                <div className="render-step-text">
+                  <h2 className="render-step-title">File Validation</h2>
+                  <p className="render-step-description">
+                    The file passed validation successfully.
+                  </p>
+                </div>
+              </div>
 
-            <div className="rendering-actions">
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={() => navigate("/dashboard")}
-              >
-                Go to Dashboard
-              </button>
+              <div className="render-step render-step-done">
+                <div className="render-step-icon render-step-icon-done">✓</div>
+                <div className="render-step-text">
+                  <h2 className="render-step-title">Imposition Layout</h2>
+                  <p className="render-step-description">
+                    The page layout was prepared successfully.
+                  </p>
+                </div>
+              </div>
 
-              <button
-                type="button"
-                className="primary-button"
-                onClick={() => navigate("/job-status")}
-              >
-                View Job Status
-              </button>
+              <div className="render-step render-step-done">
+                <div className="render-step-icon render-step-icon-done">✓</div>
+                <div className="render-step-text">
+                  <h2 className="render-step-title">File Optimization</h2>
+                  <p className="render-step-description">
+                    The file settings were finalized successfully.
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+
+            <div className="file-rendering-summary">
+              <h2 className="file-rendering-summary-title">
+                ✅ Your file has been received and accepted
+              </h2>
+              <p className="file-rendering-summary-text">
+                Your job is now in our production queue. You’ll receive an email with
+                print and shipping details soon.
+              </p>
+              <p className="file-rendering-summary-note">
+                Digital workers handle this entire workflow automatically.
+              </p>
+
+              <div className="rendering-actions">
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Go to Dashboard
+                </button>
+
+                <button
+                  type="button"
+                  className="primary-button"
+                  onClick={() => navigate("/job-status")}
+                >
+                  View Job Status
+                </button>
+              </div>
+            </div>
+          </>
         )}
 
         {!jobNotFound && backendStatus !== "ERROR_LOADING" && isFailure && (
