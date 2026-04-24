@@ -145,7 +145,8 @@ function FileRendering() {
   const isFailure =
     backendStatus === "FAILED" || backendStatus === "ERROR";
 
-  const isFinished = backendStatus === "FINISHED";
+  const isFinished =
+    backendStatus === "FINISHED";
 
   const isProcessing =
     backendStatus === "CREATED" || backendStatus === "IN_PROGRESS";
@@ -210,12 +211,8 @@ function FileRendering() {
           <>
             <div className="file-rendering-steps">
               <div className={`render-step ${step >= 1 ? "render-step-done" : ""}`}>
-                <div
-                  className={`render-step-icon ${
-                    step >= 1 ? "render-step-icon-done" : "render-step-icon-spinner"
-                  }`}
-                >
-                  {step >= 1 ? "✓" : <ClipLoader size={18} color="#1a73e8" />}
+                <div className="render-step-icon render-step-icon-spinner">
+                  <ClipLoader size={18} color="#1a73e8" />
                 </div>
 
                 <div className="render-step-text">
@@ -227,12 +224,8 @@ function FileRendering() {
               </div>
 
               <div className={`render-step ${step >= 2 ? "render-step-done" : ""}`}>
-                <div
-                  className={`render-step-icon ${
-                    step >= 2 ? "render-step-icon-done" : "render-step-icon-spinner"
-                  }`}
-                >
-                  {step >= 2 ? "✓" : <ClipLoader size={18} color="#1a73e8" />}
+                <div className="render-step-icon render-step-icon-spinner">
+                  <ClipLoader size={18} color="#1a73e8" />
                 </div>
 
                 <div className="render-step-text">
@@ -244,12 +237,8 @@ function FileRendering() {
               </div>
 
               <div className={`render-step ${step >= 3 ? "render-step-done" : ""}`}>
-                <div
-                  className={`render-step-icon ${
-                    step >= 3 ? "render-step-icon-done" : "render-step-icon-spinner"
-                  }`}
-                >
-                  {step >= 3 ? "✓" : <ClipLoader size={18} color="#1a73e8" />}
+                <div className="render-step-icon render-step-icon-spinner">
+                  <ClipLoader size={18} color="#1a73e8" />
                 </div>
 
                 <div className="render-step-text">
