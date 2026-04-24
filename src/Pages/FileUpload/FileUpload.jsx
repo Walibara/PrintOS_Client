@@ -40,9 +40,9 @@ import PickMeChooseMe from "../../assets/BennyFront.png";*/
   { id: "humor5", name: "Pick me, Choose Me", thumbnail: PickMeChooseMe },
 ];*/
 
-import col1 from "../../assets/ColorUpColection001.png";
-import col2 from "../../assets/ColorUpColection002.png";
-import col3 from "../../assets/ColorUpColection003.png";
+import col1 from "../../assets/printOS.svg";
+import col2 from "../../assets/tiles.svg";
+import col3 from "../../assets/Untitled-5.svg";
 
 
 const featuredCollection = [
@@ -316,7 +316,7 @@ useEffect(() => {
         <div className="upload-bottom-section">
           <div className="recent-header">
             <div>
-              <h2 className="upload-section-heading">Featured Collection</h2>
+              <h2 className="upload-section-heading">Color Me Collection by Emma S.</h2>
               <p className="featured-subtitle">
                 Sample CMYK poster set enhanced with Color Up extended gamut.
                 Best printed on the HP Indigo 12000 or HP Indigo 15K Presses.
@@ -336,10 +336,6 @@ useEffect(() => {
             ))}
           </div>
         </div>
-
-        <p className="file-upload-footer">
-          Need help? Don&apos;t contact us yet... we&apos;re still figuring it out too.
-        </p>
       </div>
 
       {/* Featured image modal */}

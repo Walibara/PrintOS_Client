@@ -1,3 +1,21 @@
+.submit-button {
+  background-color: #94ccf5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: .8rem 1.25rem;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(194, 223, 251, 0.35);
+  transition: background 0.2s ease;
+  margin-bottom: 1rem; 
+}
+
+.submit-button:hover{
+  background-color: #d0bdf7; 
+}
+
 .paginations {
   display: flex;
   justify-content: flex-end;
@@ -8,15 +26,13 @@
   padding: 1rem 0;
 }
 
-
 .page-numbers {
   display: flex;
   gap: 0.5rem;
 }
 
-
 .pagination-button {
-  background-color: #38a9ff;
+  background-color: #7bbff4;
   color: white;
   border: none;
   border-radius: 20px;
@@ -27,7 +43,7 @@
 }
 
 .pagination-button:hover:not(:disabled) {
-  background-color: #1b8de2;
+  background-color: #8ec9f7;
 }
 
 .pagination-button:disabled {
@@ -54,19 +70,16 @@
 }
 
 .page-number.active {
-  background-color: #38a9ff;
+  background-color: #7bbff4;
   color: white;
 }
 
-
-
-
 .job-history-container {
-  min-height: 100vh;
   padding: 32px;
   background: linear-gradient(270deg, #e5c2fd, #d1f4ff, #c8e3fe);
   background-size: 400% 400%;
-  animation: gradientShift 6s ease infinite;
+  animation: gradientShift 6s ease infinite; 
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .custom-modal-overlay {
@@ -121,16 +134,6 @@
   border-top: 1px solid #ddd;
 }
 
-.history-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  gap: 1rem;
-  flex-wrap: wrap;
-  padding: 16px 24px 0;
-}
-
 
 .history-filters {
   display: flex;
@@ -139,28 +142,6 @@
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
-}
-
-.filter-btn {
-  background-color: #f1f1f1;
-  color: black;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-
-}
-
-.filter-btn:hover {
-  background-color: #e4e4e4;
-}
-
-.filter-btn.active {
-  background-color: #38a9ff;
-  color: white;
-  border-color: #38a9ff;
 }
 
 .empty-history {
@@ -175,28 +156,30 @@
   background-color: #fafafa;
 }
 
-
-
-
- .history-header h1 {
+.history-header h1 {
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 800;
   margin: 0;
-  line-height: 1.05;
   color: #7c3aed;
   margin-bottom: 1.5rem;
 }
 
-.history-title-group {
+.history-title-section {
+  margin-top: 1rem;
+  margin-bottom: 1rem; 
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Segoe UI', sans-serif;
 } 
-.job-history-subtitle {
-  margin: 0.35rem 0 0;
-  font-size: 1.125rem;
-  color: #4b5563;
-  max-width: 700px;
-  font-weight: bold;
+
+.history-title-section h1 {
+  background: linear-gradient(90deg, rgb(199, 139, 238), #2190df,rgb(204, 141, 247));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: .5rem;
+  font-weight: bold; 
+  font-size: 3.2rem; 
 }
 
 .stats-grid {
@@ -220,17 +203,17 @@
 .stat-icon {
   width: 50px;
   height: 50px;
-  border-radius: 16px;
+  border-radius: 8px;
   display: grid;
   place-items: center;
   color: white;
   margin-bottom: 1rem;
 }
 
-.stat-card.purple .stat-icon { background: #a855f7; }
-.stat-card.green .stat-icon { background: #22c55e; }
-.stat-card.orange .stat-icon { background: #f59e0b; }
-.stat-card.red .stat-icon { background: #fb7185; }
+.stat-card.purple .stat-icon { background: rgb(199, 139, 238); }
+.stat-card.green .stat-icon { background: #96df8a; }
+.stat-card.orange .stat-icon { background:  #f3a974; }
+.stat-card.red .stat-icon { background:#f88080; }
 
 .stat-card h2 {
   font-size: 2.2rem;
@@ -241,7 +224,6 @@
   margin: 0;
   color: #6b7280;
 }
-
 
 .history-filters {
   display: flex;
@@ -263,9 +245,9 @@
 } */
 
  .filter-btn.active {
-  background-color: #38a9ff;
+  background-color: #9dd2fb;
   color: white;
-  border-color: #38a9ff;
+  border-color: #93ccf7;
 }
 
 .jobs-panel {
@@ -298,9 +280,9 @@
   color: white;
 } 
 
-.job-icon.success { background: #10b981; }
-.job-icon.pending { background: #f59e0b; }
-.job-icon.error { background: #f43f5e; } */
+.job-icon.success { background: #96df8a;  }
+.job-icon.pending { background: #f3a974; }
+.job-icon.error { background: #f88080; } 
 
  .job-main {
   min-width: 0;
@@ -323,7 +305,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 1.25rem;
-  color: #4b5563;
+  color: #525f70;
   font-size: 0.98rem;
 }
 
@@ -351,17 +333,17 @@
 
 .badge-success {
   background: #dcfce7;
-  color: #15803d;
+  color: #88eaac;
 }
 
 .badge-pending {
   background: #fef3c7;
-  color: #b45309;
+  color: #eea670;
 }
 
 .badge-error {
   background: #ffe4e6;
-  color: #be123c;
+  color: #ff9393;
 } 
 
 .action-btn {
@@ -379,11 +361,11 @@
 }
 
 .receipt-btn {
-  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  background: linear-gradient(90deg, #c4a3fc, #f8a1cc);
 }
 
 .rerun-btn {
-  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  background: linear-gradient(90deg, #9cbff8, #a6f0fd);
 }
 
 .icon-delete-btn {
@@ -399,7 +381,7 @@
 }
 
 .icon-delete-btn:hover {
-  background: #f77676;
+  background: #fa9e9e;
   color: #5c0303e0;
 }
 
@@ -459,8 +441,8 @@
   background: #ffffff;
   border-radius: 30px;
   padding: 26px 34px;
-  height: 1000px;
   display: flex;
+  min-height: 1000px; 
   flex-direction: column;
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
   border: 1px solid #edf2f7;

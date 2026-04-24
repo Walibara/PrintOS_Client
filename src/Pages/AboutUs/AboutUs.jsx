@@ -37,7 +37,7 @@ export default function AboutUs() {
             <img src={photo5} className="d-block w-100" alt="Photo 1" />
           </div>
           <div className="carousel-item">
-            <img src={photoPrintOS} className="d-block w-100" alt="Photo 2" />
+              <img src={photoPrintOS} className="d-block w-100 OS" alt="Photo 2" />
           </div>
           <div className="carousel-item">
             <img src={photo7} className="d-block w-100" alt="Photo 3" />

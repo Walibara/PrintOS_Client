@@ -4,6 +4,10 @@
   object-position: center top; 
 }
 
+.carousel-item img.OS {
+  object-position: center center; 
+}
+
 .our-story, .our-sponsors{
     display: flex;
     flex-direction: column;

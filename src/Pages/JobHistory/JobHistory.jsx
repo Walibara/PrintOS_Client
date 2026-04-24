@@ -230,79 +230,43 @@ const handleViewReceipt = (job) => {
     <div className="job-history-container">
       <div className="job-history-inner">
       <div className="history-header">
-      <div className="history-title-group">
-        <h1>Job History</h1>
-        <p className="job-history-subtitle">Review and manage your print jobs.</p>
-      </div>
-        <button
-          className="submit-btn"
-          onClick={() => navigate("/file-upload")}
-        >
-          Submit New Job
-        </button>
+
+        <div className="history-title-section">
+          <h1>Job History</h1>
+          <button className="submit-button" onClick={() => navigate("/file-upload")}>Submit New Job</button>
+        </div>
       </div>
 
       <div className="stats-grid">
-        <div className="stat-card purple">
-          <div className="stat-icon"><Printer size={50} /></div>
-          <h2>{stats.total}</h2>
-          <p>Total Jobs</p>
-        </div>
+          <div className="stat-card purple" type="button" onClick={() => setStatusFilter("ALL")}>
+            <div className="stat-icon"><Printer size={50} /></div>
+            <h2>{stats.total}</h2>
+            <p>Total Jobs</p>
+        </div> 
 
-        <div className="stat-card green">
+        <div className="stat-card green" type="button" onClick={() => setStatusFilter("COMPLETED")}>
           <div className="stat-icon"><SquareCheck size={50} /></div>
           <h2>{stats.completed}</h2>
           <p>Completed</p>
         </div>
 
-        <div className="stat-card orange">
+        <div className="stat-card orange" type="button" onClick={() => setStatusFilter("IN_PROGRESS")}>
           <div className="stat-icon"><Clock8 size={50} /></div>
           <h2>{stats.inProgress}</h2>
           <p>In Progress</p>
         </div>
 
-        <div className="stat-card red">
+        <div className="stat-card red" type="button" onClick={() => setStatusFilter("FAILED")}>
           <div className="stat-icon"><CircleX size={50} /></div>
           <h2>{stats.failed}</h2>
           <p>Failed</p>
         </div>
       </div>
-      <div className="history-filters">
-        <button
-          type="button"
-          className={`filter-btn ${statusFilter === "ALL" ? "active" : ""}`}
-          onClick={() => setStatusFilter("ALL")}
-        >
-          All
-        </button>
 
-        <button
-          type="button"
-          className={`filter-btn ${statusFilter === "COMPLETED" ? "active" : ""}`}
-          onClick={() => setStatusFilter("COMPLETED")}
-        >
-          Completed
-        </button>
-
-        <button
-          type="button"
-          className={`filter-btn ${statusFilter === "IN_PROGRESS" ? "active" : ""}`}
-          onClick={() => setStatusFilter("IN_PROGRESS")}
-        >
-          In Progress
-        </button>
-
-        <button
-          type="button"
-          className={`filter-btn ${statusFilter === "FAILED" ? "active" : ""}`}
-          onClick={() => setStatusFilter("FAILED")}
-        >
-          Failed
-        </button>
-      </div>
       <div className="job-history-content">
         <div className="jobs-panel">
           <div className="jobs-list">
+
             {currentItems.length === 0 ? (
               <div className="empty-history">No jobs found for the selected filter.</div>
             ) : (
