@@ -210,11 +210,11 @@ function FileRendering() {
         {!jobNotFound && backendStatus !== "ERROR_LOADING" && isProcessing && (
           <>
             <div className="file-rendering-steps">
-              <div className={`render-step ${step >= 1 ? "render-step-done" : ""}`}>
+
+              <div className="render-step">
                 <div className="render-step-icon render-step-icon-spinner">
                   <ClipLoader size={18} color="#1a73e8" />
                 </div>
-
                 <div className="render-step-text">
                   <h2 className="render-step-title">File Validation</h2>
                   <p className="render-step-description">
@@ -223,11 +223,10 @@ function FileRendering() {
                 </div>
               </div>
 
-              <div className={`render-step ${step >= 2 ? "render-step-done" : ""}`}>
+              <div className="render-step">
                 <div className="render-step-icon render-step-icon-spinner">
                   <ClipLoader size={18} color="#1a73e8" />
                 </div>
-
                 <div className="render-step-text">
                   <h2 className="render-step-title">Imposition Layout</h2>
                   <p className="render-step-description">
@@ -236,11 +235,10 @@ function FileRendering() {
                 </div>
               </div>
 
-              <div className={`render-step ${step >= 3 ? "render-step-done" : ""}`}>
+              <div className="render-step">
                 <div className="render-step-icon render-step-icon-spinner">
                   <ClipLoader size={18} color="#1a73e8" />
                 </div>
-
                 <div className="render-step-text">
                   <h2 className="render-step-title">File Optimization</h2>
                   <p className="render-step-description">
@@ -248,6 +246,7 @@ function FileRendering() {
                   </p>
                 </div>
               </div>
+
             </div>
 
             <div className="file-rendering-summary">
