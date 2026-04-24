@@ -14,7 +14,7 @@
 
 .dashboard h1{
   margin-top: 2rem; 
-  font-family: "Inter", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   font-weight: bold; 
   background: linear-gradient(90deg, rgb(199, 139, 238), #2190df,rgb(204, 141, 247));
   -webkit-background-clip: text;
@@ -38,7 +38,7 @@
   border: none;
   border-radius: 10px;
   padding: 0.5rem 1rem;
-  font-family: "Inter", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   font-size: 1.1rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(75, 168, 255, 0.35);
@@ -139,7 +139,7 @@
 .db-history-section h2 {
   margin-bottom: 1rem;
   color: #0A2A43;
-  font-family: "Inter", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /* --- Job List --- */

@@ -289,9 +289,6 @@ function JobSubmission() {
           </form>
         </div>
 
-        <p className="job-submission-footer">
-          We will eventually display some helpful message here...
-        </p>
       </div>
     </div>
   );
