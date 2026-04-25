@@ -85,7 +85,7 @@ export default function MyLibrary() {
   };
 
   const isImage = (fileType) => {
-    return ["jpg", "jpeg", "png", "gif", "webp", "svg"].includes(
+    return ["jpg", "jpeg", "png", "gif", "webp", "svg", "avif"].includes(
       fileType?.toLowerCase()
     );
   }
