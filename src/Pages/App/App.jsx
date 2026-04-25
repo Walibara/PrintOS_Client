@@ -87,8 +87,12 @@ function App() {
             },
           }}
     >
-          {({ signOut, user }) => {                                      
-              const displayName = firstName || user?.attributes?.name || "";
+          {({ signOut, user }) => {
+            if (user && window.location.hostname !== "main.d22sjrfdf1uqnw.amplifyapp.com") {
+              window.location.href = "https://main.d22sjrfdf1uqnw.amplifyapp.com/";
+              return null;
+            }
+            const displayName = firstName || user?.attributes?.name || "";
 
           return (
   <BrowserRouter>
