@@ -157,7 +157,7 @@ const handleViewReceipt = (job) => {
 
   const deleteJobHelper = async () => {
     try {
-      await statusMethods.deleteJob(selectedJob.id);
+      await statusMethods.deleteJob(selectedJob);
       setJobHistory((prev) => prev.filter((job) => job.id !== selectedJob.id));
     } catch (err) {
       console.error("Failed to delete job:", err);
