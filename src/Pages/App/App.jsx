@@ -27,6 +27,7 @@ import AboutUs from '../AboutUs/AboutUs.jsx'
 import React, { useState, useEffect } from 'react'
 import { getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 import LoginPage from '../Login/LoginPage.jsx'
+import LogoutPage from '../Login/LogoutPage.jsx';
 
 
 
@@ -36,6 +37,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [firstName, setName] = useState(""); 
   const [userEmail, setUserEmail] = useState("");
+  const [showLogout, setShowLogout] = useState(false);
  
 
 
@@ -49,8 +51,8 @@ function App() {
         setUserEmail(currentAttributes.email || "");
         setName(currentAttributes.name || ""); 
   
-      } catch (error) {
-        console.error("Could not load Cognito username", error);
+      } catch {
+       
       }
     };
   
@@ -88,10 +90,16 @@ function App() {
           }}
     >
           {({ signOut, user }) => {
-            if (user && window.location.hostname !== "main.d22sjrfdf1uqnw.amplifyapp.com") {
-              window.location.href = "https://main.d22sjrfdf1uqnw.amplifyapp.com/";
-              return null;
+            if (showLogout) {
+              return (
+                <LogoutPage onDone={() => {
+                  setShowLogout(false);
+                  sessionStorage.removeItem("loggedIn");
+                  signOut();
+                }} />
+              );
             }
+            
             const displayName = firstName || user?.attributes?.name || "";
 
           return (
@@ -145,7 +153,8 @@ function App() {
                 <Link to="/about-us" className="nav-item">
                   About Us
                 </Link>
-                <span tabindex="0" role="button" className="logout" onClick={signOut}>Log Out</span>
+                <span tabindex="0" role="button" className="logout" onClick={() => setShowLogout(true)}>Log Out</span>
+
               </nav>
             </aside>
 
@@ -171,6 +180,7 @@ function App() {
                   <Route path="/about-us" element={<AboutUs/>}/>
                   <Route path="/my-library" element={<MyLibrary />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
+                  <Route path="/logout" element={<LogoutPage />} />
 
                 </Routes>
               </section>
